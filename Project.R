@@ -31,6 +31,8 @@ names(newdf) <- c("Province", "Province code", "Cycling lanes", "Motorization ra
                   "Pedestrian areas", "Urban ecosystem")
 names(newdf)
 
+#separazione dell'italia https://www.tuttitalia.it/statistiche/nord-centro-mezzogiorno-italia/
+
 Nord <- newdf[c(1:40, 93, 96:99, 103:104),]
 Nord
 
