@@ -14,8 +14,36 @@ Verde_urbano<-Verde_urbano[order(Verde_urbano$CODICE.PROVINCIA.ISTAT..STORICO.),
 Qualità_aria<-df[df$INDICATORE=="Qualità dell'aria",c(1,3,5)]
 Qualità_aria<-Qualità_aria[order(Qualità_aria$CODICE.PROVINCIA.ISTAT..STORICO.),]
 
-newdf<-data.frame(Piste_ciclabili[,c(1,3)], Tasso_motorizzazione[,3], Verde_urbano[,3], Qualità_aria[,3])
+Isole_pedonali <-df[df$INDICATORE=="Isole pedonali ",c(1,3,5)]
+Isole_pedonali<-Isole_pedonali[order(Isole_pedonali$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Ecosistema_urbano <- df[df$INDICATORE=="Ecosistema urbano ", c(1,3,5)]
+Ecosistema_urbano <- Ecosistema_urbano[order(Ecosistema_urbano$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+
+newdf<-data.frame(Piste_ciclabili[,c(1,2,3)], Tasso_motorizzazione[,3], 
+                  Verde_urbano[,3], Qualità_aria[,3], 
+                  Isole_pedonali[,3], Ecosistema_urbano[,3])
 newdf
+
+names(newdf) <- c("Province", "Province code", "Cycling lanes", "Motorization rate", 
+                  "Urban green", "Air quality", 
+                  "Pedestrian areas", "Urban ecosystem")
+names(newdf)
+
+Nord <- newdf[c(1:40, 93, 96:99, 103:104),]
+Nord
+
+Centro <- newdf[c(41:60, 100, 105),]
+Centro
+
+Mezzogiorno <- newdf[c(61:92, 94:95, 101:102, 106:107),]
+Mezzogiorno
+
+nrow(Nord)
+nrow(Centro)
+nrow(Mezzogiorno)
 
 plot(x= newdf$Verde_urbano...3., y=newdf$Qualità_aria...3.)
 plot
+
