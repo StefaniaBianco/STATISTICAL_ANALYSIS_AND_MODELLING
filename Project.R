@@ -50,6 +50,23 @@ mean(Nord$`Cycling lanes`)
 mean(Centro$`Cycling lanes`)
 mean(Mezzogiorno$`Cycling lanes`)
 
-plot(x= newdf$Verde_urbano...3., y=newdf$Qualità_aria...3.)
-plot
+mean(Nord$`Motorization rate`)
+mean(Centro$`Motorization rate`)
+mean(Mezzogiorno$`Motorization rate`)
+
+mean(Nord$`Urban green`)
+mean(Centro$`Urban green`)
+mean(Mezzogiorno$`Urban green`)
+
+mean(Nord$`Air quality`)
+mean(Centro$`Air quality`)
+mean(Mezzogiorno$`Air quality`)
+
+mean(Nord$`Pedestrian areas`)
+mean(Centro$`Pedestrian areas`)
+mean(Mezzogiorno$`Pedestrian areas`)
+
+mean(Nord$`Urban ecosystem`)
+mean(Centro$`Urban ecosystem`)
+mean(Mezzogiorno$`Urban ecosystem`)
 
