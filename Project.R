@@ -46,6 +46,10 @@ nrow(Nord)
 nrow(Centro)
 nrow(Mezzogiorno)
 
+mean(Nord$`Cycling lanes`)
+mean(Centro$`Cycling lanes`)
+mean(Mezzogiorno$`Cycling lanes`)
+
 plot(x= newdf$Verde_urbano...3., y=newdf$Qualità_aria...3.)
 plot
 
