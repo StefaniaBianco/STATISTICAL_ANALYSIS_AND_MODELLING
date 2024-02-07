@@ -1,0 +1,17 @@
+###useful things we could do
+
+#check the size of our dataframe
+
+## convert a numerical variable into a categorical one
+## cut
+cut(mydf$SepalLength, breaks = c(4, 5, 6, 8), labels = c("small", 
+                      "medium", "large"))
+sepal_length_cat <- cut(mydf$SepalLength, breaks = c(4, 5, 6, 8), labels = c("small", 
+                        "medium", "large"))
+class(sepal_length_cat)
+cbind(mydf$SepalLength, sepal_length_cat)
+
+#mean calculation
+mean(stud.df$km_travel[stud.df$travel=="train"], na.rm=T)
+#Or we can use the function aggregate. In this way it returns the mean distance for each way of travelling.
+aggregate(x=stud.df$km_travel, by = list(Way = stud.df$travel), FUN = mean, na.rm=T)
