@@ -1,0 +1,115 @@
+#mean of variable "cycling lanes"
+mean_cycling_lanes<-mean(newdf$`Cycling lanes`)
+mean_cycling_lanes_nord<-mean(Nord$`Cycling lanes`)
+mean_cycling_lanes_centro<-mean(Centro$`Cycling lanes`)
+mean_cycling_lanes_mezzogiorno<-mean(Mezzogiorno$`Cycling lanes`)
+mean_cycling_lanes_values<-c(9.67, 14.90, 7.10, 4.69)
+
+#variance of variable "cycling lanes"// var=M(x^2)-M(x)^2
+variance_cycling_lanes<-mean(newdf$`Cycling lanes`^2)-mean(newdf$`Cycling lanes`)^2
+variance_cycling_lanes_nord<-mean(Nord$`Cycling lanes`^2)-mean(Nord$`Cycling lanes`)^2
+variance_cycling_lanes_centro<-mean(Centro$`Cycling lanes`^2)-mean(Centro$`Cycling lanes`)^2
+variance_cycling_lanes_mezzogiorno<-mean(Mezzogiorno$`Cycling lanes`^2)-mean(Mezzogiorno$`Cycling lanes`)^2
+
+#standard deviation of variable "cycling lanes" // sd=sqrt(var)
+sd_cycling_lanes<-sqrt(variance_cycling_lanes)
+sd_cycling_lanes_nord<-sqrt(variance_cycling_lanes_nord)
+sd_cycling_lanes_centro<-sqrt(variance_cycling_lanes_centro)
+sd_cycling_lanes_mezzogiorno<-sqrt(variance_cycling_lanes_mezzogiorno)
+
+#coefficient of variation of variable "cycling lanes" // cv=sd/mean
+cv_cycling_lanes<-sd_cycling_lanes/mean_cycling_lanes
+cv_cycling_lanes_nord<-sd_cycling_lanes_nord/mean_cycling_lanes_nord
+cv_cycling_lanes_centro<-sd_cycling_lanes_centro/mean_cycling_lanes_centro
+cv_cycling_lanes_mezzogiorno<-sd_cycling_lanes_mezzogiorno/mean_cycling_lanes_mezzogiorno
+
+#mean of variable "motorization rate"
+mean_motorization_rate<-mean(newdf$`Motorization rate`)
+mean_motorization_rate_nord<-mean(Nord$`Motorization rate`)
+mean_motorization_rate_centro<-mean(Centro$`Motorization rate`)
+mean_motorization_rate_mezzogiorno<-mean(Mezzogiorno$`Motorization rate`)
+mean_motorization_rate_values<-c(65.54, 62.47, 67.40, 68.26)
+
+#variance of variable "Motorization rate"// var=M(x^2)-M(x)^2
+variance_motorization_rate<-mean(newdf$`Motorization rate`^2)-mean(newdf$`Motorization rate`)^2
+variance_motorization_rate_nord<-mean(Nord$`Motorization rate`^2)-mean(Nord$`Motorization rate`)^2
+variance_motorization_rate_centro<-mean(Centro$`Motorization rate`^2)-mean(Centro$`Motorization rate`)^2
+variance_motorization_rate_mezzogiorno<-mean(Mezzogiorno$`Motorization rate`^2)-mean(Mezzogiorno$`Motorization rate`)^2
+
+#standard deviation of variable "Motorization rate" // sd=sqrt(var)
+sd_motorization_rate<-sqrt(variance_motorization_rate)
+sd_motorization_rate_nord<-sqrt(variance_motorization_rate_nord)
+sd_motorization_rate_centro<-sqrt(variance_motorization_rate_centro)
+sd_motorization_rate_mezzogiorno<-sqrt(variance_motorization_rate_mezzogiorno)
+
+#coefficient of variation of variable "Motorization rate" // cv=sd/mean
+cv_motorization_rate<-sd_motorization_rate/mean_motorization_rate
+cv_motorization_rate_nord<-sd_motorization_rate/mean_motorization_rate_nord
+cv_motorization_rate_centro<-sd_motorization_rate/mean_motorization_rate_centro
+cv_motorization_rate_mezzogiorno<-sd_motorization_rate/mean_motorization_rate_mezzogiorno
+
+#barplot with the mean of variable "cycling lanes"
+bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, 
+                               names.arg = c("Italy", "North", "Centre", "South"), 
+                               col="GREEN", ylab="Squared metres per inhabitant")
+title("barplot of cycling lanes mean")
+abline(h=9.67)
+
+#barplot with the mean of variable "motorization rate"
+bp_mean_motorization_rate<-barplot(mean_motorization_rate_values, 
+                            names.arg = c("Italy", "North", "Centre", "South"), 
+                            col="GREEN", ylab="Number of cars per 100 inhabitant")
+                            title("Barplot of motorization rate means")
+                            abline(h=65.54)
+
+                            #correlation                            
+plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
+     xlab = "Urban Green", ylab="Air quality", 
+     main="Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(newdf$`Urban green`, newdf$`Air quality`)      
+
+plot(x=Nord$`Urban green`, y=Nord$`Air quality`)
+cor(x=Nord$`Urban green`, y=Nord$`Air quality`)  
+
+plot(x=Centro$`Urban green`, y=Centro$`Air quality`)
+cor(x=Centro$`Urban green`, y=Centro$`Air quality`)  
+
+plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`)
+cor(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) 
+
+#Grouped frequency distribution
+#we take the variable km_travel and consider
+range(newdf$`Cycling lanes`)
+
+cycling_lanes_cat<-cut(newdf$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("0-10", "10-20", "20-30","30-40","40-50"))
+table(cycling_lanes_cat)
+
+cycling_lanes_cat_nord<-cut(Nord$`Cycling lanes`, breaks =c(0, 10, 20, 30, 40, 50), labels = c("0-10", "10-20", "20-30","30-40","40-50"))
+table(cycling_lanes_cat_nord)
+
+cycling_lanes_cat_centro<-cut(Centro$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("0-10", "10-20", "20-30","30-40","40-50"))
+table(cycling_lanes_cat_centro)
+
+cycling_lanes_cat_sud<-cut(Mezzogiorno$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("0-10", "10-20", "20-30","30-40","40-50"))
+table(cycling_lanes_cat_sud)
+
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+
+par(mfrow=c(2,2))
+barplot(table(cycling_lanes_cat), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+barplot(table(cycling_lanes_cat_nord), xlab="m^2 per inhabitant", ylab="Number of cycling lanes",main="Cycling lanes Nord", col=coul, border="red")
+barplot(table(cycling_lanes_cat_centro), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes Centre", col=coul, border="red")
+barplot(table(cycling_lanes_cat_sud), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes South", col=coul, border="red")
+dev.off()
+
+hist(newdf$`Cycling lanes`, freq=F, xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+lines(density(newdf$`Cycling lanes`), lwd=2) 
+abline(v=mean(newdf$`Cycling lanes`), col='red', lwd=3)
+curve(dnorm(x, mean=mean(newdf$`Cycling lanes`), 
+            sd=sd(newdf$`Cycling lanes`)), 
+      add=T, col="orange", lwd=2)
+shapiro.test(newdf$`Cycling lanes`)
+
