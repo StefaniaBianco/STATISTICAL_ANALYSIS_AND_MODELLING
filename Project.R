@@ -202,6 +202,82 @@ plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`)
 cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good negative correlation
 
 #########################################Mattia##########
+
+# Mean of variable "Urban green"
+mean_urban_green<-mean(newdf$`Urban green`)
+mean_urban_green_nord<-mean(Nord$`Urban green`)
+mean_urban_green_centro<-mean(Centro$`Urban green`)
+mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
+mean_urban_green_values<-c(22.40, 29.79, 19.87, 14.74)
+
+# Variance of variable "Urban green" // var=M(x^2)-M(x)^2
+variance_urban_green<-mean(newdf$`Urban green`^2)-(mean_urban_green)^2
+variance_urban_green_nord<-mean(Nord$`Urban green`^2)- (mean_urban_green_nord)^2
+variance_urban_green_centro<-mean(Centro$`Urban green`^2)-(mean_urban_green_centro)^2
+variance_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`^2)- (mean_urban_green_mezzogiorno)^2
+
+#standard deviation of variable "Urban green" // sd=sqrt(var)
+sd_urban_green<-sqrt(variance_urban_green)
+sd_urban_green_nord<-sqrt(variance_urban_green_nord)
+sd_urban_green_centro<-sqrt(variance_urban_green_centro)
+sd_urban_green_mezzogiorno<-sqrt(variance_urban_green_mezzogiorno)
+
+#coefficient of variation of variable "Urban green" // cv=sd/mean
+cv_urban_green<-sd_urban_green/mean_urban_green
+cv_urban_green_nord<-sd_urban_green_nord/mean_urban_green_nord
+cv_urban_green_centro<-sd_urban_green_centro/mean_urban_green_centro
+cv_urban_green_mezzogiorno<-sd_urban_green_mezzogiorno/mean_urban_green_mezzogiorno
+
+#barplot with the mean of variable "Urban green"
+bp_mean_urban_green<-barplot(mean_urban_green_values, 
+                                 names.arg = c("Italy", "North", "Centre", "South"), 
+                                 col="light green", ylab="Number of U.A. ???")
+title("Barplot of Urban green")
+abline(h=9.67)
+
+# Mean of variable "Air quality"
+mean_air_quality<-mean(newdf$`Air quality`)
+mean_air_quality_nord<-mean(Nord$`Air quality`)
+mean_air_quality_centro<-mean(Centro$`Air quality`)
+mean_air_quality_mezzogiorno<-mean(Mezzogiorno$`Air quality`)
+mean_air_quality_values<-c(51.32, 62.41, 43.83, 41.95)
+
+# Variance of variable "Air quality" // var=M(x^2)-M(x)^2
+variance_air_quality<-mean(newdf$`Air quality`^2)-(mean_air_quality)^2
+variance_air_quality_nord<-mean(Nord$`Air quality`^2)- (mean_air_quality_nord)^2
+variance_air_quality_centro<-mean(Centro$`Air quality`^2)-(mean_air_quality_centro)^2
+variance_air_quality_mezzogiorno<-mean(Mezzogiorno$`Air quality`^2)- (mean_air_quality_mezzogiorno)^2
+
+#standard deviation of variable "Air quality" // sd=sqrt(var)
+sd_air_quality<-sqrt(variance_air_quality)
+sd_air_quality_nord<-sqrt(variance_air_quality_nord)
+sd_air_quality_centro<-sqrt(variance_air_quality_centro)
+sd_air_quality_mezzogiorno<-sqrt(variance_air_quality_mezzogiorno)
+
+#coefficient of variation of variable "Air quality" // cv=sd/mean
+cv_air_quality<-sd_air_quality/mean_air_quality
+cv_air_quality_nord<-sd_air_quality_nord/mean_air_quality_nord
+cv_air_quality_centro<-sd_air_quality_centro/mean_air_quality_centro
+cv_air_quality_mezzogiorno<-sd_air_quality_mezzogiorno/mean_air_quality_mezzogiorno
+
+#barplot with the mean of variable "Air quality"
+bp_mean_air_quality<-barplot(mean_air_quality_values, 
+                                 names.arg = c("Italy", "North", "Centre", "South"), 
+                                 col="light green", ylab="Number of U.A. ???")
+title("Barplot of Air quality")
+abline(h=9.67)
+
+#correlation between motorization rate and cycling lanes                           
+cor(newdf$`Motorization rate`, newdf$`Cycling lanes`) #value -0.07, no correlation
+
+plot(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`)
+cor(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`) #value 0.32, poor correlation
+
+plot(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`)
+cor(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`)  #-0.05, no correlation
+
+plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`)
+cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`) #-0.01, no correlation
 #############################
 
 
