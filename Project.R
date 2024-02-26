@@ -46,9 +46,7 @@ Mezzogiorno <- newdf[c(61:92, 94:95, 101:102, 106:107),]
 Mezzogiorno
 
 #Checking if we took all the provences
-nrow(Nord)
-nrow(Centro)
-nrow(Mezzogiorno)
+nrow(Nord)+nrow(Centro)+nrow(Mezzogiorno)
 
 
 ############################Stefania#################################
