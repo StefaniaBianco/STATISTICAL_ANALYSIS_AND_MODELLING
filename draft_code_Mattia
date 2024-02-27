@@ -177,11 +177,12 @@ table(air_quality_rate_cat_sud)
 library(RColorBrewer)
 coul <- brewer.pal(5, "Set2")
 
-barplot(table(air_quality_rate_cat), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", main="Air quality Italy", col=coul, border="black")
-barplot(table(air_quality_rate_cat_nord), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", main="Air quality North Italy", col=coul, border="black")
-barplot(table(air_quality_rate_cat_centro), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", main="Air quality Centre Italy", col=coul, border="black")
-barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", main="Air quality South Italy", col=coul, border="black")
-
+par(mfrow=c(2,2))
+barplot(table(air_quality_rate_cat), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", ylim = c(0,50), main="Air quality Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_nord), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", ylim = c(0,25), main="Air quality North Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_centro), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", ylim = c(0,25), main="Air quality Centre Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", ylim = c(0,25), main="Air quality South Italy", col=coul, border="black")
+dev.off()
 hist(newdf$`Air quality`, freq=F, xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Number of cities", main="Air quality Italy", col=coul, border="black")
 lines(density(newdf$`Air quality`), lwd=2)
 abline(v=mean(newdf$`Air quality`), col='red', lwd=3)
@@ -190,3 +191,19 @@ curve(dnorm(x, mean=mean(newdf$`Air quality`),
             sd=sd(newdf$`Air quality`)), 
       add=T, col="orange", lwd=2)
 shapiro.test(newdf$`Air quality`)
+
+#t test between population means for urban green
+t.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Urban green`, y = Centro$`Urban green`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Urban green`, y = Centro$`Urban green`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+
+#t test between population means for urban green
+t.test(x=Nord$`Air quality` , y = Mezzogiorno$`Air quality`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Air quality`, y = Centro$`Air quality`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Air quality`, y = Centro$`Air quality`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
