@@ -1,3 +1,38 @@
+---
+title: "Does the Italian quality of life depends on the geographical area?"
+author: "Gioia Riolli, Stefania Bianco, Mattia Fabris"
+date: "2024-02-27"
+output:
+  html_document: default
+  pdf_document: default
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Introduction and Data Clean
+
+Life quality in cities is a major discussion topic nowadays in the european countries, and the focus of the influence of the environmental aspect is getting more and more important. 
+Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. We made some analysis in order to understand if the parameters are significantly different between these three macroareas and we obtained some interesting results. 
+
+We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the Italian provinces from the highest to the lowest for quality of life standards. The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions
+
+```{r, eval=FALSE }
+getwd()
+df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
+df
+```
+
+After importing our data, we selected "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function order we listed all the data following the province code. With the selected and ordered indicators a new data frame has been created, called "newdf", and all the variables renamed in English. We used this following code for all the indicators:
+
+```{r, eval=FALSE }
+Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
+Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
+```
+
+The new data frame has been then been further divided into three new subset: North, Centre, and the so-called "Mezzogiorno" or South, according to the ISTAT division of the Italian administrative territory.
+
+
+
 #Getting our working directory and importing our dataset with the function read.csv
 getwd()
 df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
