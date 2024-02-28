@@ -101,9 +101,9 @@ cv_urban_green_mezzogiorno<-sd_urban_green_mezzogiorno/mean_urban_green_mezzogio
 #barplot with the mean of variable "Urban green"
 bp_mean_urban_green<-barplot(mean_urban_green_values, 
                                  names.arg = c("Italy", "North", "Centre", "South"), 
-                                 col="light green", ylab="Number of U.A. ???")
+                                 col="light green", ylab="m^2 per inhabitant")
 title("Barplot of Urban green")
-abline(h=9.67)
+abline(h=22.40)
 
 # Mean of variable "Air quality"
 mean_air_quality<-mean(newdf$`Air quality`)
@@ -133,9 +133,9 @@ cv_air_quality_mezzogiorno<-sd_air_quality_mezzogiorno/mean_air_quality_mezzogio
 #barplot with the mean of variable "Air quality"
 bp_mean_air_quality<-barplot(mean_air_quality_values, 
                                  names.arg = c("Italy", "North", "Centre", "South"), 
-                                 col="light green", ylab="Number of U.A. ???")
+                                 col="light green", ylab="Index based on PM10, NO2 and O3 data")
 title("Barplot of Air quality")
-abline(h=9.67)
+abline(h=51.32)
 
 # correlation between motorization rate and cycling lanes                          
 # Plot to see if there is correlation
@@ -207,3 +207,22 @@ t.test(x=Nord$`Air quality`, y = Centro$`Air quality`, alternative = "two.sided"
        mu=0, var.equal=T, conf.level = 0.99)
 t.test(x=Mezzogiorno$`Air quality`, y = Centro$`Air quality`, alternative = "two.sided",
        mu=0, var.equal=T, conf.level = 0.99)
+
+############################ REPORT
+
+As a first numerical measure we decided to summarize the data calculating the arithmetic mean for each indicator in different areas. 
+For exemple for the indicator "Urban green" we did:
+```{r, eval=FALSE }
+mean_urban_green<-mean(newdf$`Urban green`)
+mean_urban_green_nord<-mean(Nord$`Urban green`)
+mean_urban_green_centro<-mean(Centro$`Urban green`)
+mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
+```
+Having this results:
+```{r, eval=TRUE }
+mean_urban_green<-mean(newdf$`Urban green`)
+mean_urban_green_nord<-mean(Nord$`Urban green`)
+mean_urban_green_centro<-mean(Centro$`Urban green`)
+mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
+```
+As we can see values are different, with a mean higher in the north than the centre and the south.
