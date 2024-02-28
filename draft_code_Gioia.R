@@ -136,7 +136,7 @@ barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province",
 
 #we will use the data collected on our newdf but importing them with a new funciton
 
-hist(newdf$`Pedestrian areas`, freq=F, xlab="m^2 per inhabitant", ylab="Number of province", 
+hist(newdf$`Pedestrian areas`, freq=F, xlab="m^2 per inhabitant", ylab="% of province", 
      main="Pedestrian Areas Italy", col=coul, border="red")
 lines(density(newdf$`Pedestrian areas`), lwd=) 
 abline(v=mean(newdf$`Pedestrian areas`), col='red', lwd=3)
