@@ -17,13 +17,13 @@ variance_urban_ecosystem_nord<-mean(Nord$`Urban ecosystem`^2)- (mean_urban_ecosy
 variance_urban_ecosystem_centro<-mean(Centro$`Urban ecosystem`^2)-(mean_urban_ecosystem_centro)^2
 variance_urban_ecosystem_mezzogiorno<-mean(Mezzogiorno$`Urban ecosystem`^2)- (mean_urban_ecosystem_mezzogiorno)^2
 
-#standard deviation of variable "cycling lanes" // sd=sqrt(var)
+#standard deviation of variable "urban ecosystem" // sd=sqrt(var)
 sd_urban_ecosystem<-sqrt(variance_urban_ecosystem)
 sd_urban_ecosystem_nord<-sqrt(variance_urban_ecosystem_nord)
 sd_urban_ecosystem_centro<-sqrt(variance_urban_ecosystem_centro)
 sd_urban_ecosystem_mezzogiorno<-sqrt(variance_urban_ecosystem_mezzogiorno)
 
-#coefficient of variation of variable "cycling lanes" // cv=sd/mean
+#coefficient of variation of variable "urban ecosystem" // cv=sd/mean
 cv_urban_ecosystem<-sd_urban_ecosystem/mean_urban_ecosystem
 cv_urban_ecosystem_nord<-sd_urban_ecosystem_nord/mean_urban_ecosystem_nord
 cv_urban_ecosystem_centro<-sd_urban_ecosystem_centro/mean_urban_ecosystem_centro
