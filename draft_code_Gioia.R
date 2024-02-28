@@ -2,7 +2,7 @@
 #nota che ho fatto la correlazione tra urban ecosystem e air quality perché almeno veniva fuori qualcosa e non tra
 #pedestrian areas ed air quality perché usciva sempre correlazione nulla
 ###########################
-
+###########################
 #mean of variable "urban ecosystem"
 mean_urban_ecosystem<-mean(newdf$`Urban ecosystem`)
 mean_urban_ecosystem_centro
@@ -87,4 +87,75 @@ cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`)  #-0.06, no correlation
 plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`)
 cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good negative correlation
 
-#still missing last part
+#now we want to divide our indicator "pedestrian areas" in four main categories
+#poor, medium, good and very good by looking at the squared metres per inhabitant.
+#general table:
+range(newdf$`Pedestrian areas`) #between 0 and 6.8
+pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
+                           breaks=c(0, 2, 4, 6, 7), 
+                           labels=c("poor", "medium", "good", "very good"))
+barcat <-table(pedestrian_areas_cat)
+
+# Northern Italy table
+range(Nord$`Pedestrian areas`) #wide range, between 0.00 and 5
+5.19-0.01#5.18
+pedestrian_areas_cat_nord<-cut(Nord$`Pedestrian areas`, breaks=c(0, 2, 4, 6, 7), labels=c("poor", "medium", "good", "very good"))
+barcat_nord <-table(pedestrian_areas_cat_nord)
+
+# Center Italy table
+range(Centro$`Pedestrian areas`) #widest range, between 0.1 and 6.79 highest value)
+6.79-0.11 #6.68
+pedestrian_areas_cat_centro <-cut(Centro$`Pedestrian areas`, 
+                                  breaks=c(0, 2, 4, 6, 7), 
+                                  labels=c("poor", "medium", "good", "very good"))
+barcat_centro <-table(pedestrian_areas_cat_centro)
+
+#Southern Italy table
+range(Mezzogiorno$`Pedestrian areas`) #extermely low values, maximum value at 1.66
+1.66-0.0 #1.66
+pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`, 
+                                 breaks=c(0, 2, 4, 6, 7), 
+                                 labels=c("poor", "medium", "good", "very good")) 
+barcat_mezz <-table(pedestrian_areas_cat_mezz)
+
+#we define a colour palette
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+
+par(mfrow=c(2,2))
+barplot(barcat, xlab = "m^2 per inhabitant", ylab= "Number of province", 
+        main="PAs in Italy", col=coul, border="red")
+barplot(barcat_nord, xlab = "m^2 per inhabitant", ylab= "Number of province", 
+        main="PAs in Northern Italy", col=coul, border="red" )
+barplot(barcat_centro, xlab = "m^2 per inhabitant", ylab= "Number of province", 
+        main="PAs in Central Italy", col=coul, border="red")
+barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province",
+        main="PAs in Southern Italy", col=coul, border="red")
+#from this we can see how the situation is pretty limited all around Italy, 
+#with the worst situation in southern Italy
+
+#we will use the data collected on our newdf but importing them with a new funciton
+
+hist(newdf$`Pedestrian areas`, freq=F, xlab="m^2 per inhabitant", ylab="Number of province", 
+     main="Pedestrian Areas Italy", col=coul, border="red")
+lines(density(newdf$`Pedestrian areas`), lwd=) 
+abline(v=mean(newdf$`Pedestrian areas`), col='red', lwd=3)
+curve(dnorm(x, mean=mean(newdf$`Pedestrian areas`), 
+            sd=sd(newdf$`Pedestrian areas`)), 
+      add=T, col="orange", lwd=2)
+shapiro.test(newdf$`Pedestrian areas`)
+
+#t test between population means for pedestrian areas
+t.test(x=Nord$`Pedestrian areas` , y = Mezzogiorno$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+
+t.test(x=Nord$`Pedestrian areas` , y = Mezzogiorno$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Pedestrian areas` , y = Centro$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Pedestrian areas` , y = Centro$`Pedestrian areas`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
