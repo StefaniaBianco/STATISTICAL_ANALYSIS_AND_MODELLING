@@ -1,38 +1,3 @@
----
-title: "Does the Italian quality of life depends on the geographical area?"
-author: "Gioia Riolli, Stefania Bianco, Mattia Fabris"
-date: "2024-02-27"
-output:
-  html_document: default
-  pdf_document: default
----
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-## Introduction and Data Clean
-
-Life quality in cities is a major discussion topic nowadays in the european countries, and the focus of the influence of the environmental aspect is getting more and more important. 
-Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. We made some analysis in order to understand if the parameters are significantly different between these three macroareas and we obtained some interesting results. 
-
-We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the Italian provinces from the highest to the lowest for quality of life standards. The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions
-
-```{r, eval=FALSE }
-getwd()
-df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
-df
-```
-
-After importing our data, we selected "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function order we listed all the data following the province code. With the selected and ordered indicators a new data frame has been created, called "newdf", and all the variables renamed in English. We used this following code for all the indicators:
-
-```{r, eval=FALSE }
-Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
-Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
-```
-
-The new data frame has been then been further divided into three new subset: North, Centre, and the so-called "Mezzogiorno" or South, according to the ISTAT division of the Italian administrative territory.
-
-
-
 #Getting our working directory and importing our dataset with the function read.csv
 getwd()
 df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
@@ -83,13 +48,56 @@ Mezzogiorno
 #Checking if we took all the provences
 nrow(Nord)+nrow(Centro)+nrow(Mezzogiorno)
 
-
-############################Stefania#################################
+##DESCRIPTIVE ANALYSIS OF THE VARIABLE CYCLING LANES
 #mean of variable "cycling lanes"
 mean_cycling_lanes<-mean(newdf$`Cycling lanes`)
 mean_cycling_lanes_nord<-mean(Nord$`Cycling lanes`)
 mean_cycling_lanes_centro<-mean(Centro$`Cycling lanes`)
 mean_cycling_lanes_mezzogiorno<-mean(Mezzogiorno$`Cycling lanes`)
+
+#barplot with the mean of variable "cycling lanes"
+bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, 
+                               names.arg = c("Italy", "North", "Centre", "South"), 
+                               col="GREEN", ylab="Equivalent metres every 100 inhabitant")
+title("Barplot of cycling lanes ")
+abline(h=9.67)
+abline(h=0)
+
+#Grouped frequency distribution of the variable cycling lanes
+range(newdf$`Cycling lanes`)
+
+cycling_lanes_cat<-cut(newdf$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat)
+
+cycling_lanes_cat_nord<-cut(Nord$`Cycling lanes`, breaks =c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_nord)
+
+cycling_lanes_cat_centro<-cut(Centro$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_centro)
+
+cycling_lanes_cat_sud<-cut(Mezzogiorno$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_sud)
+
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+
+barplot(table(cycling_lanes_cat), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+
+par(mfrow=c(1,3))
+barplot(table(cycling_lanes_cat_nord), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", ylim="35", main="Cycling lanes Nord", col=coul, border="red")
+barplot(table(cycling_lanes_cat_centro), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", ylim=35, main="Cycling lanes Centre", col=coul, border="red")
+barplot(table(cycling_lanes_cat_sud), xlab="m^2 per inhabitant", ylab="Number of cycling lanes", ylim=35, main="Cycling lanes South", col=coul, border="red")
+dev.off()
+
+#histogram of the variable cycling lanes
+hist(newdf$`Cycling lanes`, freq=F, xlab="m^2 per inhabitant", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+lines(density(newdf$`Cycling lanes`), lwd=2) 
+abline(v=mean(newdf$`Cycling lanes`), col='red', lwd=3)
+curve(dnorm(x, mean=mean(newdf$`Cycling lanes`), 
+            sd=sd(newdf$`Cycling lanes`)), 
+      add=T, col="orange", lwd=2)
+shapiro.test(newdf$`Cycling lanes`) #data do not come from a normal distribution, they are skewed
+
 
 #variance of variable "cycling lanes"// var=M(x^2)-M(x)^2
 variance_cycling_lanes<-mean(newdf$`Cycling lanes`^2)-mean(newdf$`Cycling lanes`)^2
@@ -109,11 +117,22 @@ cv_cycling_lanes_nord<-sd_cycling_lanes_nord/mean_cycling_lanes_nord
 cv_cycling_lanes_centro<-sd_cycling_lanes_centro/mean_cycling_lanes_centro
 cv_cycling_lanes_mezzogiorno<-sd_cycling_lanes_mezzogiorno/mean_cycling_lanes_mezzogiorno
 
+
+
+#DESCRIPTIVE ANALYSIS OF THE VARIABLE MOTORIZATION RATE
 #mean of variable "motorization rate"
 mean_motorization_rate<-mean(newdf$`Motorization rate`)
 mean_motorization_rate_nord<-mean(Nord$`Motorization rate`)
 mean_motorization_rate_centro<-mean(Centro$`Motorization rate`)
 mean_motorization_rate_mezzogiorno<-mean(Mezzogiorno$`Motorization rate`)
+
+#barplot with the mean of variable "motorization rate"
+bp_mean_motorization_rate<-barplot(mean_motorization_rate_values, 
+                            names.arg = c("Italy", "North", "Centre", "South"), 
+                            col="GREEN", ylab="Number of cars per 100 inhabitant")
+                            title("Barplot of motorization rate means")
+                            abline(h=65.54)
+                            abline(h=0)
 
 #variance of variable "Motorization rate"// var=M(x^2)-M(x)^2
 variance_motorization_rate<-mean(newdf$`Motorization rate`^2)-mean(newdf$`Motorization rate`)^2
@@ -133,6 +152,111 @@ cv_motorization_rate_nord<-sd_motorization_rate/mean_motorization_rate_nord
 cv_motorization_rate_centro<-sd_motorization_rate/mean_motorization_rate_centro
 cv_motorization_rate_mezzogiorno<-sd_motorization_rate/mean_motorization_rate_mezzogiorno
 
+
+####CORRELATIONSSSS
+
+#correlation between air quality (PM10, NO2 and O3 in the air) and urban green (Squared metres per inhabitant)                       
+plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
+     xlab = "Urban Green", ylab="Air quality", 
+     main="Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+abline(model_italy)
+cor(newdf$`Urban green`, newdf$`Air quality`) #cor=0.13    
+cor.test(newdf$`Urban green`, newdf$`Air quality`) #p-value=0.17-->no evidence against H0=true correlation is equal to 0
+model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
+summary(model_italy)
+dev.off()
+
+plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
+     main="NORD // Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Nord$`Urban green`, y=Nord$`Air quality`)  
+cor.test(x=Nord$`Urban green`, y=Nord$`Air quality`) 
+model_nord <- lm(Nord$`Urban green`~ Nord$`Air quality`)
+summary(model_nord)
+
+plot(x=Centro$`Urban green`, y=Centro$`Air quality`,
+     xlab = "Urban Green", ylab="Air quality", 
+     main="CENTRE // Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Centro$`Urban green`, y=Centro$`Air quality`)  
+cor.test(x=Centro$`Urban green`, y=Centro$`Air quality`)
+model_centro <- lm(Centro$`Urban green`~ Centro$`Air quality`)
+summary(model_centro)
+
+plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
+     xlab = "Urban Green", ylab="Air quality", 
+     main="Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) 
+cor.test(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) #P-value=0.005-->strong evidence against H0, so they are correlated
+model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
+summary(model_mezzogiorno)
+abline(model_mezzogiorno)
+dev.off()
+
+#correlation between pedestrian areas and motorization rate
+#Pedestrian areas=squared metres per inhabitant, motorization rate=cars every 100 inhabitants
+plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
+     main="Scatterplot of Pedestrian areas and Motorization rate", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+#DOES NOT WORK abline(model_italy)
+cor(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`)
+cor.test(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`) #p-value=0.07, they might be correlated
+model_italy_correlation<-lm (newdf$`Pedestrian areas`~newdf$`Motorization rate`)
+summary(model_italy_correlation)
+dev.off()
+
+plot(x=Nord$`Pedestrian areas`, y=Nord$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
+     main="NORD // Scatterplot of Pedestrian areas and Motorization rate", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+  cor(x=Nord$`Pedestrian areas`, y=Nord$`Motorization rate`)  
+cor.test(x=Nord$`Pedestrian areas`, y=Nord$`Motorization rate`) 
+model_nord_correlation <- lm(Nord$`Pedestrian areas`~ Nord$`Motorization rate`)
+summary(model_nord_correlation)
+
+plot(x=Centro$`Pedestrian areas`, y=Centro$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
+     main="CENTRO // Scatterplot of Pedestrian areas and Motorization rate", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Centro$`Pedestrian areas`, y=Centro$`Motorization rate`)  
+cor.test(x=Centro$`Pedestrian areas`, y=Centro$`Motorization rate`) 
+model_centro_correlation <- lm(Centro$`Pedestrian areas`~ Centro$`Motorization rate`)
+summary(model_centro_correlation)
+
+plot(x=Mezzogiorno$`Pedestrian areas`, y=Mezzogiorno$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
+     main="Mezzogiorno // Scatterplot of Pedestrian areas and Motorization rate", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Mezzogiorno$`Pedestrian areas`, y=Mezzogiorno$`Motorization rate`)  
+cor.test(x=Mezzogiorno$`Pedestrian areas`, y=Mezzogiorno$`Motorization rate`) 
+model_mezzogiorno_correlation <- lm(Mezzogiorno$`Pedestrian areas`~ Mezzogiorno$`Motorization rate`)
+summary(model_mezzogiorno_correlation)
+
+
+###INFERENCE
+#t test between population means for cycling lanes
+t.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Cycling lanes`, y = Centro$`Cycling lanes`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Cycling lanes`, y = Centro$`Cycling lanes`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+
+#t test between population means for cycling lanes
+t.test(x=Nord$`Motorization rate` , y = Mezzogiorno$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+
 #########################Gioia########################
 ###########################
 #mean of variable "urban ecosystem"
@@ -148,18 +272,6 @@ variance_urban_ecosystem<-mean(newdf$`Urban ecosystem`^2)-(mean_urban_ecosystem)
 variance_urban_ecosystem_nord<-mean(Nord$`Urban ecosystem`^2)- (mean_urban_ecosystem_nord)^2
 variance_urban_ecosystem_centro<-mean(Centro$`Urban ecosystem`^2)-(mean_urban_ecosystem_centro)^2
 variance_urban_ecosystem_mezzogiorno<-mean(Mezzogiorno$`Urban ecosystem`^2)- (mean_urban_ecosystem_mezzogiorno)^2
-
-#standard deviation of variable "cycling lanes" // sd=sqrt(var)
-sd_urban_ecosystem<-sqrt(variance_urban_ecosystem)
-sd_urban_ecosystem_nord<-sqrt(variance_urban_ecosystem_nord)
-sd_urban_ecosystem_centro<-sqrt(variance_urban_ecosystem_centro)
-sd_urban_ecosystem_mezzogiorno<-sqrt(variance_urban_ecosystem_mezzogiorno)
-
-#coefficient of variation of variable "cycling lanes" // cv=sd/mean
-cv_urban_ecosystem<-sd_urban_ecosystem/mean_urban_ecosystem
-cv_urban_ecosystem_nord<-sd_urban_ecosystem_nord/mean_urban_ecosystem_nord
-cv_urban_ecosystem_centro<-sd_urban_ecosystem_centro/mean_urban_ecosystem_centro
-cv_urban_ecosystem_mezzogiorno<-sd_urban_ecosystem_mezzogiorno/mean_urban_ecosystem_mezzogiorno
 
 #mean of variable "pedestrian areas"
 mean_pedestrian_areas<-mean(newdf$`Pedestrian areas`)
