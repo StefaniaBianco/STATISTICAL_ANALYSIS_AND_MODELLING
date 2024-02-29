@@ -68,3 +68,28 @@ The measures of variability follows the same pattern, with higher variance and s
 ## Sitography
 
 
+###########################
+# #PROVA DI GRAFICO
+```{r, eval=TRUE, echo=FALSE}
+par(mfrow=c(3,3))
+barplot(barcat_nord, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Northern Italy", col=coul, border="red" )
+barplot(barcat_centro, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50), 
+        main="PAs in Central Italy", col=coul, border="red")
+barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Southern Italy", col=coul, border="red")
+
+barplot(barcat_mr_nord, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
+        main="MR in Northern Italy", col=coul, border="red" )
+barplot(barcat_mr_centro, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40), 
+        main="MR in Central Italy", col=coul, border="red")
+barplot(barcat_mr_sud, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
+        main="MR in Southern Italy", col=coul, border="red")
+
+barplot(barcat_aq_nord, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
+        main="AQ in Northern Italy", col=coul, border="red" )
+barplot(barcat_aq_centro, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30), 
+        main="AQ in Central Italy", col=coul, border="red")
+barplot(barcat_aq_sud, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
+        main="AQ in Southern Italy", col=coul, border="red")
+```
