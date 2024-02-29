@@ -1,0 +1,418 @@
+---
+title: "Does the Italian quality of life depends on the geographical area?"
+author: "Gioia Riolli, Stefania Bianco, Mattia Fabris"
+date: "2024-02-27"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+```{r, eval=TRUE, include=FALSE}
+getwd()
+df <- read.csv("/Users/mattiafabris/Desktop/unibo/statistical analysis/Progetto.def/20221213_QDV2022_001 .csv", dec=".", sep=",", stringsAsFactors = T)
+
+
+Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
+Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Tasso_motorizzazione<-df[df$INDICATORE=="Tasso di motorizzazione",c(1,3,5)]
+Tasso_motorizzazione<-Tasso_motorizzazione[order(Tasso_motorizzazione$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Verde_urbano<-df[df$INDICATORE=="Verde urbano fruibile",c(1,3,5)]
+Verde_urbano<-Verde_urbano[order(Verde_urbano$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Qualità_aria<-df[df$INDICATORE=="Qualità dell'aria",c(1,3,5)]
+Qualità_aria<-Qualità_aria[order(Qualità_aria$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Isole_pedonali <-df[df$INDICATORE=="Isole pedonali ",c(1,3,5)]
+Isole_pedonali<-Isole_pedonali[order(Isole_pedonali$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+Ecosistema_urbano <- df[df$INDICATORE=="Ecosistema urbano ", c(1,3,5)]
+Ecosistema_urbano <- Ecosistema_urbano[order(Ecosistema_urbano$CODICE.PROVINCIA.ISTAT..STORICO.),]
+
+newdf<-data.frame(Piste_ciclabili[,c(1,2,3)], Tasso_motorizzazione[,3], Verde_urbano[,3], Qualità_aria[,3], Isole_pedonali[,3], Ecosistema_urbano[,3])
+
+
+names(newdf) <- c("Province", "Province code", "Cycling lanes", "Motorization rate", 
+                  "Urban green", "Air quality", 
+                  "Pedestrian areas", "Urban ecosystem")
+Nord <- newdf[c(1:40, 93, 96:99, 103:104),]
+
+Centro <- newdf[c(41:60, 100, 105),]
+
+Mezzogiorno <- newdf[c(61:92, 94:95, 101:102, 106:107),]
+
+model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
+
+##### PER GRAFICO GRANDE
+range(newdf$`Pedestrian areas`) #between 0 and 6.8
+pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
+                           breaks=c(0, 1.5, 3, 4.5, 7), 
+                           labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat <-table(pedestrian_areas_cat)
+
+
+# Northern Italy table
+pedestrian_areas_cat_nord<-cut(Nord$`Pedestrian areas`, 
+                               breaks=c(0, 1.5, 3, 4.5, 7), 
+                               labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat_nord <-table(pedestrian_areas_cat_nord)
+
+# Center Italy table
+pedestrian_areas_cat_centro <-cut(Centro$`Pedestrian areas`, 
+                                  breaks=c(0, 1.5, 3, 4.5, 7), 
+                                  labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat_centro <-table(pedestrian_areas_cat_centro)
+
+#Southern Italy table
+pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`, 
+                                 breaks=c(0, 1.5, 3, 4.5, 7), 
+                                 labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7")) 
+barcat_mezz <-table(pedestrian_areas_cat_mezz)
+
+#we define a colour palette
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+par(mfrow=c(2,2))
+barplot(barcat, xlab = "m^2 per inhabitant", ylab= "Number of province",
+        main="PAs in Italy", col=coul, border="red")
+barplot(barcat_nord, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Northern Italy", col=coul, border="red" )
+barplot(barcat_centro, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50), 
+        main="PAs in Central Italy", col=coul, border="red")
+barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Southern Italy", col=coul, border="red")
+
+#MOTORIZATION RATE
+motorization_rate_cat <-cut(newdf$`Motorization rate`, 
+                            breaks=c(40, 50, 60, 70, 80), 
+                            labels=c("40-50", "50-60", "60-70", "70-80"))
+barcat_mr <-table(motorization_rate_cat)
+
+# Northern Italy table
+motorization_rate_nord<-cut(Nord$`Motorization rate`, 
+                            breaks=c(40, 50, 60, 70, 80), 
+                            labels=c("40-50", "50-60", "60-70", "70-80"))
+barcat_mr_nord <-table(motorization_rate_nord)
+
+# Center Italy table
+motorization_rate_centro<-cut(Centro$`Motorization rate`, 
+                              breaks=c(40, 50, 60, 70, 80), 
+                              labels=c("40-50", "50-60", "60-70", "70-80"))
+barcat_mr_centro <-table(motorization_rate_centro)
+
+#Southern Italy table
+motorization_rate_sud<-cut(Mezzogiorno$`Motorization rate`, 
+                           breaks=c(40, 50, 60, 70, 80), 
+                           labels=c("40-50", "50-60", "60-70", "70-80"))
+barcat_mr_sud <-table(motorization_rate_sud)
+
+#we define a colour palette
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+
+par(mfrow=c(2,2))
+barplot(barcat_mr, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province",
+        main="MR in Italy", col=coul, border="red")
+barplot(barcat_mr_nord, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
+        main="MR in Northern Italy", col=coul, border="red" )
+barplot(barcat_mr_centro, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40), 
+        main="MR in Central Italy", col=coul, border="red")
+barplot(barcat_mr_sud, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
+        main="MR in Southern Italy", col=coul, border="red")
+
+#AIR QUALITY
+air_quality_cat <-cut(newdf$`Air quality`, 
+                      breaks=c(20, 38, 55, 73, 90), 
+                      labels=c("20-38", "38-55", "55-73", "73-90"))
+barcat_aq <-table(air_quality_cat)
+
+# Northern Italy table
+air_quality_nord<-cut(Nord$`Air quality`, 
+                      breaks=c(20, 38, 55, 73, 90), 
+                      labels=c("20-38", "38-55", "55-73", "73-90"))
+barcat_aq_nord <-table(air_quality_nord)
+
+# Center Italy table
+air_quality_centro<-cut(Centro$`Air quality`, 
+                        breaks=c(20, 38, 55, 73, 90), 
+                        labels=c("20-38", "38-55", "55-73", "73-90"))
+barcat_aq_centro <-table(air_quality_centro)
+
+#Southern Italy table
+air_quality_sud<-cut(Mezzogiorno$`Air quality`, 
+                     breaks=c(20, 38, 55, 73, 90), 
+                     labels=c("20-38", "38-55", "55-73", "73-90"))
+barcat_aq_sud <-table(air_quality_sud)
+
+
+par(mfrow=c(2,2))
+barplot(barcat_aq, xlab = "PM10, NO2 and O3 index", ylab= "Number of province",
+        main="AQ in Italy", col=coul, border="red")
+barplot(barcat_aq_nord, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
+        main="AQ in Northern Italy", col=coul, border="red" )
+barplot(barcat_aq_centro, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30), 
+        main="AQ in Central Italy", col=coul, border="red")
+barplot(barcat_aq_sud, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
+        main="AQ in Southern Italy", col=coul, border="red")
+```
+
+# Introduction and Data Description 
+
+Life quality in cities is a major discussion topic nowadays in the european countries, and the focus of the influence of the environmental aspect is getting more and more important. 
+Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. We made some analysis in order to understand if the parameters are significantly different between these three macroareas and we obtained some interesting results. 
+
+We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the 107 Italian provinces from the highest to the lowest for quality of life standards. The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions
+
+```{r, eval=FALSE }
+getwd()
+df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
+```
+
+After importing our data, we selected "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function "order" we listed all the data according to the province code. With the selected and ordered indicators a new data frame has been created, called "newdf", and all the variables renamed in English. 
+Every indicator has a different unit of measurements: "Cycling lanes" is expressed in equivalent metres every 100 inhabitant, "Motorization rate" in number of circulating cars every 100 inhabitants, "Urban green" is squared metres per inhabitant, "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats, "Pedestrian areas" is expressed in squared metres per inhabitant and finally "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
+We used the following code for all the indicators:
+
+```{r, eval=FALSE }
+#Example of data cleaning and ordering
+Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
+Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
+```
+
+ 
+The new data frame has been then further divided into three new subset: North, Centre, and the so-called "Mezzogiorno" or South, according to the ISTAT division of the Italian administrative territory.
+
+We made some descriptive and inferential analysis of all the chosen indicators, that we will explain in the next paragraphs. In our study, we use the 107 provinces as statistical units and the environmental parameters are quantitative continuous variables.
+
+# Descriptive statistics
+
+We first decided to do some univariate descriptive analysis. Each of us calculated the mean, the variance, the standard deviation and the coefficient of variation to get some information on the central tendencies and variability of our data. 
+
+### Cycling lane descriptive analysis
+The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants and we obtained a mean of 9.67 for the whole Italy, 14.90 for the North, 7.10 for the Centre and 4.69 for the South. 
+
+
+The measures of variability follows the same pattern, with higher variance and standard deviation in the North (var=99.74, sd=9.99), smaller in the centre (var=36.19, sd=6.02) and even smaller in the south (var=35.70, sd=5.98). The overall variance for Italy is 86.08, while the standard deviation is 9.28.
+
+### Motorization rate
+
+### Urban green
+As a first numerical measure we decided to summarize the data calculating the arithmetic mean for each indicator in different areas. 
+For exemple for the indicator "Urban green" we have this results:
+```{r, eval=TRUE }
+mean_urban_green<-mean(newdf$`Urban green`)
+mean_urban_green
+mean_urban_green_nord<-mean(Nord$`Urban green`)
+mean_urban_green_nord
+mean_urban_green_centro<-mean(Centro$`Urban green`)
+mean_urban_green_centro
+mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
+mean_urban_green_mezzogiorno
+```
+As we can see from the barplot values are different, with a higher mean in the north than the centre and the south.
+```{r, eval=TRUE}
+mean_urban_green_values<-c(22.40, 29.79, 19.87, 14.74)
+bp_mean_urban_green<-barplot(mean_urban_green_values, 
+                                 names.arg = c("Italy", "North", "Centre", "South"), 
+                                 col="light green", ylab="m^2 per inhabitant")
+title("Barplot of Urban green")
+abline(h=22.40)
+```
+
+We created then a boxplot, that allows us to see quantiles, median and range from italian data. The boxplot highlights the presence of five outliers: Gorizia, Pordenone, Verbano-Cusio-Ossola, Monza e della Brianza, Reggio nell'Emilia.
+```{r, eval=TRUE}
+par(mfrow=c(1,2))
+boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant", outline = FALSE)
+boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant")
+```
+
+The presence of these outliers skews the mean. In this case a more robust measure is the median.
+```{r, eval=TRUE}
+median_urban_green<-median(newdf$`Urban green`)
+median_urban_green
+```
+
+
+We calculated measures of variability: variance, standard deviation and coefficient of variation.
+```{r, eval=TRUE}
+# Variance of Urban green
+variance_urban_green<-mean(newdf$`Urban green`^2)-(mean_urban_green)^2
+variance_urban_green
+variance_urban_green_nord<-mean(Nord$`Urban green`^2)- (mean_urban_green_nord)^2
+variance_urban_green_nord
+variance_urban_green_centro<-mean(Centro$`Urban green`^2)-(mean_urban_green_centro)^2
+variance_urban_green_centro
+variance_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`^2)- (mean_urban_green_mezzogiorno)^2
+variance_urban_green_mezzogiorno
+
+# Standard deviation of Urban green 
+sd_urban_green<-sqrt(variance_urban_green)
+sd_urban_green
+sd_urban_green_nord<-sqrt(variance_urban_green_nord)
+sd_urban_green_nord
+sd_urban_green_centro<-sqrt(variance_urban_green_centro)
+sd_urban_green_centro
+sd_urban_green_mezzogiorno<-sqrt(variance_urban_green_mezzogiorno)
+sd_urban_green_mezzogiorno
+
+# Coefficient of variation of Urban green 
+cv_urban_green<-sd_urban_green/mean_urban_green
+cv_urban_green
+cv_urban_green_nord<-sd_urban_green_nord/mean_urban_green_nord
+cv_urban_green_nord
+cv_urban_green_centro<-sd_urban_green_centro/mean_urban_green_centro
+cv_urban_green_centro
+cv_urban_green_mezzogiorno<-sd_urban_green_mezzogiorno/mean_urban_green_mezzogiorno
+cv_urban_green_mezzogiorno
+```
+
+### Air quality
+For the variable "Air quality" the unit of measurement is an index based on PM10, NO2 and O3 data in the regional county seats. The arithmetic mean for the whole Italy is equal to 51.32, for the North 62.41, 43.83 for the Center and 41.95 in the South.
+This shows an air quality that is higher in the South, followed by the Centre and the North in the end.
+
+```{r, eval=TRUE, echo=FALSE}
+mean_air_quality_values<-c(51.32, 62.41, 43.83, 41.95)
+bp_mean_air_quality<-barplot(mean_air_quality_values, 
+                                 names.arg = c("Italy", "North", "Centre", "South"), 
+                                 col="light green", ylab="Index based on PM10, NO2 and O3 data")
+title("Barplot of Air quality")
+abline(h=51.32)
+```
+
+```{r, eval=TRUE, echo=FALSE}
+boxplot(newdf$`Air quality`, main = "Boxplot of Air quality", ylab = "Index based on PM10, NO2 and O3 data", ylim=c(10,90))
+
+```
+
+To gain a deeper understanding of the air quality across various regions of Italy, we analyzed the grouped frequency distribution pertaining to different levels of the PM10, NO2, and O3 indices in the regional county seats. We segmented the data into five classes: very poor, poor, medium, good, and very good, in order to categorize the range effectively.
+
+```{r, eval=TRUE, echo=FALSE}
+range(newdf$`Air quality`)
+
+air_quality_rate_cat<-cut(newdf$`Air quality`, breaks = c(20, 34, 48, 62, 76, 90), labels = c("very good", "good", "medium","poor", "very poor"))
+table(air_quality_rate_cat)
+
+air_quality_rate_cat_nord<-cut(Nord$`Air quality`, breaks = c(20, 34, 48, 62, 76, 90), labels = c("very good", "good", "medium","poor", "very poor"))
+table(air_quality_rate_cat_nord)
+
+air_quality_rate_cat_centro<-cut(Centro$`Air quality`, breaks = c(20, 34, 48, 62, 76, 90), labels = c("very good", "good", "medium","poor", "very poor"))
+table(air_quality_rate_cat_centro)
+
+air_quality_rate_cat_sud<-cut(Mezzogiorno$`Air quality`, breaks = c(20, 34, 48, 62, 76, 90), labels = c("very good", "good", "medium","poor", "very poor"))
+table(air_quality_rate_cat_sud)
+
+library(RColorBrewer)
+coul <- brewer.pal(5, "Set2")
+
+barplot(table(air_quality_rate_cat), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,50), main="Air quality Italy", col=coul, border="black")
+
+par(mfrow=c(1,3))
+barplot(table(air_quality_rate_cat_nord), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality North Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_centro), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality Centre Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality South Italy", col=coul, border="black")
+```
+
+
+As we can observe, a significant number of provinces fall within the first two classes, suggesting a low presence of harmful pollutants. However, a lot of provinces still exhibit poor air quality conditions.
+
+
+Histogram
+```{r, eval=TRUE}
+hist(newdf$`Air quality`, freq=F, xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Relative Frequency Density", main="Air quality Italy", col=coul, border="black")
+lines(density(newdf$`Air quality`), lwd=2)
+abline(v=mean(newdf$`Air quality`), col='red', lwd=3)
+
+curve(dnorm(x, mean=mean(newdf$`Air quality`), 
+            sd=sd(newdf$`Air quality`)), 
+      add=T, col="orange", lwd=2)
+shapiro.test(newdf$`Air quality`)
+```
+
+The black line indicates our density curve, the orange one is the shape that the distribution should have if it would be normal and the red one is the mean.
+The histogram is slightly positively skewed.
+From thee shapiro test we stated that our hypothesis are: 
+
+- H0 : sample data come from a normal distribution; 
+- H1 : sample data do not come from a normal distribution
+
+Since the p-value is really low we can say that there is a strong evidence against H0, so our data do not come from a normal distributio.
+
+Measures of variability are following a different pattern, in fact variance and standard deviation in the North are respectively 238.60 and 15.45, in the Centre var=50.46 and sd=7.10, in the South var=126.11 and sd=11.23 in the Mezzogiorno.
+We calculated then the coefficient of variation (cv), having this results:
+
+- Italy cv = 0.31
+- North cv = 0.25
+- Centre cv = 0.16
+- Mezzogiorno cv = 0.27
+
+
+### Pedestrian areas
+
+### Urban ecosystem
+
+
+## Correlation between variables
+In this section, we conducted a study on the correlation between indicators within our dataset, aiming to identify any potential links between them.
+
+- Air quality and Urban green 
+- Pedestrian areas and Motorization rate
+- Motorization rate and Cycling lanes
+- Urban ecosystem and Air quality
+
+### Air quality and Urban green
+
+```{r, eval=TRUE}
+
+plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
+     xlab = "Urban Green", ylab="Air quality", 
+     main="Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+abline(model_italy)
+cor(newdf$`Urban green`, newdf$`Air quality`) #cor=0.13    
+cor.test(newdf$`Urban green`, newdf$`Air quality`) #p-value=0.17-->no evidence against H0=true correlation is equal to 0
+model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
+summary(model_italy)
+```
+
+```{r, eval=TRUE}
+plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
+     main="NORD // Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Nord$`Urban green`, y=Nord$`Air quality`)  
+cor.test(x=Nord$`Urban green`, y=Nord$`Air quality`) 
+model_nord <- lm(Nord$`Urban green`~ Nord$`Air quality`)
+summary(model_nord)
+
+plot(x=Centro$`Urban green`, y=Centro$`Air quality`,
+     xlab = "Urban Green", ylab="Air quality", 
+     main="CENTRE // Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Centro$`Urban green`, y=Centro$`Air quality`)  
+cor.test(x=Centro$`Urban green`, y=Centro$`Air quality`)
+model_centro <- lm(Centro$`Urban green`~ Centro$`Air quality`)
+summary(model_centro)
+
+plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
+     xlab = "Urban Green", ylab="Air quality", 
+     main="Scatterplot of Urban Green and Air quality", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) 
+cor.test(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) #P-value=0.005-->strong evidence against H0, so they are correlated
+model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
+summary(model_mezzogiorno)
+abline(model_mezzogiorno)
+```
+
+
+
+# Inference
+
+
+
+
+
+# Sitography
