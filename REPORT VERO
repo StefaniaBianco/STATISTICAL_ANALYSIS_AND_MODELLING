@@ -186,15 +186,8 @@ We made some descriptive and inferential analysis of all the chosen indicators, 
 
 # Descriptive statistics
 
-We first decided to do some univariate descriptive analysis. Each of us calculated the mean, the variance, the standard deviation and the coefficient of variation to get some information on the central tendencies and variability of our data. 
-
-### Cycling lane descriptive analysis
-The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants and we obtained a mean of 9.67 for the whole Italy, 14.90 for the North, 7.10 for the Centre and 4.69 for the South. 
-
-
-The measures of variability follows the same pattern, with higher variance and standard deviation in the North (var=99.74, sd=9.99), smaller in the centre (var=36.19, sd=6.02) and even smaller in the south (var=35.70, sd=5.98). The overall variance for Italy is 86.08, while the standard deviation is 9.28.
-
-### Motorization rate
+We first decided to do some univariate descriptive analysis. 
+Each of us calculated the mean, the variance, the standard deviation and the coefficient of variation to get some information on the central tendencies and variability of our data. 
 
 ### Urban green
 As a first numerical measure we decided to summarize the data calculating the arithmetic mean for each indicator in different areas. 
@@ -330,7 +323,7 @@ shapiro.test(newdf$`Air quality`)
 
 The black line indicates our density curve, the orange one is the shape that the distribution should have if it would be normal and the red one is the mean.
 The histogram is slightly positively skewed.
-From thee shapiro test we stated that our hypothesis are: 
+From thee Shapiro test we stated that our hypothesis are: 
 
 - H0 : sample data come from a normal distribution; 
 - H1 : sample data do not come from a normal distribution
@@ -346,7 +339,12 @@ We calculated then the coefficient of variation (cv), having this results:
 - Mezzogiorno cv = 0.27
 
 #Cycling lane descriptive analysis
-The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants and we obtained a mean of 9.67 for the whole Italy, 14.90 for the North, 7.10 for the Centre and 4.69 for the South. 
+The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants. 
+We obtained:
+- Italy mean = 9.67 
+- Nord mean = 14.90 
+- Centre mean = 7.10 
+- South mean = 4.69
 
 ```{r, eval=TRUE,echo=FALSE}
 bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, 
@@ -358,9 +356,21 @@ abline(h=0)
 
 ```
 
-The measures of variability follows the same pattern, with higher variance and standard deviation in the North (var=99.74, sd=9.99), smaller in the centre (var=36.19, sd=6.02) and even smaller in the south (var=35.70, sd=5.98). The overall variance for Italy is 86.08, while the standard deviation is 9.28.
+The measures of variability follows the same pattern, with:
+- Higher variance and standard deviation in the North (var=99.74, sd=9.99);
+- Smaller in the centre (var=36.19, sd=6.02)
+- Even smaller in the south (var=35.70, sd=5.98). 
 
-We wanted to understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, so we calculated the range (that goes from 0 to 46.5) and we divided it into 5 categories: "Very poor", "Poor", "Medium","Good","Very good", from a lower to an higher presence of cycling lanes.
+The overall variance for Italy is 86.08, while the standard deviation is 9.28.
+
+We wanted to understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, 
+so we calculated the range (that goes from 0 to 46.5) and we divided it into 5 categories: 
+- "Very poor" range #  STEFANIA QUALE RANGEEEEEE
+- "Poor"
+- "Medium"
+- "Good"
+- "Very good"
+
 
 ```{r, eval=TRUE, echo=FALSE}
 range(newdf$`Cycling lanes`)
@@ -394,7 +404,8 @@ dev.off()
 ```
 From this barplots we can understand that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South.
 
-The last analysis we did on this variable is an histogram. Again, here we can see that the distribution is strongly positively skewed
+The last analysis we did on this variable is an histogram. 
+Again, here we can see that the distribution is strongly positively skewed
 
 ```{r, eval=TRUE, echo=F}
 hist(newdf$`Cycling lanes`, freq=F, xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
