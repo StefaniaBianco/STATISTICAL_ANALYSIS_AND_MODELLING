@@ -345,6 +345,76 @@ We calculated then the coefficient of variation (cv), having this results:
 - Centre cv = 0.16
 - Mezzogiorno cv = 0.27
 
+#Cycling lane descriptive analysis
+The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants and we obtained a mean of 9.67 for the whole Italy, 14.90 for the North, 7.10 for the Centre and 4.69 for the South. 
+
+```{r, eval=TRUE,echo=FALSE}
+bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, 
+                               names.arg = c("Italy", "North", "Centre", "South"), 
+                               col="GREEN", ylab="Equivalent metres every 100 inhabitant")
+title("Barplot of cycling lanes ")
+abline(h=9.67)
+abline(h=0)
+
+```
+
+The measures of variability follows the same pattern, with higher variance and standard deviation in the North (var=99.74, sd=9.99), smaller in the centre (var=36.19, sd=6.02) and even smaller in the south (var=35.70, sd=5.98). The overall variance for Italy is 86.08, while the standard deviation is 9.28.
+
+We wanted to understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, so we calculated the range (that goes from 0 to 46.5) and we divided it into 5 categories: "Very poor", "Poor", "Medium","Good","Very good", from a lower to an higher presence of cycling lanes.
+
+```{r, eval=TRUE, echo=FALSE}
+range(newdf$`Cycling lanes`)
+cycling_lanes_cat<-cut(newdf$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat)
+
+
+library(RColorBrewer) #choosing colours
+coul <- brewer.pal(5, "Set2")
+
+barplot(table(cycling_lanes_cat), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+```
+It is clear that the majority of Italian cities have a poor presence of cycling lanes, as more than 60 cities belongs to the category very poor, and the number of cities decreases when the categories gets better in term of presence of cycling lanes. 
+
+We also wanted to understand how the situation is in the macroregion of Italy we are analysing, so we did the same process but just within the small subsets. 
+```{r, eval=TRUE, echo=FALSE}
+cycling_lanes_cat_nord<-cut(Nord$`Cycling lanes`, breaks =c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_nord)
+
+cycling_lanes_cat_centro<-cut(Centro$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_centro)
+
+cycling_lanes_cat_sud<-cut(Mezzogiorno$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
+table(cycling_lanes_cat_sud)
+
+par(mfrow=c(1,3))
+barplot(table(cycling_lanes_cat_nord), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes Nord", col=coul, border="red")
+barplot(table(cycling_lanes_cat_centro), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes Centre", col=coul, border="red")
+barplot(table(cycling_lanes_cat_sud), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes South", col=coul, border="red")
+dev.off()
+```
+From this barplots we can understand that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South.
+
+The last analysis we did on this variable is an histogram. Again, here we can see that the distribution is strongly positively skewed
+
+```{r, eval=TRUE, echo=F}
+hist(newdf$`Cycling lanes`, freq=F, xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+lines(density(newdf$`Cycling lanes`), lwd=2) 
+abline(v=mean(newdf$`Cycling lanes`), col='red', lwd=3)
+curve(dnorm(x, mean=mean(newdf$`Cycling lanes`), 
+            sd=sd(newdf$`Cycling lanes`)), 
+      add=T, col="orange", lwd=2)
+```
+The red line indicates the mean, the black line is the actual density curve and the orange line indicates the shape the distribution should have with a normal density. 
+With the function
+```{r, eval=FALSE}
+shapiro.test(newdf$`Cycling lanes`) 
+```
+We obtained an extremely low p-value (1.976^-08), that means strong evidence against H0. With this function, 
+
+- H0 : sample data come from a normal distribution
+- H1 : sample data do not come from a normal distribution,
+
+so our data do not come from a normal distribution, as foreseen. 
 
 ### Pedestrian areas
 
