@@ -37,19 +37,19 @@ mean_pedestrian_areas_centro<-mean(Centro$`Pedestrian areas`)
 mean_pedestrian_areas_mezzogiorno<-mean(Mezzogiorno$`Pedestrian areas`)
 mean_pedestrian_areas_values<-c(0.47, 0.50, 0.70, 0.29)
 
-#variance of variable "Motorization rate"// var=M(x^2)-M(x)^2
+#variance of variable "pedestrian areas"// var=M(x^2)-M(x)^2
 variance_pedestrian_areas<-mean(newdf$`Pedestrian areas`^2)- (mean_pedestrian_areas)^2
 variance_pedestrian_areas_nord<-mean(Nord$`Pedestrian areas`^2)-(mean_pedestrian_areas_nord)^2
 variance_pedestrian_areas_centro<-mean(Centro$`Pedestrian areas`^2)-(mean_pedestrian_areas_centro)^2
 variance_pedestrian_areas_mezzogiorno<-mean(Mezzogiorno$`Pedestrian areas`^2)-(mean_pedestrian_areas_mezzogiorno)^2
 
-#standard deviation of variable "Motorization rate" // sd=sqrt(var)
+#standard deviation of variable "pedestrian areas" // sd=sqrt(var)
 sd_pedestrian_areas<-sqrt(variance_pedestrian_areas)
 sd_pedestrian_areas_nord<-sqrt(variance_pedestrian_areas_nord)
 sd_pedestrian_areas_centro<-sqrt(variance_pedestrian_areas_centro)
 sd_pedestrian_areas_mezzogiorno<-sqrt(variance_pedestrian_areas_mezzogiorno)
 
-#coefficient of variation of variable "Motorization rate" // cv=sd/mean
+#coefficient of variation of variable "Pedestrian areas" // cv=sd/mean
 cv_pedestrian_areas<-sd_pedestrian_areas/mean_pedestrian_areas
 cv_pedestrian_areas_nord<-sd_pedestrian_areas/mean_pedestrian_areas_nord
 cv_pedestrian_areas_centro<-sd_pedestrian_areas/mean_pedestrian_areas_centro
