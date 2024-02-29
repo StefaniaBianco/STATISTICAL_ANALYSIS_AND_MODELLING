@@ -369,7 +369,7 @@ cv_urban_ecosystem_mezzogiorno<-sd_urban_ecosystem_mezzogiorno/mean_urban_ecosys
 ##CORRELATIONS
 #1.correlation between air quality (PM10, NO2 and O3 in the air) and urban green (Squared metres per inhabitant)                       
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
-     xlab = "Urban Green", ylab="Air quality", 
+     xlab = "Urban Green", ylab="PM10, NO2 and 03", 
      main="Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
@@ -380,7 +380,7 @@ model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 summary(model_italy)
 dev.off()
 
-plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
+plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="PM10, NO2 and 03", 
      main="NORD // Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
@@ -390,7 +390,7 @@ model_nord <- lm(Nord$`Urban green`~ Nord$`Air quality`)
 summary(model_nord)
 
 plot(x=Centro$`Urban green`, y=Centro$`Air quality`,
-     xlab = "Urban Green", ylab="Air quality", 
+     xlab = "Urban Green", ylab="PM10, NO2 and 03", 
      main="CENTRE // Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
@@ -400,7 +400,7 @@ model_centro <- lm(Centro$`Urban green`~ Centro$`Air quality`)
 summary(model_centro)
 
 plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
-     xlab = "Urban Green", ylab="Air quality", 
+     xlab = "Urban Green", ylab="PM10, NO2 and 03", 
      main="Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
