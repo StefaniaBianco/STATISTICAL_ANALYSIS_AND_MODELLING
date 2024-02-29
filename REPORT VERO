@@ -427,6 +427,34 @@ We obtained an extremely low p-value (1.976^-08), that means strong evidence aga
 
 so our data do not come from a normal distribution, as foreseen. 
 
+
+#Motorization rate descriptive analysis
+The variable "Motorization rate" is expressed in circulating cars every 100 inhabitants. The trend this time showed higher values in the South, medium in the Centre and smaller in the North.
+We obtained as means:
+- Italy = 65.54 
+- Nord =  62.47
+- Centre = 67.40
+- South = 68.26
+
+```{r, eval=TRUE, echo=FALSE}
+bp_mean_motorization_rate<-barplot(mean_motorization_rate_values, 
+                                   names.arg = c("Italy", "North", "Centre", "South"), 
+                                   col="GREEN", ylab="Number of cars per 100 inhabitant")
+title("Barplot of motorization rate means")
+abline(h=65.54)
+abline(h=0)
+```
+
+The difference is not that consistent, but still the lower motorization rate in the North of Italy may be due to a better public transportation system, to more cycling lanes in the urban areas and to more pedestrian areas. 
+
+The variance and the standard deviation follow the same pattern:
+- Italy var = 45.66; Italy sd = 6.76
+- North var = 37.04; North sd = 6.09
+- Centre var = 37.37; Centre sd = 6.11
+- South var = 40.06; South sd = 6.33
+
+Overall, the motorization rate is very high and needs to be lowered in order to have more environmental-friendly cities. 
+
 ### Pedestrian areas
 
 ### Urban ecosystem
