@@ -470,6 +470,8 @@ In this section, we conducted a study on the correlation between indicators with
 
 ### Air quality and Urban green
 
+It is known that trees may play a central role in improving air quality in cities, so we were expecting to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
+However, by plotting the two variables together we obtained a slightly positive correlation instead (cor=0.13).
 ```{r, eval=TRUE}
 
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
@@ -479,10 +481,22 @@ plot(x=newdf$`Urban green`, y=newdf$`Air quality`,
      col.main="orange")
 abline(model_italy)
 cor(newdf$`Urban green`, newdf$`Air quality`) #cor=0.13    
-cor.test(newdf$`Urban green`, newdf$`Air quality`) #p-value=0.17-->no evidence against H0=true correlation is equal to 0
+```
+At this point we wanted to understand if our correlation is stastically relevant, so we used the function 
+```{r, eval=F}
+cor.test(newdf$`Urban green`, newdf$`Air quality`)
+```
+and we obtained as p-value 0.17. In this case, 
+- H0 = true correlation is equal to 0;
+- H1 = true correlation is not equal to 0.
+The p-value does not imply any evidence against H0, so basically our variables are not significantly correlated. 
+
+Also with the functions
+```{r}
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 summary(model_italy)
 ```
+we understood that our X^2 is very low, so once more they do not seem to be correlated.
 
 ```{r, eval=TRUE}
 plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
