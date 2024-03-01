@@ -606,6 +606,25 @@ The coefficient of determination R^2 we obtained is 0.20, so our regression line
 Still, we hypotesized that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and they can be more easily by urban green (when there is a decent amount of threes in the city). 
 In the North, probably there are more sources of pollutants that can not be absorbed by urban green, so the correlation is not that direct.
 
+###Pedestrian areas and Motorization rate
+As second correlation, we wanted to understand if there is a relationship between the variables "Pedestrian areas" and "Motorization rate". Does an area with more pedestrian areas have less motorization rate?
+The scatterplot for the whole Italy is:
+```{r, eval=TURE, echo= FALSE}
+plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
+     main="Scatterplot of Pedestrian areas and Motorization rate", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+abline(model_italy_pa_mr)
+```
+and from the function cor we had a value of linear correlation coefficient r=-0.18. The p-value the function cor.test provided is 0.07, that implies weak evidence against H0.
+Againg H0=true correlation is equal to 0, so the two variable may be weakly correlated. The coefficient of determination, however, is pretty low (X^2=0.03), so the regression line would explain only the 3% of the total variability.
+
+Once more, we decided to calculate the correlation within the different geographical areas. 
+We started correlating the data from the North of Italy and we actually obtain a r value=-0.39, with a p-value of 0.007 (strong evidence against H0), so the link within this two variable in the North is consistent. 
+Also the coefficient of determination is higher (0.15). 
+
+About the Centre and the South of the peninsula, we didn't find such clear values: the linear correlation coefficient is almost null for the centre (0.009) and also very low for the South (-0.07).
+
 
 ###Air quality and Urban Ecosystem
 
