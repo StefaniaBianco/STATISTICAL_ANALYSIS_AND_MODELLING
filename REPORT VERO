@@ -674,7 +674,28 @@ summary(model_italy_5)
 ```
 
 # Inference
+By looking at the data of the variable "Cycling lane", we already noted some important differences among the peninsula. We had already seen the mean values decreases going southern, but we wanted to test if the differences are statistically relevant. 
+In order to understand better, we did a test for comparing the population means with unknown variance, that on R may be performed like this:
+```{r, eval=TRUE}
+t.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+```
+With this test, 
+-H0=true difference between population means is equal to 0
+-H1=true difference between population means is not equal to 0
+In this case, we obtain an infinitesimal p-value (4.453e-07), so we are 99% confident there is a difference between population mean, as expected.
 
+We also did did the t-test for the comparison between North and Centre, obtain still a small p-value (0.001), even if considerably bigger compared to the previous test. 
+About the difference Centre-South, we get p-value = 0.145, so basically there is not significative difference within the two areas. 
+
+
+#t test between population means for motorization rate
+t.test(x=Nord$`Motorization rate` , y = Mezzogiorno$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Nord$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
 
 
 
