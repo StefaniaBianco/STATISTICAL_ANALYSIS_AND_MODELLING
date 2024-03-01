@@ -52,7 +52,7 @@ mean_cycling_lanes_centro<-mean(Centro$`Cycling lanes`)
 mean_cycling_lanes_mezzogiorno<-mean(Mezzogiorno$`Cycling lanes`)
 
 #barplot with the mean of variable "cycling lanes"
-bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, 
+bp_mean_cycling_lanes<-barplot(mean_cycling_lanes_values, #### NON è DEFINITA 
                                names.arg = c("Italy", "North", "Centre", "South"), 
                                col="GREEN", ylab="Equivalent metres every 100 inhabitant")
 title("Barplot of cycling lanes ")
