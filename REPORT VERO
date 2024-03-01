@@ -569,17 +569,41 @@ The coefficient of determination R^2 we obtained is 0.20, so our regression line
 Still, we hypotesized that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and they can be more easily by urban green (when there is a decent amount of threes in the city). 
 In the North, probably there are more sources of pollutants that can not be absorbed by urban green, so the correlation is not that direct.
 
+For Urban Green synthetic index, the aim was to highlight the difference in the distribution density of the data between the North, Center, and South compared to the national Italian average. Therefore, four histograms were created.
+
 ```{r, eval=TRUE, echo=F}
-plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
-     xlab = "Urban Green", ylab="Air quality", 
-     main="Scatterplot of Urban Green and Air quality", 
-     cex.main=1.4, font.main=2, 
-     col.main="orange")
-cor(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) 
-cor.test(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`) #P-value=0.005-->strong evidence against H0, so they are correlated
-model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
-summary(model_mezzogiorno)
-abline(model_mezzogiorno)
+par(mfrow=c(2,2))
+
+hist(newdf$`Urban ecosystem`, freq=F, xlab="Synthetic Urban Ecosystem Index", 
+     ylab="% of province", ylim = c(0,6),
+     main="Urban Ecosystem Northern Italy", col=coul, border="red")
+lines(density(Nord$`Urban ecosystem`), col= "blue", lwd=2, ) 
+abline(v=mean(Nord$`Urban ecosystem`), col='red', lwd=3)
+
+hist(newdf$`Urban ecosystem`, freq=F, xlab="Synthetic Urban Ecosystem Index", 
+     ylab="% of province", ylim = c(0,6),
+     main="Urban Ecosystem Central Italy", col=coul, border="red")
+lines(density(Centro$`Urban ecosystem`), col= "darkgreen", lwd=2, ) 
+abline(v=mean(Centro$`Urban ecosystem`), col='red', lwd=3)
+
+hist(newdf$`Urban ecosystem`, freq=F, xlab="Synthetic Urban Ecosystem Index", 
+     ylab="% of province", ylim = c(0,6),
+     main="Urban Ecosystem Southern Italy", col=coul, border="red")
+lines(density(Mezzogiorno$`Urban ecosystem`), lwd=2, ) 
+abline(v=mean(Mezzogiorno$`Urban ecosystem`), col='red', lwd=3)
+
+hist(newdf$`Urban ecosystem`, freq=F, xlab="Synthetic UE Index", 
+     ylab="% of province", ylim = c(0,6),
+     main="Urban Ecosystem Italy", col=coul, border="red")
+lines(density(newdf$`Urban ecosystem`), col= "orange", lwd=2, ) 
+lines(density(Nord$`Urban ecosystem`), col= "blue", lwd=2, ) 
+lines(density(Centro$`Urban ecosystem`), col= "darkgreen", lwd=2, ) 
+lines(density(Mezzogiorno$`Urban ecosystem`), lwd=2, ) 
+abline(v=mean(newdf$`Urban ecosystem`), col='red', lwd=3)
+
+legend("topright", inset = c(-0.05, 0), legend= c("Italy","Northern Italy", "Central Italy", "Southern Italy"),
+       fill= c("orange", "blue", "darkgreen", "black"), box.lwd= 0.1, cex=0.6, text.width= 0.2, title="Lines legend",
+       y.intersp = 0.5, text.font = 2, text.col = "black")
 ```
 
 
