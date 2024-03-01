@@ -747,15 +747,9 @@ In this case, we obtain an infinitesimal p-value (4.453e-07), so we are 99% conf
 We also did did the t-test for the comparison between North and Centre, obtain still a small p-value (0.001), even if considerably bigger compared to the previous test. 
 About the difference Centre-South, we get p-value = 0.145, so basically there is not significative difference within the two areas. 
 
-
 #t test between population means for motorization rate
-t.test(x=Nord$`Motorization rate` , y = Mezzogiorno$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Nord$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-
+With the variable "Motorization rate" we found an opposite trend: higher values in the South and lower values in the North. 
+Once more, we found stastically significative differences within the North and the South (p-value=5.929e-05), still significative but to a lesser extent difference within the North and the Centre (p-value = 0.003) and no differences between the Centre and the South (p-value=0.6167)
 
 
 
