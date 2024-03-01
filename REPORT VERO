@@ -479,6 +479,40 @@ bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values,
 title("Barplot of Urban Ecosystem")
 abline(h=0.53)
 ```
+```{r, eval=TRUE, echo=FALSE}
+We divided our indicator "Pedestrian Areas" in four main categories by using the "cat" function and by looking at the squared metres per inhabitant.
+
+General table:
+range(newdf$`Pedestrian areas`) # between 0 and 6.8
+pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
+                           breaks=c(0, 1.5, 3, 4.5, 7), 
+                           labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat <-table(pedestrian_areas_cat)
+
+Northern Italy table
+range(Nord$`Pedestrian areas`) # wide range, between 0.00 and 5
+5.19-0.01# 5.18
+pedestrian_areas_cat_nord<-cut(Nord$`Pedestrian areas`, 
+                               breaks=c(0, 1.5, 3, 4.5, 7), 
+                               labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat_nord <-table(pedestrian_areas_cat_nord)
+
+Center Italy table
+range(Centro$`Pedestrian areas`) # widest range, between 0.1 and 6.79 highest value)
+6.79-0.11 # 6.68
+pedestrian_areas_cat_centro <-cut(Centro$`Pedestrian areas`, 
+                                  breaks=c(0, 1.5, 3, 4.5, 7), 
+                                  labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
+barcat_centro <-table(pedestrian_areas_cat_centro)
+
+Southern Italy table
+range(Mezzogiorno$`Pedestrian areas`) # extermely low values, maximum value at 1.66
+1.66-0.0 # 1.66
+pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`, 
+                                 breaks=c(0, 1.5, 3, 4.5, 7), 
+                                 labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7")) 
+barcat_mezz <-table(pedestrian_areas_cat_mezz)
+```
 
 ### Urban ecosystem
 
