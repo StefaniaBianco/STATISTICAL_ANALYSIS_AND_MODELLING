@@ -708,6 +708,18 @@ summary(model_italy_5)
 ```
 
 # Inference
+
+Our inference work involves sampling provinces within the subset, aiming to confirm and broaden the results obtained during the analysis to the entire population. Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
+
+We used the function:
+```{r, eval=FALSE}
+t.test()
+```
+
+That let us obtain at first the confidence interval
+
+
+
 By looking at the data of the variable "Cycling lane", we already noted some important differences among the peninsula. We had already seen the mean values decreases going southern, but we wanted to test if the differences are statistically relevant. 
 In order to understand better, we did a test for comparing the population means with unknown variance, that on R may be performed like this:
 ```{r, eval=TRUE}
