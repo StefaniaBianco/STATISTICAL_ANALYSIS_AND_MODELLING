@@ -595,6 +595,7 @@ plot(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`,
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
 cor(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`)  #negative -0.3, poor correlation
+
 cor.test(Nord$`Urban ecosystem`, Nord$`Air quality`) #p-value, no evidence against H0= no correlation
 model_italy_3 <- lm(Nord$`Urban ecosystem`~ Nord$`Air quality`)
 summary(model_italy_3)
@@ -616,6 +617,7 @@ plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`,
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
 cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good negative correlation
+# all'aumentare dellurban ecosystem, diminuisce il valore di air quality e quindi abbiamo associati valori più bassi di pm10 e no2 e o3
 cor.test(Mezzogiorno$`Urban ecosystem`, Mezzogiorno$`Urban ecosystem`)
 model_italy_5 <- lm(Mezzogiorno$`Urban ecosystem`~ Mezzogiorno$`Air quality`)
 summary(model_italy_5)
