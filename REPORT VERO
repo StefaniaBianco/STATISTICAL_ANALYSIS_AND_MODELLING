@@ -515,7 +515,6 @@ In this section, we conducted a study on the correlation between indicators with
 - Urban ecosystem and Air quality
 
 ### Air quality and Urban green
-
 It is known that trees may play a central role in improving air quality in cities, so we were expecting to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
 However, by plotting the two variables together we obtained a slightly positive correlation instead (cor=0.13).
 ```{r, eval=TRUE}
@@ -544,26 +543,33 @@ summary(model_italy)
 ```
 we understood that our X^2 is very low, so once more they do not seem to be correlated.
 
-```{r, eval=TRUE}
+We wanted to understand if this pattern of not correlaton is the same throughout Italy, so we analysed the correlation among our subsets. 
+
+For the North of Italy, we obtained a very low correlation (-0.05) that is also not statistically relevant (p-value=0.71).
+The same situation was found for the Centre (no significant correlation), whereas in the South we found a different situation. 
+
+```{r, eval=TRUE, echo=F}
+par(mfrow=c(1,2))
 plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
      main="NORD // Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
-cor(x=Nord$`Urban green`, y=Nord$`Air quality`)  
-cor.test(x=Nord$`Urban green`, y=Nord$`Air quality`) 
-model_nord <- lm(Nord$`Urban green`~ Nord$`Air quality`)
-summary(model_nord)
 
 plot(x=Centro$`Urban green`, y=Centro$`Air quality`,
      xlab = "Urban Green", ylab="Air quality", 
      main="CENTRE // Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
-cor(x=Centro$`Urban green`, y=Centro$`Air quality`)  
-cor.test(x=Centro$`Urban green`, y=Centro$`Air quality`)
-model_centro <- lm(Centro$`Urban green`~ Centro$`Air quality`)
-summary(model_centro)
+```
+In this case, we obtained a correlation of -0.44, that is also stastically relevant (p-value=0.005): we have strong evidence against the null hypotesis, meaning that the two variables are correlated. 
+The regression line we obtained is:
+- Urban Green=50.21-0.56 x [PM10, NO2 and O3 concentration]
+The coefficient of determination R^2 we obtained is 0.20, so our regression line explains only the 20% of the variability of the pollutants concentrations. 
 
+Still, we hypotesized that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and they can be more easily by urban green (when there is a decent amount of threes in the city). 
+In the North, probably there are more sources of pollutants that can not be absorbed by urban green, so the correlation is not that direct.
+
+```{r, eval=TRUE, echo=F}
 plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
      xlab = "Urban Green", ylab="Air quality", 
      main="Scatterplot of Urban Green and Air quality", 
@@ -575,6 +581,7 @@ model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
 summary(model_mezzogiorno)
 abline(model_mezzogiorno)
 ```
+
 
 ###Air quality and Urban Ecosystem
 
