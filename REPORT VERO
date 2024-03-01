@@ -513,6 +513,19 @@ pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`,
                                  labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7")) 
 barcat_mezz <-table(pedestrian_areas_cat_mezz)
 ```
+From this we can see how the situation is pretty limited all around Italy, with the worst situation again in Southern Italy.
+
+```{r, eval=TRUE, echo=FALSE}
+par(mfrow=c(2,2))
+barplot(barcat, xlab = "m^2 per inhabitant", ylab= "Number of province",
+        main="PAs in Italy", col=coul, border="red")
+barplot(barcat_nord, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Northern Italy", col=coul, border="red" )
+barplot(barcat_centro, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50), 
+        main="PAs in Central Italy", col=coul, border="red")
+barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
+        main="PAs in Southern Italy", col=coul, border="red")
+```
 
 ### Urban ecosystem
 
