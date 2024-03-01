@@ -457,8 +457,54 @@ Overall, the motorization rate is very high and needs to be lowered in order to 
 
 ### Pedestrian areas
 
+The index Pedestrian Areas measures the m^2 of pedestrian pavement for every inhabitant.
+The results are the following:
+- Italy: mean = 0.46, var = 0.72, sd = 0.85, cv = 1.82 
+- North: mean = 0.49, var = 0.67, sd = 0.81, cv = 1.70
+- Centre: mean = 0.70, var = 1.83, sd = 1.35, cv = 1.21
+- South: mean = 0.29, var = 0.082, sd = 0.28, cv = 2.92
+
+In this case, the values obtained from the analysis across the North, Central, and South regions differ significantly. 
+While the values for provinces in the North are around the Italian average, those in the South are much lower, whereas those in the Central region are somewhat higher. 
+There's also notable variability in the data, particularly in the Central region, indicating a considerable degree of difference among the various provinces.
+
+To visually appreciate the results, here we have the barplot. 
+On the y-axis we have the relative frequency grouped as follow
+
+```{r, eval=TRUE, echo=FALSE}
+bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
+                               names.arg = c("Italy", "North", "Centre", "South"), 
+                               col="dark green", ylab="Urban Ecosystem Synthetic Index",
+                               ylim =c(0, 0.7) )
+title("Barplot of Urban Ecosystem")
+abline(h=0.53)
+```
+
 ### Urban ecosystem
 
+Urban Areas is a synthetic index on 18 parameters: air quality, waste, water networks, land consumption. 
+Data have been collected from Legambiente - Environment Italy, 2023.
+
+The values we've obtained a shallow pattern across the Italian peninsula; rather, they remain relatively consistent throughout. 
+This contrasts with the trends observed in other indices analyzed. 
+This highlights the need for increased green spaces and urban redevelopment projects throughout the region to make urban areas more environmentally friendly.
+
+The results are the following:
+- Italy: mean = 0.53, var = 0.011, sd = 0.10, cv = 0.19 
+- North: mean = 0.59, var = 0.008, sd = 0.09, cv = 0.16
+- Centre: mean = 0.52, var = 0.007, sd = 0.08, cv = 0.16
+- South: mean = 0.46, var = 0.008, sd = 0.09, cv = 0.19
+
+To visually appreciate the results, here we have the barplot. 
+On the y-axis we have the relative frequency grouped as follow
+```{r, eval=TRUE, echo=FALSE}
+bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
+                               names.arg = c("Italy", "North", "Centre", "South"), 
+                               col="dark green", ylab="Urban Ecosystem Synthetic Index",
+                               ylim =c(0, 0.7) )
+title("Barplot of Urban Ecosystem")
+abline(h=0.53)
+```
 
 ## Correlation between variables
 In this section, we conducted a study on the correlation between indicators within our dataset, aiming to identify any potential links between them.
