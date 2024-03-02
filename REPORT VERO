@@ -159,8 +159,11 @@ barplot(barcat_aq_sud, xlab = "PM10, NO2 and O3 index", ylab= "Number of provinc
 
 # Introduction and Data Description 
 
-Life quality in cities is a major discussion topic nowadays in the european countries, and the focus of the influence of the environmental aspect is getting more and more important. 
-Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. We made some analysis in order to understand if the parameters are significantly different between these three macroareas and we obtained some interesting results. 
+Life quality in cities is a major discussion topic nowadays in the European countries, and the focus of the influence of the environmental aspect is getting more and more important. 
+Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. 
+Our project aims both to 
+- understand the overall state of art of six environmental parameters in the whole Italy;
+- analyse and understand if the parameters are significantly different between the three macroareas of the peninsula.
 
 We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the 107 Italian provinces from the highest to the lowest for quality of life standards. The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions
 
@@ -169,20 +172,24 @@ getwd()
 df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
 ```
 
-After importing our data, we selected "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function "order" we listed all the data according to the province code. With the selected and ordered indicators a new data frame has been created, called "newdf", and all the variables renamed in English. 
-Every indicator has a different unit of measurements: "Cycling lanes" is expressed in equivalent metres every 100 inhabitant, "Motorization rate" in number of circulating cars every 100 inhabitants, "Urban green" is squared metres per inhabitant, "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats, "Pedestrian areas" is expressed in squared metres per inhabitant and finally "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
-We used the following code for all the indicators:
-
+After importing our data, we selected the variables "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function "order" we listed all the data according to the province code. 
+A new data frame has been created with the selected and ordered indicators , called "newdf", and all the variables renamed in English. 
+We used the following code for selecting all the indicators:
 ```{r, eval=FALSE }
 #Example of data cleaning and ordering
 Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
 Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
 ```
 
- 
+Every indicator has a different unit of measurements: "Cycling lanes" is expressed in equivalent metres every 100 inhabitant, "Motorization rate" in number of circulating cars every 100 inhabitants, "Urban green" is squared metres per inhabitant, "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats, "Pedestrian areas" is expressed in squared metres per inhabitant and finally "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
+
 The new data frame has been then further divided into three new subset: North, Centre, and the so-called "Mezzogiorno" or South, according to the ISTAT division of the Italian administrative territory.
 
-We made some descriptive and inferential analysis of all the chosen indicators, that we will explain in the next paragraphs. In our study, we use the 107 provinces as statistical units and the environmental parameters are quantitative continuous variables.
+We made some descriptive and inferential statistical analysis of all the chosen indicators, that we will explain in the next paragraphs. 
+For the descriptive part, we first explained all the indicators with some measures of central tendency and of variability, with some plots and graphics. Note that we didn't make the same analysis on all the variables, as we wanted the report to be more dynamic and smooth. Secondly, we tried to correlate the variables to each other, to understand if there are some kind of relationships among them.
+In our study we used the 107 provinces as statistical units and the environmental parameters are quantitative continuous variables.
+
+For the inferencial part, we did some tests about the differences among population means, assuming that our data come from a random sample of cities and expanding our inference to the whole geographical area (North, Centre, South).
 
 # Descriptive statistics
 
