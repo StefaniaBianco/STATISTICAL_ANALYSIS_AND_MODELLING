@@ -738,8 +738,8 @@ summary(model_italy_5)
 ```
 
 # Inference
-
-Our inference work involves sampling provinces within the subset, aiming to confirm and broaden the results obtained during the analysis to the entire population. Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
+For our inferencial analysis, we worked pretending that our provences are stastical units coming from a random sample and assuming we could broaden the results obtained thanks to the values of the main cities to the whole geographical areas.
+((((#io scriverei quello della riga precedente al posto di questo, mi sembra più chiaro, però ditemi voi. Our inference work involves sampling provinces within the subset, aiming to confirm and broaden the results obtained during the analysis to the entire population.))))) Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
 
 We used the function:
 ```{r, eval=FALSE}
