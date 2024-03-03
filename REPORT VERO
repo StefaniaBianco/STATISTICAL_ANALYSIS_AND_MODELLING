@@ -377,13 +377,13 @@ The measures of variability follows the same pattern, with:
 The overall variance for Italy is 86.08, while the standard deviation is 9.28.
 
 We wanted to understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, 
-so we calculated the range (that goes from 0 to 46.5) and we divided it into 5 categories: 
-- "Very poor" range #  STEFANIA QUALE RANGEEEEEE
-- "Poor"
-- "Medium"
-- "Good"
-- "Very good"
-
+so we calculated the range (that goes from 0 to 46.5 equivalent meters every 100 inhabitants) and we divided it into 5 categories: 
+- "Very poor"=0-10
+- "Poor"=10-20
+- "Medium"=20-30
+- "Good"=30-40
+- "Very good"=40-50
+Note that we used this classification only based on our data, it is not an arbitrary classification and it is not universal. Probably, what we classified in "very good" is not good enough for the european standards, or in any case is not good enough for a proper cyclable city.
 
 ```{r, eval=TRUE, echo=FALSE}
 range(newdf$`Cycling lanes`)
@@ -415,7 +415,7 @@ barplot(table(cycling_lanes_cat_centro), xlab="Equivalent metres every 100 inhab
 barplot(table(cycling_lanes_cat_sud), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes South", col=coul, border="red")
 dev.off()
 ```
-From this barplots we can understand that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South.
+From this barplots we can understand that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South. 
 
 The last analysis we did on this variable is an histogram. 
 Again, here we can see that the distribution is strongly positively skewed
@@ -466,7 +466,13 @@ The variance and the standard deviation follow the same pattern:
 - Centre var = 37.37; Centre sd = 6.11
 - South var = 40.06; South sd = 6.33
 
-Overall, the motorization rate is very high and needs to be lowered in order to have more environmental-friendly cities. 
+Also in this case we did a boxplot of the variable "Motorization rate" in Italy:
+```{r, eval=TRUE}
+boxplot(newdf$`Motorization rate`)
+```
+Once more, we noticed the presence of three outliers: Venice, Genova and Milan
+
+Overall, the motorization rate is very high and needs to be lowered in order to have more environmental-friendly and human-friendly cities. 
 
 ### Pedestrian areas
 
