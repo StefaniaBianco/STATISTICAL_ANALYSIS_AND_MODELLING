@@ -488,9 +488,9 @@ While the values for provinces in the North are around the Italian average, thos
 There's also notable variability in the data, particularly in the Central region, indicating a considerable degree of difference among the various provinces.
 
 To visually appreciate the results, here we have the barplot. 
-On the y-axis we have the relative frequency grouped as follow
+#DI REGOLA SONO LE MEDIE SEMPLICEMENTE On the y-axis we have the relative frequency grouped as follow
 
-```{r, eval=TRUE, echo=FALSE}
+####DI CHE PARLIAMO? QUESTO è URBAN ECOSYSTEM```{r, eval=TRUE, echo=FALSE}
 bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
                                names.arg = c("Italy", "North", "Centre", "South"), 
                                col="dark green", ylab="Urban Ecosystem Synthetic Index",
@@ -499,9 +499,10 @@ title("Barplot of Urban Ecosystem")
 abline(h=0.53)
 ```
 ```{r, eval=TRUE, echo=FALSE}
+
 We divided our indicator "Pedestrian Areas" in four main categories by using the "cat" function and by looking at the squared metres per inhabitant.
 
-General table:
+###METTERE LE COSE PER FAR ANDARE IL CODICE General table:
 range(newdf$`Pedestrian areas`) # between 0 and 6.8
 pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
                            breaks=c(0, 1.5, 3, 4.5, 7), 
@@ -532,6 +533,7 @@ pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`,
                                  labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7")) 
 barcat_mezz <-table(pedestrian_areas_cat_mezz)
 ```
+
 From this we can see how the situation is pretty limited all around Italy, with the worst situation again in Southern Italy.
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -549,10 +551,10 @@ barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province", yl
 ### Urban ecosystem
 
 Urban Areas is a synthetic index on 18 parameters: air quality, waste, water networks, land consumption. 
-Data have been collected from Legambiente - Environment Italy, 2023.
+Data have been collected from Legambiente - Environment Italy, 2023. #PROBABILMENTE 2022?
 
-The values we've obtained a shallow pattern across the Italian peninsula; rather, they remain relatively consistent throughout. 
-This contrasts with the trends observed in other indices analyzed. 
+The values we have obtained show a shallow pattern across the Italian peninsula; rather, they remain relatively consistent throughout. 
+This contrasts with the trends observed in other indices analyzed. #non so se lo metterei, più che altro perchè ci escono differenze significative con il t-test no?
 This highlights the need for increased green spaces and urban redevelopment projects throughout the region to make urban areas more environmentally friendly.
 
 The results are the following:
@@ -562,7 +564,7 @@ The results are the following:
 - South: mean = 0.46, var = 0.008, sd = 0.09, cv = 0.19
 
 To visually appreciate the results, here we have the barplot. 
-On the y-axis we have the relative frequency grouped as follow
+On the y-axis we have the relative frequency grouped as follow #credo non siamo relative frequencys ma solo i valori della media
 ```{r, eval=TRUE, echo=FALSE}
 bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
                                names.arg = c("Italy", "North", "Centre", "South"), 
@@ -572,7 +574,7 @@ title("Barplot of Urban Ecosystem")
 abline(h=0.53)
 ```
 
-For Urban Green synthetic index, the aim was to highlight the difference in the distribution density of the data between the North, Center, and South compared to the national Italian average. Therefore, four histograms were created.
+For Urban Ecosystem synthetic index, the aim was to highlight the difference in the distribution density of the data between the North, Center, and South compared to the national Italian average. Therefore, four histograms were created.
 
 ```{r, eval=TRUE, echo=F}
 par(mfrow=c(2,2))
@@ -606,8 +608,9 @@ abline(v=mean(newdf$`Urban ecosystem`), col='red', lwd=3)
 
 legend("topright", inset = c(-0.05, 0), legend= c("Italy","Northern Italy", "Central Italy", "Southern Italy"),
        fill= c("orange", "blue", "darkgreen", "black"), box.lwd= 0.1, cex=0.6, text.width= 0.2, title="Lines legend",
-       y.intersp = 0.5, text.font = 2, text.col = "black")
+y.intersp = 0.5, text.font = 2, text.col = "black")
 ```
+#non so se vuoi commentare un po' questa parte
 
 ## Correlation between variables
 In this section, we conducted a study on the correlation between indicators within our dataset, aiming to identify any potential links between them.
@@ -646,30 +649,25 @@ summary(model_italy)
 ```
 we understood that our X^2 is very low, so once more they do not seem to be correlated.
 
-We wanted to understand if this pattern of not correlaton is the same throughout Italy, so we analysed the correlation among our subsets. 
+We wanted to understand if this pattern of no correlaton is the same throughout Italy, so we analysed the correlation among our subsets. 
 
-For the North of Italy, we obtained a very low correlation (-0.05) that is also not statistically relevant (p-value=0.71).
+For the North of Italy, we obtained a very low correlation (-0.05) that is once more not statistically relevant (p-value=0.71).
 The same situation was found for the Centre (no significant correlation), whereas in the South we found a different situation. 
 
 ```{r, eval=TRUE, echo=F}
-par(mfrow=c(1,2))
-plot(x=Nord$`Urban green`, y=Nord$`Air quality`, xlab = "Urban Green", ylab="Air quality", 
-     main="NORD // Scatterplot of Urban Green and Air quality", 
+plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
+     xlab = "Urban Green", ylab="PM10, NO2 and 03", 
+     main="Scatterplot of Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
-
-plot(x=Centro$`Urban green`, y=Centro$`Air quality`,
-     xlab = "Urban Green", ylab="Air quality", 
-     main="CENTRE // Scatterplot of Urban Green and Air quality", 
-     cex.main=1.4, font.main=2, 
-     col.main="orange")
+abline(model_mezzogiorno)
 ```
 In this case, we obtained a correlation of -0.44, that is also stastically relevant (p-value=0.005): we have strong evidence against the null hypotesis, meaning that the two variables are correlated. 
 The regression line we obtained is:
 - Urban Green=50.21-0.56 x [PM10, NO2 and O3 concentration]
-The coefficient of determination R^2 we obtained is 0.20, so our regression line explains only the 20% of the variability of the pollutants concentrations. 
+However, the coefficient of determination R^2 we obtained with the function lm was 0.20, so our regression line explains only the 20% of the variability of the pollutants concentrations. 
 
-Still, we hypotesized that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and they can be more easily by urban green (when there is a decent amount of threes in the city). 
+Still, we hypotesized that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and the pollutants can be more easily absorbed by urban green (when there is a decent amount of threes in the city). 
 In the North, probably there are more sources of pollutants that can not be absorbed by urban green, so the correlation is not that direct.
 
 ###Pedestrian areas and Motorization rate
@@ -687,7 +685,7 @@ Againg H0=true correlation is equal to 0, so the two variable may be weakly corr
 
 Once more, we decided to calculate the correlation within the different geographical areas. 
 We started correlating the data from the North of Italy and we actually obtain a r value=-0.39, with a p-value of 0.007 (strong evidence against H0), so the link within this two variable in the North is consistent. 
-Also the coefficient of determination is higher (0.15). 
+Furthermore, also the coefficient of determination was higher (0.15). 
 
 About the Centre and the South of the peninsula, we didn't find such clear values: the linear correlation coefficient is almost null for the centre (0.009) and also very low for the South (-0.07).
 
