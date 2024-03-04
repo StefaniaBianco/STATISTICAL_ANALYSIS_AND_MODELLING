@@ -751,25 +751,36 @@ We performed the t.test every time we obtained normality in our population data,
 We performed the z.test every time we did not obtain normality in our population data, knowing that we can assume our data follow a ###z distribution in case of large samples (n>30). 
 However, the subset of the central Italy has not a sample size large enough (n=22), so we could perform the z test only for comparing the population of the North (n=47) and of the South (n=38) of Italy.
 
+###Inference on the variable "Cycling lane"
 By looking at the data of the variable "Cycling lane", we already noted some important differences among the peninsula. We had already seen the mean values decreases going southern, but we wanted to test if the differences are statistically relevant. 
-In order to understand better, we did a test for comparing the population means with unknown variance, that on R may be performed like this:
-```{r, eval=TRUE}
-t.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
+We first performed the Shapiro test to understand the normality of our subset data. 
+```{r, eval=FALSE}
+shapiro.test(Nord$`Cycling lanes`)
+shapiro.test(Mezzogiorno$`Cycling lanes`)
+shapiro.test(Centro$`Cycling lanes`)
+```
+We obtained in all the three cases a low p-value, meaning that all our data come from a non-normal distribution. 
+As already stated in the introduction, we can perform the z test even if the variance is unknown if we have a sample size large enough. 
+We can in our case make inference on the difference between the population means between the North and the South. 
+In order to do the z test, we need to have the standard deviation of the two samples, that we can calculate using the function var() that gives us the unbiased sample variance and the simply using the function sqrt()
+```{r, eval=FALSE}
+z.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`,
+       alternative = "two.sided", sigma.x=10.09, sigma.y=6.06, mu=0, conf.level = 0.99)
 ```
 With this test, 
 -H0=true difference between population means is equal to 0
 -H1=true difference between population means is not equal to 0
-In this case, we obtain an infinitesimal p-value (4.453e-07), so we are 99% confident there is a difference between population mean, as expected.
+We obtained an extremely low p-value (8.17^-09), so we are 99% confident the difference between the amount of Cycling lanes in the North and the South is stastically significative. 
 
-We also did did the t-test for the comparison between North and Centre, obtain still a small p-value (0.001), even if considerably bigger compared to the previous test. 
-About the difference Centre-South, we get p-value = 0.145, so basically there is not significative difference within the two areas. 
-
-#t test between population means for motorization rate
+###Inference on the variable "Motorization rate" 
 With the variable "Motorization rate" we found an opposite trend: higher values in the South and lower values in the North. 
-Once more, we found stastically significative differences within the North and the South (p-value=5.929e-05), still significative but to a lesser extent difference within the North and the Centre (p-value = 0.003) and no differences between the Centre and the South (p-value=0.6167)
-
-
+This time, with the Shapiro test, we discovered the datas in the subset North follow a normal distribution, whereas in the Centre and in the South follow a normal distribution. 
+Therefore, we could perform the T test within the difference of means of Centre and South
+```{r, eval=FALSE}
+t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
+       mu=0, var.equal=T, conf.level = 0.99)
+```
+but this time obtaining an high p-value (0.6167), implying no evidence against H0, so basically there is not significative difference among these two geographical areas.
 
 # Sitography
 - https://github.com/IlSole24ORE/QDV2022/blob/main/20221213_QDV2022_001.csv
