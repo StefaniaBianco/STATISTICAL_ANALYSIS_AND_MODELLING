@@ -494,21 +494,39 @@ cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good neg
 
 
 ###INFERENCE
-#t test between population means for cycling lanes
-t.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Nord$`Cycling lanes`, y = Centro$`Cycling lanes`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Mezzogiorno$`Cycling lanes`, y = Centro$`Cycling lanes`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
 
-#t test between population means for cycling lanes
-t.test(x=Nord$`Motorization rate` , y = Mezzogiorno$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Nord$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
+library(EnvStats)
+library(BSDA)
+require(BSDA)
+
+#z test between population means for cycling lanes
+shapiro.test(Nord$`Cycling lanes`)
+shapiro.test(Mezzogiorno$`Cycling lanes`)
+shapiro.test(Centro$`Cycling lanes`)
+
+var(Nord$`Cycling lanes`)
+sqrt(var(Nord$`Cycling lanes`))
+
+var(Mezzogiorno$`Cycling lanes`)
+sqrt(var(Mezzogiorno$`Cycling lanes`))
+
+z.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`,
+       alternative = "two.sided", sigma.x=10.09, sigma.y=6.06, mu=0, conf.level = 0.99)
+
+#test between population means for motorization rate
+shapiro.test(Nord$`Motorization rate`) #not normal distribution
+shapiro.test(Centro$`Motorization rate`) #normal 
+shapiro.test(Mezzogiorno$`Motorization rate`) #normal
+
+var(Nord$`Motorization rate`)
+sqrt(var(Nord$`Motorization rate`))
+var(Mezzogiorno$`Motorization rate`)
+sqrt(var(Mezzogiorno$`Motorization rate`))
+
+z.test(x=Nord$`Motorization rate` , y = Mezzogiorno$`Motorization rate`, alternative = "two.sided",
+       sigma.x = 6.15, sigma.y= 6.41, mu=0, conf.level = 0.99) #not normal and normal, so maybe z.test is fine?
 t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
+       mu=0, var.equal=T, conf.level = 0.99) #normal distribution so t test is fine
 
 #t test between population means for urban green
 t.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.sided",
