@@ -782,6 +782,11 @@ t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alter
 ```
 but this time obtaining an high p-value (0.6167), implying no evidence against H0, so basically there is not significative difference among these two geographical areas.
 
+#Conclusion
+Our project's aim was to understand the Italian situation regarding some environmental parameters and to discover if there are patterns along the Peninsula. 
+
+Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a bad situation
+
 # Sitography
 - https://github.com/IlSole24ORE/QDV2022/blob/main/20221213_QDV2022_001.csv
 - https://lab24.ilsole24ore.com/qualita-della-vita/tabelle/2022/classifica-finale 
