@@ -785,7 +785,11 @@ but this time obtaining an high p-value (0.6167), implying no evidence against H
 #Conclusion
 Our project's aim was to understand the Italian situation regarding some environmental parameters and to discover if there are patterns along the Peninsula. 
 
-Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a bad situation
+Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a #bad situation for all the parameters. 
+Furthermore, the gap between North-Centre-South is almost always visible and consistent in every aspect analysed. 
+
+The need of creating sustainable cities, both for human life and from an environmental point of view, is getting more and more urgent. 
+Thanks to the indicators we can understand where is more important to act, both in terms of parameters and in terms of geographical area.
 
 # Sitography
 - https://github.com/IlSole24ORE/QDV2022/blob/main/20221213_QDV2022_001.csv
