@@ -161,7 +161,8 @@ barplot(barcat_aq_sud, xlab = "PM10, NO2 and O3 index", ylab= "Number of provinc
 
 Life quality in cities is a major discussion topic nowadays in the European countries, and the focus of the influence of the environmental aspect is getting more and more important. 
 Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. 
-Our project aims both to 
+Our project aims both to
+
 - understand the overall state of art of six environmental parameters in the whole Italy;
 - analyse and understand if the parameters are significantly different between the three macroareas of the peninsula.
 
@@ -220,7 +221,7 @@ title("Barplot of Urban green")
 abline(h=22.40)
 ```
 
-We created then a boxplot, that allows us to see quantiles, median and range from italian data. The boxplot highlights the presence of five outliers: Gorizia, Pordenone, Verbano-Cusio-Ossola, Monza e Brianza, Reggio Emilia.
+We generated a boxplot to visualize the quantiles, median, and range of the Italian data. The boxplot revealed the presence of five outliers (Gorizia, Pordenone, Verbano-Cusio-Ossola, Monza e della Brianza, Reggio nell'Emilia). Consequently, we opted to display the boxplot excluding these outliers.
 ```{r, eval=TRUE}
 par(mfrow=c(1,2))
 boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant", outline = FALSE)
@@ -235,6 +236,7 @@ median_urban_green
 
 
 We also calculated the measures of variability: variance, standard deviation and coefficient of variation.
+We calculated measures of variability: variance, standard deviation and coefficient of variation.
 ```{r, eval=TRUE}
 # Variance of Urban green
 variance_urban_green<-mean(newdf$`Urban green`^2)-(mean_urban_green)^2
@@ -245,7 +247,11 @@ variance_urban_green_centro<-mean(Centro$`Urban green`^2)-(mean_urban_green_cent
 variance_urban_green_centro
 variance_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`^2)- (mean_urban_green_mezzogiorno)^2
 variance_urban_green_mezzogiorno
+```
 
+In the northern region, the variance is notably high compared to other values, primarily because outlier provinces are concentrated in that area.
+
+```{r, eval=TRUE}
 # Standard deviation of Urban green 
 sd_urban_green<-sqrt(variance_urban_green)
 sd_urban_green
@@ -270,10 +276,12 @@ cv_urban_green_mezzogiorno
 ### Air quality
 For the variable "Air quality" the unit of measurement is an index based on PM10, NO2 and O3 data in the regional county seats. 
 The values we obtained for the arithmetic mean are
+
 - Italy = 51.32, 
 - North = 62.41, 
 - Centre = 43.83, 
 - South = 41.95.
+
 This shows the air quality is in average higher in the South, followed by the Centre and the North in the end.
 
 ```{r, eval=TRUE, echo=FALSE}
@@ -339,11 +347,13 @@ The black line indicates our density curve, the orange one is the shape that the
 The histogram is slightly positively skewed.
 
 From thee Shapiro test we stated that our hypothesis are: 
+
 - H0 : sample data come from a normal distribution; 
 - H1 : sample data do not come from a normal distribution
+
 Since the p-value is really low we can say that there is a strong evidence against H0, so our data do not come from a normal distribution.
 
-Measures of variability are following a different pattern !!!compared to what?, in fact variance and standard deviation in the North are respectively 238.60 and 15.45, in the Centre var=50.46 and sd=7.10, in the South var=126.11 and sd=11.23 in the Mezzogiorno.
+Measures of variability are following a different pattern compared to the mean, in fact variance and standard deviation in the North are respectively 238.60 and 15.45, in the Centre var=50.46 and sd=7.10, in the South var=126.11 and sd=11.23 in the Mezzogiorno.
 We finally calculated then the coefficient of variation (cv), having this results:
 
 - Italy cv = 0.31
