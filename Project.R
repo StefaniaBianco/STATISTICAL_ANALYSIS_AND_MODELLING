@@ -605,12 +605,19 @@ t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alter
        mu=0, var.equal=T, conf.level = 0.99) #normal distribution so t test is fine
 
 #t test between population means for urban green
-t.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Nord$`Urban green`, y = Centro$`Urban green`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
-t.test(x=Mezzogiorno$`Urban green`, y = Centro$`Urban green`, alternative = "two.sided",
-       mu=0, var.equal=T, conf.level = 0.99)
+shapiro.test(Nord$`Urban green`) #not normal distribution
+shapiro.test(Mezzogiorno$`Urban green`) #not normal distribution
+shapiro.test(Centro$`Urban green`) #normal distribution
+
+var(Nord$`Urban green`)
+sqrt(var(Nord$`Urban green`))
+var(Mezzogiorno$`Urban green`)
+sqrt(var(Mezzogiorno$`Urban green`))
+
+z.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.sided",
+       sigma.x=24.07, sigma.y=9.02, mu=0, conf.level = 0.99)
+#p-value 7,585e-05 so reject H0 (differences between the two means is not equal to 0)
+
 
 #t test between population means for air quality
 t.test(x=Nord$`Air quality` , y = Mezzogiorno$`Air quality`, alternative = "two.sided",
