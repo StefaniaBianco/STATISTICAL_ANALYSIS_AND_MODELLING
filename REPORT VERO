@@ -99,13 +99,14 @@ Finally, for the inferencial part, some tests have been made about the differenc
 
 # Descriptive statistics
 
-We first decided to do some univariate descriptive analysis. 
-Each of us calculated the mean, the variance, the standard deviation and the coefficient of variation to get some information on the central tendencies and variability of our data. For some variables there are also some graphics, such as boxplots, barplots and histograms.  
+In order to make some univariate descriptive analysis, for each indicator the mean, the variance, the standard deviation and the coefficient of variation has been calculated. 
+For some variables graphics, such as boxplots, barplots and histograms, have been drawn.  
 
 ### Urban green
-The first variable we analysed is "Urban green", expressed in squared metres per inhabitant. 
-As first numerical measure we decided to summarize the data calculating the arithmetic mean for each indicator in different areas. 
-For the indicator "Urban green" we have this results:
+The first analyzed variable is "Urban green", expressed in squared metres per inhabitant. 
+As first numerical measure a data summary has been made in order to calculate the arithmetic mean for each indicator in different areas. 
+
+For "Urban Green", the results are the following:
 ```{r, eval=TRUE }
 mean_urban_green<-mean(newdf$`Urban green`)
 mean_urban_green
@@ -116,7 +117,7 @@ mean_urban_green_centro
 mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
 mean_urban_green_mezzogiorno
 ```
-As we can see from the barplot values are different, with a higher mean in the north than the centre and the south.
+As the barplot shows,the values differ across the peninsula, with a higher mean in the North than the Centre and the South.
 ```{r, eval=TRUE}
 mean_urban_green_values<-c(22.40, 29.79, 19.87, 14.74)
 bp_mean_urban_green<-barplot(mean_urban_green_values, 
@@ -126,7 +127,9 @@ title("Barplot of Urban green")
 abline(h=22.40)
 ```
 
-We generated a boxplot to visualize the quantiles, median, and range of the Italian data. The boxplot revealed the presence of five outliers (Gorizia, Pordenone, Verbano-Cusio-Ossola, Monza e della Brianza, Reggio nell'Emilia). Consequently, we opted to display the boxplot excluding these outliers.
+To visualize the quantiles, median, and range of the Italian data, a boxplot has been generated. 
+It revealed the presence of five outliers (Gorizia, Pordenone, Verbano-Cusio-Ossola, Monza e Brianza, Reggio Emilia). 
+Consequently, we opted to display the boxplot excluding these outliers.
 ```{r, eval=TRUE}
 par(mfrow=c(1,2))
 boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant", outline = FALSE)
@@ -139,9 +142,7 @@ median_urban_green<-median(newdf$`Urban green`)
 median_urban_green
 ```
 
-
-We also calculated the measures of variability: variance, standard deviation and coefficient of variation.
-We calculated measures of variability: variance, standard deviation and coefficient of variation.
+Measures of variability have also been calculated: variance, standard deviation and coefficient of variation.
 ```{r, eval=TRUE}
 # Variance of Urban green
 variance_urban_green<-mean(newdf$`Urban green`^2)-(mean_urban_green)^2
@@ -154,7 +155,7 @@ variance_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`^2)- (mean_urban
 variance_urban_green_mezzogiorno
 ```
 
-In the northern region, the variance is notably high compared to other values, primarily because outlier provinces are concentrated in that area.
+In the northern region, the variance is notably higher compared to other values, primarily because outlier provinces are concentrated in that area.
 
 ```{r, eval=TRUE}
 # Standard deviation of Urban green 
@@ -180,7 +181,7 @@ cv_urban_green_mezzogiorno
 
 ### Air quality
 For the variable "Air quality" the unit of measurement is an index based on PM10, NO2 and O3 data in the regional county seats. 
-The values we obtained for the arithmetic mean are
+The values obtained for the arithmetic mean are:
 
 - Italy = 51.32, 
 - North = 62.41, 
@@ -203,12 +204,13 @@ boxplot(newdf$`Air quality`, main = "Boxplot of Air quality", ylab = "Index base
 
 ```
 
-To gain a deeper understanding of the air quality across various regions of Italy, we analyzed the grouped frequency distribution pertaining to different levels of the PM10, NO2, and O3 indices in the regional county seats. We segmented the data using the function range into five classes that we stated as: "very poor" (20-34), "poor" (34-48), "medium" (48-62), "good" (62-76), and "very good" (76-90), in order to categorize the range effectively.
-
-
-```{r, eval=TRUE}
-range(newdf$`Air quality`)
-```
+To gain a deeper understanding of the air quality across various regions of Italy, an analysis on the grouped frequency distribution has been done pertaining to different levels of the PM10, NO2, and O3 indices in the regional county seats. 
+The data have been segmented by using the function "cut" into five classes: 
+- "very poor" (20-34), 
+- "poor" (34-48), 
+- "medium" (48-62), 
+- "good" (62-76), 
+- "very good" (76-90).
 
 ```{r, eval=TRUE, echo=FALSE}
 air_quality_rate_cat<-cut(newdf$`Air quality`, breaks = c(20, 34, 48, 62, 76, 90), labels = c("very good", "good", "medium","poor", "very poor"))
@@ -235,9 +237,10 @@ barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, NO2 and O3", ylab=
 ```
 
 
-As we can observe, a significant number of provinces fall within the first two classes, suggesting a low presence of harmful pollutants. However, a lot of provinces still exhibit poor air quality conditions.
+As can be observed, a significant number of provinces fall within the first two classes, suggesting a low presence of harmful pollutants. 
+However, a lot of provinces still exhibit poor air quality conditions.
 
-We also created an histogram, in order to see more clearly the distribution of our data.
+An histogram was also created, in order to see more clearly the distribution of the data.
 ```{r, eval=TRUE}
 hist(newdf$`Air quality`, freq=F, xlab="Index on Pm10, nitrogen dioxide and ozone data", ylab="Relative Frequency Density", main="Air quality Italy", col=coul, border="black")
 lines(density(newdf$`Air quality`), lwd=2)
@@ -248,37 +251,35 @@ curve(dnorm(x, mean=mean(newdf$`Air quality`),
       add=T, col="orange", lwd=2)
 ```
 
-The black line indicates our density curve, the orange one is the shape that the distribution should have if it would be normal and the red one is the mean.
+The black line indicates the density curve, the orange one represents the shape of hypothetically normally distributed data and the red one is the mean.
 The histogram is slightly positively skewed.
 
 ```{r, eval=TRUE}
 shapiro.test(newdf$`Air quality`)
 ```
-
-From the Shapiro test we stated that our hypothesis are: 
+To understand if the data are normally distributed or not, Shapiro test can be performed.
+The latter test states that: 
 
 - H0 : sample data come from a normal distribution; 
-- H1 : sample data do not come from a normal distribution
+- H1 : sample data do NOT come from a normal distribution.
 
-Since the p-value is really low we can say that there is a strong evidence against H0, so our data do not come from a normal distribution.
+Since the p-value is really low, strong evidence against H0 can be found, so the data do not come from a normal distribution.
 
-Measures of variability are following a different pattern compared to the mean, in fact variance and standard deviation in the North are respectively 238.60 and 15.45, in the Centre var=50.46 and sd=7.10, in the South var=126.11 and sd=11.23 in the Mezzogiorno.
-We finally calculated the coefficient of variation (cv), having this results:
+Measures of variability followed a different pattern compared to the mean:
+#ricontrollare dati cv
+- North: var = 238.60, sd = 15.45, cv = 0.25;
+- Centre: var = 50.46, sd = 7.10, cv = 0.16;
+- South: var = 126.11, sd = 11.23, cv = 0.27.
 
-- Italy cv = 0.31
-- North cv = 0.25
-- Centre cv = 0.16
-- Mezzogiorno cv = 0.27
 
 # Cycling lane descriptive analysis
 
 The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants. 
-We obtained:
-
-- Italy mean = 9.67 
-- Nord mean = 14.90 
-- Centre mean = 7.10 
-- South mean = 4.69
+The values obtained for the means are:
+- Italy = 9.67 
+- Nord = 14.90 
+- Centre = 7.10 
+- South = 4.69
 
 ```{r, eval=TRUE,echo=FALSE}
 mean_cycling_lanes_values<-c(9.67, 14.90, 7.10, 4.70)
@@ -299,16 +300,15 @@ The measures of variability follows the same pattern, with:
 
 The overall variance for Italy is 86.08, while the standard deviation is 9.28.
 
-We wanted to understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, 
-so we calculated the range (that goes from 0 to 46.5 equivalent meters every 100 inhabitants) and we divided it into 5 categories: 
+To understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, the range has been calculated. It goes from 0 to 46.5 equivalent meters every 100 inhabitants. 5 categories have been created: 
 
-- "Very poor"=0-10
-- "Poor"=10-20
-- "Medium"=20-30
-- "Good"=30-40
-- "Very good"=40-50
+- "Very poor" = 0-10
+- "Poor" = 10-20
+- "Medium" = 20-30
+- "Good" = 30-40
+- "Very good" = 40-50
 
-Note that we used this classification only based on our data, it is not an arbitrary classification and it is not universal. Probably, what we classified in "very good" is not good enough for the european standards, or in any case is not good enough for a proper cyclable city.
+Note that the above-made classification is based only on the collected data: it is not an arbitrary and universal classification. This means that probably, what has been classified as "very good" could not be good enough for the European standards, or, more generally, for a proper cyclable city.
 
 ```{r, eval=TRUE, echo=FALSE}
 range(newdf$`Cycling lanes`)
@@ -322,9 +322,9 @@ coul <- brewer.pal(5, "Set2")
 barplot(table(cycling_lanes_cat), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
 ```
 
-It is clear that the majority of Italian cities have a poor presence of cycling lanes, as more than 60 cities belongs to the category very poor, and the number of cities decreases when the categories gets better in term of presence of cycling lanes. 
+It is clear that the majority of Italian cities have a poor presence of cycling lanes, as more than 60 cities belong to the category "very poor", and the number of cities decreases when the categories get better in terms of presence of cycling lanes. 
 
-We also wanted to understand how the situation is in the macroregion of Italy we are analysing, so we did the same process but just within the small subsets. 
+To understand how the situation is in the macroregion of Italy, the same process has been applied, but within small subsets. 
 ```{r, eval=TRUE, echo=FALSE}
 cycling_lanes_cat_nord<-cut(Nord$`Cycling lanes`, breaks =c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
 table(cycling_lanes_cat_nord)
@@ -341,10 +341,10 @@ barplot(table(cycling_lanes_cat_centro), xlab="Equivalent metres every 100 inhab
 barplot(table(cycling_lanes_cat_sud), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes South", col=coul, border="red")
 dev.off()
 ```
-From this barplots we can understand that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South. 
+From this barplots, it can be seen that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South. 
 
-The last analysis we did on this variable is an histogram. 
-Again, here we can see that the distribution is strongly positively skewed
+The last analysis made on this variable was an histogram. 
+Again, the distribution is strongly positively skewed.
 
 ```{r, eval=TRUE, echo=F}
 hist(newdf$`Cycling lanes`, freq=F, xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
@@ -355,18 +355,12 @@ curve(dnorm(x, mean=mean(newdf$`Cycling lanes`),
       add=T, col="orange", lwd=2)
 ```
 
-The red line indicates the mean, the black line is the actual density curve and the orange line indicates the shape the distribution should have with a normal density. 
+The red line indicates the mean, the black line is the actual density curve and the orange line indicates a normal distributed density curve. 
 With the function
 ```{r, eval=FALSE}
 shapiro.test(newdf$`Cycling lanes`) 
 ```
-We obtained an extremely low p-value (1.976^-08), that means strong evidence against H0. With this function, 
-
-- H0 : sample data come from a normal distribution
-- H1 : sample data do not come from a normal distribution,
-
-so our data do not come from a normal distribution, as foreseen. 
-
+an extremely low p-value (1.976^-08) has been obtained, meaning strong evidence against H0: data do not come from a normal distribution, as foreseen. 
 
 # Motorization rate descriptive analysis
 The variable "Motorization rate" is expressed in circulating cars every 100 inhabitants. The trend this time showed higher values in the South, medium in the Centre and smaller in the North.
