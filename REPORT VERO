@@ -1,6 +1,6 @@
 ---
 title: "Does the Italian quality of life depends on the geographical area?"
-author: "Gioia Riolli, Stefania Bianco, Mattia Fabris"
+author: "Stefania Bianco, Mattia Fabris, Gioia Riolli"
 date: "2024-02-27"
 output:
   html_document: default
@@ -10,7 +10,6 @@ output:
 ```{r, eval=TRUE, include=FALSE}
 getwd()
 df <- read.csv("/Users/mattiafabris/Desktop/unibo/statistical analysis/Progetto.def/20221213_QDV2022_001 .csv", dec=".", sep=",", stringsAsFactors = T)
-
 
 Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
 Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
@@ -42,152 +41,51 @@ Centro <- newdf[c(41:60, 100, 105),]
 
 Mezzogiorno <- newdf[c(61:92, 94:95, 101:102, 106:107),]
 
-model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
-
-##### PER GRAFICO GRANDE
-range(newdf$`Pedestrian areas`) #between 0 and 6.8
-pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
-                           breaks=c(0, 1.5, 3, 4.5, 7), 
-                           labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
-barcat <-table(pedestrian_areas_cat)
-
-
-# Northern Italy table
-pedestrian_areas_cat_nord<-cut(Nord$`Pedestrian areas`, 
-                               breaks=c(0, 1.5, 3, 4.5, 7), 
-                               labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
-barcat_nord <-table(pedestrian_areas_cat_nord)
-
-# Center Italy table
-pedestrian_areas_cat_centro <-cut(Centro$`Pedestrian areas`, 
-                                  breaks=c(0, 1.5, 3, 4.5, 7), 
-                                  labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
-barcat_centro <-table(pedestrian_areas_cat_centro)
-
-#Southern Italy table
-pedestrian_areas_cat_mezz <- cut(Mezzogiorno$`Pedestrian areas`, 
-                                 breaks=c(0, 1.5, 3, 4.5, 7), 
-                                 labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7")) 
-barcat_mezz <-table(pedestrian_areas_cat_mezz)
-
-#we define a colour palette
-library(RColorBrewer)
-coul <- brewer.pal(5, "Set2")
-par(mfrow=c(2,2))
-barplot(barcat, xlab = "m^2 per inhabitant", ylab= "Number of province",
-        main="PAs in Italy", col=coul, border="red")
-barplot(barcat_nord, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
-        main="PAs in Northern Italy", col=coul, border="red" )
-barplot(barcat_centro, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50), 
-        main="PAs in Central Italy", col=coul, border="red")
-barplot(barcat_mezz, xlab = "m^2 per inhabitant", ylab= "Number of province", ylim= c(0,50),
-        main="PAs in Southern Italy", col=coul, border="red")
-
-#MOTORIZATION RATE
-motorization_rate_cat <-cut(newdf$`Motorization rate`, 
-                            breaks=c(40, 50, 60, 70, 80), 
-                            labels=c("40-50", "50-60", "60-70", "70-80"))
-barcat_mr <-table(motorization_rate_cat)
-
-# Northern Italy table
-motorization_rate_nord<-cut(Nord$`Motorization rate`, 
-                            breaks=c(40, 50, 60, 70, 80), 
-                            labels=c("40-50", "50-60", "60-70", "70-80"))
-barcat_mr_nord <-table(motorization_rate_nord)
-
-# Center Italy table
-motorization_rate_centro<-cut(Centro$`Motorization rate`, 
-                              breaks=c(40, 50, 60, 70, 80), 
-                              labels=c("40-50", "50-60", "60-70", "70-80"))
-barcat_mr_centro <-table(motorization_rate_centro)
-
-#Southern Italy table
-motorization_rate_sud<-cut(Mezzogiorno$`Motorization rate`, 
-                           breaks=c(40, 50, 60, 70, 80), 
-                           labels=c("40-50", "50-60", "60-70", "70-80"))
-barcat_mr_sud <-table(motorization_rate_sud)
-
-#we define a colour palette
-library(RColorBrewer)
-coul <- brewer.pal(5, "Set2")
-
-par(mfrow=c(2,2))
-barplot(barcat_mr, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province",
-        main="MR in Italy", col=coul, border="red")
-barplot(barcat_mr_nord, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
-        main="MR in Northern Italy", col=coul, border="red" )
-barplot(barcat_mr_centro, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40), 
-        main="MR in Central Italy", col=coul, border="red")
-barplot(barcat_mr_sud, xlab = "N. of cars every 100 inhabitants", ylab= "Number of province", ylim= c(0,40),
-        main="MR in Southern Italy", col=coul, border="red")
-
-#AIR QUALITY
-air_quality_cat <-cut(newdf$`Air quality`, 
-                      breaks=c(20, 38, 55, 73, 90), 
-                      labels=c("20-38", "38-55", "55-73", "73-90"))
-barcat_aq <-table(air_quality_cat)
-
-# Northern Italy table
-air_quality_nord<-cut(Nord$`Air quality`, 
-                      breaks=c(20, 38, 55, 73, 90), 
-                      labels=c("20-38", "38-55", "55-73", "73-90"))
-barcat_aq_nord <-table(air_quality_nord)
-
-# Center Italy table
-air_quality_centro<-cut(Centro$`Air quality`, 
-                        breaks=c(20, 38, 55, 73, 90), 
-                        labels=c("20-38", "38-55", "55-73", "73-90"))
-barcat_aq_centro <-table(air_quality_centro)
-
-#Southern Italy table
-air_quality_sud<-cut(Mezzogiorno$`Air quality`, 
-                     breaks=c(20, 38, 55, 73, 90), 
-                     labels=c("20-38", "38-55", "55-73", "73-90"))
-barcat_aq_sud <-table(air_quality_sud)
-
-
-par(mfrow=c(2,2))
-barplot(barcat_aq, xlab = "PM10, NO2 and O3 index", ylab= "Number of province",
-        main="AQ in Italy", col=coul, border="red")
-barplot(barcat_aq_nord, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
-        main="AQ in Northern Italy", col=coul, border="red" )
-barplot(barcat_aq_centro, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30), 
-        main="AQ in Central Italy", col=coul, border="red")
-barplot(barcat_aq_sud, xlab = "PM10, NO2 and O3 index", ylab= "Number of province", ylim= c(0,30),
-        main="AQ in Southern Italy", col=coul, border="red")
 ```
 
 # Introduction and Data Description 
 
 Life quality in cities is a major discussion topic nowadays in the European countries, and the focus of the influence of the environmental aspect is getting more and more important. 
 Italy, on its side, is struggling to reach some good environmental index and indicators: furthermore, the complex socio-economical situation throughout the peninsula may underlie some differences among the Nord, Centre and South. 
-Our project aims both to
+Our project aims both to:
 
 - understand the overall state of art of six environmental parameters in the whole Italy;
 - analyse and understand if the parameters are significantly different between the three macroareas of the peninsula.
 
-We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the 107 Italian provinces from the highest to the lowest for quality of life standards. The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions
+We took our data from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the 107 Italian provinces from the highest to the lowest for quality of life standards. 
+The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where we took our data and we imported them with the functions:
 
 ```{r, eval=FALSE }
 getwd()
 df <- read.csv("C:/Users/Utente/Desktop/STATISTICAL ANALYSIS AND MODELLING/exam/project/20221213_QDV2022_001 (4).csv", dec=".", sep=",", stringsAsFactors = T)
 ```
 
-After importing our data, we selected the variables "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the r function "order" we listed all the data according to the province code. 
+After importing our data, we selected the variables "Province", "Province code", "Cycling lanes", "Motorization rate", "Urban green", "Air quality", "Pedestrian areas", "Urban ecosystem" and with the R function "order" we listed all the data according to the province code. 
 A new data frame has been created with the selected and ordered indicators , called "newdf", and all the variables renamed in English. 
 We used the following code for selecting all the indicators:
 ```{r, eval=FALSE }
-#Example of data cleaning and ordering
+#Example of data cleaning and ordering for one indicator
 Piste_ciclabili<-df[df$INDICATORE=="Piste ciclabili", c(1,3,5)]
 Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..STORICO.),]
 ```
 
-Every indicator has a different unit of measurements: "Cycling lanes" is expressed in equivalent metres every 100 inhabitant, "Motorization rate" in number of circulating cars every 100 inhabitants, "Urban green" is squared metres per inhabitant, "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats, "Pedestrian areas" is expressed in squared metres per inhabitant and finally "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
+Every indicator has a different unit of measurements: 
+- "Cycling lanes" is expressed in equivalent metres every 100 inhabitant;
+- "Motorization rate" in number of circulating cars every 100 inhabitants; 
+- "Urban green" is squared metres per inhabitant;
+- "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats; 
+- "Pedestrian areas" is expressed in squared metres per inhabitant;
+- "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
 
-The new data frame has been then further divided into three new subset: North, Centre, and the so-called "Mezzogiorno" or South, according to the ISTAT division of the Italian administrative territory.
+The new data frame has been then further divided into three new subsets: 
+- North, 
+- Centre, 
+- "Mezzogiorno" or South,
+according to the ISTAT division of the Italian administrative territory.
 
-We made some descriptive and inferential statistical analysis of all the chosen indicators, that we will explain in the next paragraphs. 
-For the descriptive part, we first explained all the indicators with some measures of central tendency and of variability, with some plots and graphics. Note that we didn't make the same analysis on all the variables, as we wanted the report to be more dynamic and smooth. Secondly, we tried to correlate the variables to each other, to understand if there are some kind of relationships among them.
+A descriptive and inferential statistical analysis of all the chosen indicators has been made and it will be explained in the next paragraphs. 
+For the descriptive part, a first study of all the indicators was made using measures of central tendency and of variability, some plots and graphics have been . 
+Note that we didn't make the same analysis on all the variables, as we wanted the report to be more dynamic and smooth. Secondly, we tried to correlate the variables to each other, to understand if there are some kind of relationships among them.
 In our study we used the 107 provinces as statistical units and the environmental parameters are quantitative continuous variables.
 
 For the inferencial part, we did some tests about the differences among population means, assuming that our data come from a random sample of cities and expanding our inference to the whole geographical area (North, Centre, South).
