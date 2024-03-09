@@ -542,7 +542,7 @@ Finally, around 5% of Southern provinces have extremely low values, between 0.2 
 This confirm what has been previously stated: the situation among the Southern provinces is critical almost everywhere, excluding few cities.
 
 ## Correlation between variables
-In this section, we conducted a study on the correlation between indicators within our dataset, aiming to identify any potential links between them.
+In this section, a study on the correlation between indicators within the dataset was conducted, aiming to identify any potential links between them.
 
 - Air quality and Urban green 
 - Pedestrian areas and Motorization rate
@@ -550,8 +550,8 @@ In this section, we conducted a study on the correlation between indicators with
 - Urban ecosystem and Air quality
 
 ### Air quality and Urban green
-It is known that trees may play a central role in improving air quality in cities, so we were expecting to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
-However, by plotting the two variables together we obtained a slightly positive correlation instead (cor=0.13).
+It is known that trees may play a central role in improving air quality in cities, so it was expected to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
+However, by plotting the two variables together a slightly positive correlation is obtained instead (cor=0.13).
 ```{r, eval=TRUE}
 
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
@@ -562,26 +562,30 @@ plot(x=newdf$`Urban green`, y=newdf$`Air quality`,
 abline(model_italy)
 cor(newdf$`Urban green`, newdf$`Air quality`) #cor=0.13    
 ```
-At this point we wanted to understand if our correlation is stastically relevant, so we used the function 
+To understand if the correlation is stastically relevant:
+
 ```{r, eval=F}
 cor.test(newdf$`Urban green`, newdf$`Air quality`)
 ```
-and we obtained as p-value 0.17. In this case, 
+And the p-value obatained is 0.17. In this case: 
 - H0 = true correlation is equal to 0;
 - H1 = true correlation is not equal to 0.
-The p-value does not imply any evidence against H0, so basically our variables are not significantly correlated. 
+The p-value does not imply any evidence against H0, so basically the variables are not significantly correlated. 
 
 Also with the functions
 ```{r}
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 summary(model_italy)
 ```
-we understood that our X^2 is very low, so once more they do not seem to be correlated.
+The X^2 is very low, so once more they do not seem to be correlated.
 
-We wanted to understand if this pattern of no correlaton is the same throughout Italy, so we analysed the correlation among our subsets. 
+So, is this pattern of "missed correlaton" the same throughout Italy? To understand that, a deepr analysis among subsets has been made.
 
-For the North of Italy, we obtained a very low correlation (-0.05) that is once more not statistically relevant (p-value=0.71).
-The same situation was found for the Centre (no significant correlation), whereas in the South we found a different situation. 
+The results are the following:
+- North: very poor correlation (-0.05), that is once more not statistically relevant (p-value=0.71),
+- Centre: no significant correlation, 
+- South: good negative correlation of -0.44, stastically relevant (p-value=0.005). A strong evidence against the null hypotesis, meaning that for the Southern provinces, the two variables are correlated. 
+
 
 ```{r, eval=TRUE, echo=F}
 model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
@@ -593,8 +597,7 @@ plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`,
 abline(model_mezzogiorno)
 ```
 
-In this case, we obtained a correlation of -0.44, that is also stastically relevant (p-value=0.005): we have strong evidence against the null hypotesis, meaning that the two variables are correlated. 
-The regression line we obtained is:
+The regression line obtained is: ###MANCA QUALCOSA???????
 
 - Urban Green=50.21-0.56 x [PM10, NO2 and O3 concentration]
 
@@ -627,6 +630,21 @@ About the Centre and the South of the peninsula, we didn't find such clear value
 
 
 ### Air quality and Urban Ecosystem
+A third correlation between the two indicator Air Quality and Urban Ecosystem was made.
+The aim was to understand if, whenever a lack of Urban Ecosystem is present, a worst quality of air follows as well.
+In this particular case, a consideration must be made: Urban Ecosystem is a synthetic index, based on different indicators (all equally weighted), which one of them is air quality itself. 
+So, what is investigated is the impact #####NON MI PIACE QUESTO, COME POSSO SPIEGARLO MEGLIO? that this single indicator has on the final index value.
+
+The results are the following:
+- Italy: no general correlation (0.05), the cor test confirms it with the p-value.
+- North: a poor negative correlation (-0.3). Though, this value is not statically relevant, because according to the p-value there's no evidene against H0.
+- Centre: no correlation (0.06), the cor test confirms it with the p-value.
+- South: good negative correlaiton (-0.6), the cor test confirms it with the p-value. 
+These can be read as follow: while there's no general correlation throughtout the peninsula, which is confirmed by Northern and Central data analysis, when it comes to the Southern ones, the trend is different.
+In fact, a good negative correlation is found, meaning that with the increasing of Urban Ecosystems, the concentration of pm10, O3 and NO2 decreases.
+This is probably due to the fact that in the Southern provinces a less massive presence of industries is present and so, the improvement of air quality can be correlated to the increase of Urban Ecosystem.
+However, since in this study a "Presence of industries" index is not taken into account, the previous can be seen only as a possible explanation. Further study should be done.
+
 
 ```{r, eval=TRUE, echo= FALSE}
 plot(x=newdf$`Urban ecosystem`, y=newdf$`Air quality`,    
@@ -634,8 +652,8 @@ plot(x=newdf$`Urban ecosystem`, y=newdf$`Air quality`,
      main="Scatterplot of U.E. and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(newdf$`Urban ecosystem`, newdf$`Air quality`)     #value 0.05, no general correlation 
-cor.test(newdf$`Urban ecosystem`, newdf$`Air quality`) #p-value, no evidence against H0= no correlation
+cor(newdf$`Urban ecosystem`, newdf$`Air quality`)      
+cor.test(newdf$`Urban ecosystem`, newdf$`Air quality`) 
 model_italy_2 <- lm(newdf$`Urban ecosystem`~ newdf$`Air quality`)
 summary(model_italy_2)
 
@@ -644,22 +662,19 @@ plot(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`,
      main="Scatterplot of U.E. and Air quality Northern Italy", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`)  #negative -0.3, poor correlation
-
-cor.test(Nord$`Urban ecosystem`, Nord$`Air quality`) #p-value, no evidence against H0= no correlation
+cor(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`)  
+cor.test(Nord$`Urban ecosystem`, Nord$`Air quality`) 
 model_italy_3 <- lm(Nord$`Urban ecosystem`~ Nord$`Air quality`)
 summary(model_italy_3)
-
 
 plot(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`,    
      xlab = "Urban Ecosystem ", ylab="Air quality", 
      main="Scatterplot of U.E. and Air quality central Italy", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`)  #-0.06, no correlation
+cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`)  
 model_italy_4 <- lm(Centro$`Urban ecosystem`~ Centro$`Air quality`)
 summary(model_italy_4)
-
 
 plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`,    
      xlab = "Urban Ecosystem ", ylab="Air quality", 
