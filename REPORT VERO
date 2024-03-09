@@ -765,8 +765,7 @@ since the p-value is really small we can say that we have a strong evidence to r
 Since the variable pedestrian areas has not a normal distribution, a z-test has been applied for large sample (>30).
 This has be successfully done for the Northern and the Southern provinces, but not for the Central one, where n = 22.
 
-# We need to calculate both sigma Y and sigma X, but to do that we need the unbiased sample variance
-# so we will use the var function
+In order to apply a z.test, the unbiased sample variance must be calculated. This is done as follow:
 ```{r, eval=FALSE}
 Nord_var <- var(Nord$`Pedestrian areas`)
 Centro_var <- var(Centro$`Pedestrian areas`)
@@ -778,8 +777,8 @@ Nord_usv <-sqrt(Nord_var)
 Centro_usv <-sqrt(Centro_var)
 Sud_usv <-sqrt(Sud_var)
 ```
+A z.test for the variable "Pedestrian Areas" can be applied:
 ```{r, eval=FALSE}
-# Now we can appyl the z.test on our variable "Pedestrian Areas"
 z.test(x=Nord$`Pedestrian areas`, y = Mezzogiorno$`Pedestrian areas`, alternative = "two.sided",
        mu=0, sigma.x= Nord_usv, sigma.y= Sud_usv, conf.level = 0.99) # p-value 0.11
 z.test(x=Nord$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
@@ -787,9 +786,9 @@ z.test(x=Nord$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "
 z.test(x=Mezzogiorno$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
        mu=0, sigma.x= Sud_usv, sigma.y= Centro_usv, conf.level = 0.99) #p-value 0.17
 ```
+The results shows that: 
 
-# Instead, when it comes to Urban Ecosystem, since a normal distribution is followed, 
-# a t-test can be applied.
+Instead, when it comes to Urban Ecosystem, since a normal distribution is followed, a t-test can be applied.
 ```{r, eval=FALSE}
 t.test(x=Nord$`Urban ecosystem` , y = Mezzogiorno$`Urban ecosystem`, alternative = "two.sided",
        mu=0, var.equal=T, conf.level = 0.99) #4x10^(-8) strong evidence against H0
@@ -798,7 +797,7 @@ t.test(x=Nord$`Urban ecosystem` , y = Centro$`Urban ecosystem`, alternative = "t
 t.test(x=Mezzogiorno$`Urban ecosystem` , y = Centro$`Urban ecosystem`, alternative = "two.sided",
        mu=0, var.equal=T, conf.level = 0.99) #0.009 strong evidence against H0
 ```
-#As expected, H0 is rejected, since our mean values for Urban Ecosystem for North, Centre and South are diffent within eachothers.
+As expected, H0 is rejected, since the mean values for Urban Ecosystem for North, Centre and South are diffent within eachothers.
 
 # Conclusion
 
