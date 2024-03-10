@@ -3,8 +3,8 @@ title: "Does the Italian quality of life depends on the geographical area?"
 author: "Stefania Bianco, Mattia Fabris, Gioia Riolli"
 date: "2024-02-27"
 output:
-  html_document: default
   word_document: default
+  html_document: default
   pdf_document: default
 ---
 ```{r, eval=TRUE, include=FALSE}
@@ -72,25 +72,31 @@ Piste_ciclabili<-Piste_ciclabili[order(Piste_ciclabili$CODICE.PROVINCIA.ISTAT..S
 ```
 
 Every indicator has a different unit of measurements: 
+
 - "Cycling lanes" is expressed in equivalent metres every 100 inhabitant;
 - "Motorization rate" in number of circulating cars every 100 inhabitants; 
 - "Urban green" is squared metres per inhabitant;
 - "Air quality" is an index based on PM10, NO2 and O3 data in the regional county seats; 
 - "Pedestrian areas" is expressed in squared metres per inhabitant;
 - "Urban ecosystem" is an indicator that merged 18 environmental parameters (such as waste recycling, water consumption and public local transportation).
+
 In the present study, the 107 Italian provinces represent the observed statistical units while the environmental parameters are quantitative continuous variables.
 
 The new data frame has been then further divided into three new subsets: 
+
 - North, 
 - Centre, 
 - "Mezzogiorno" or South,
+
 according to the ISTAT division of the Italian administrative territory.
 
 A descriptive and inferential statistical analysis of all the chosen indicators has been made and it will be explained in the next paragraphs. 
 For the descriptive part, a first study of all the indicators was made using:
+
 - measures of central tendency;
 - measures of variability;
 - plots and graphics to visually appreaciate the data analysis. 
+
 Note that different analysis have been made for the different variables in order to obtain a more dynamic and smooth report. 
 
 Moreover, four correlations between variables have been made, willing to understand if any possible relationship among them could exist.
@@ -117,7 +123,7 @@ mean_urban_green_centro
 mean_urban_green_mezzogiorno<-mean(Mezzogiorno$`Urban green`)
 mean_urban_green_mezzogiorno
 ```
-As the barplot shows,the values differ across the peninsula, with a higher mean in the North than the Centre and the South.
+As the barplot shows, the values differ across the peninsula, with a higher mean in the North than the Centre and the South.
 ```{r, eval=TRUE}
 mean_urban_green_values<-c(22.40, 29.79, 19.87, 14.74)
 bp_mean_urban_green<-barplot(mean_urban_green_values, 
@@ -180,15 +186,14 @@ cv_urban_green_mezzogiorno
 ```
 
 ### Air quality
-For the variable "Air quality" the unit of measurement is an index based on PM10, NO2 and O3 data in the regional county seats. 
-The values obtained for the arithmetic mean are:
+The average values for the variable "Air quality," measured in an index based on PM10, NO2, and O3 data in the regional county seats, are as follows:
 
-- Italy = 51.32, 
-- North = 62.41, 
-- Centre = 43.83, 
-- South = 41.95.
+- Italy: 51.32
+- North: 62.41
+- Centre: 43.83
+- South: 41.95
 
-This shows the air quality is in average higher in the South, followed by the Centre and the North in the end.
+These values indicate that, on average, air quality is higher in the South, followed by the Centre, and the North has the lowest air quality.
 
 ```{r, eval=TRUE, echo=FALSE}
 mean_air_quality_values<-c(51.32, 62.41, 43.83, 41.95)
@@ -206,6 +211,7 @@ boxplot(newdf$`Air quality`, main = "Boxplot of Air quality", ylab = "Index base
 
 To gain a deeper understanding of the air quality across various regions of Italy, an analysis on the grouped frequency distribution has been done pertaining to different levels of the PM10, NO2, and O3 indices in the regional county seats. 
 The data have been segmented by using the function "cut" into five classes: 
+
 - "very poor" (20-34), 
 - "poor" (34-48), 
 - "medium" (48-62), 
@@ -266,7 +272,7 @@ The latter test states that:
 Since the p-value is really low, strong evidence against H0 can be found, so the data do not come from a normal distribution.
 
 Measures of variability followed a different pattern compared to the mean:
-#ricontrollare dati cv
+
 - North: var = 238.60, sd = 15.45, cv = 0.25;
 - Centre: var = 50.46, sd = 7.10, cv = 0.16;
 - South: var = 126.11, sd = 11.23, cv = 0.27.
@@ -276,6 +282,7 @@ Measures of variability followed a different pattern compared to the mean:
 
 The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants. 
 The values obtained for the means are:
+
 - Italy = 9.67 
 - Nord = 14.90 
 - Centre = 7.10 
@@ -413,6 +420,7 @@ While the values for provinces in the North are around the Italian average, thos
 There's also notable variability in the data, particularly in the Central region, indicating a considerable degree of difference among the various provinces.
 
 To visually appreciate the results:
+
 ```{r, eval=TRUE, echo=FALSE}
 mean_urban_ecosystem_values<-c(0.53, 0.59, 0.53, 0.46)
 bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
@@ -491,6 +499,7 @@ The results are the following:
 - South: mean = 0.46, var = 0.008, sd = 0.09, cv = 0.19
 
 To visually appreciate the results:
+
 ```{r, eval=TRUE, echo=FALSE}
 bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
                                names.arg = c("Italy", "North", "Centre", "South"), 
@@ -536,6 +545,7 @@ legend("topright", inset = c(-0.05, 0), legend= c("Italy","Northern Italy", "Cen
        fill= c("orange", "blue", "darkgreen", "black"), box.lwd= 0.1, cex=0.6, text.width= 0.2, title="Lines legend",
 y.intersp = 0.5, text.font = 2, text.col = "black")
 ```
+
 When it comes to the Northern table, the data density curve is better-positioned compared to the national mean, meaning that the best situation can be found there.
 Instead, central region follows the general italian distribution with a good overlap.
 Finally, around 5% of Southern provinces have extremely low values, between 0.2 and 0.3. Little more of 50% of them have values ranging between 0.3 and 0.6 with the maximum density around 0.45, which still falls below the national italian mean. Instead, only a small percentage, less than 5% has good values ranging between 0.7 and 0.8.
@@ -546,14 +556,14 @@ In this section, a study on the correlation between indicators within the datase
 
 - Air quality and Urban green 
 - Pedestrian areas and Motorization rate
-- Motorization rate and Cycling lanes
 - Urban ecosystem and Air quality
+- Motorization rate and Cycling lanes
 
 ### Air quality and Urban green
 It is known that trees may play a central role in improving air quality in cities, so it was expected to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
 However, by plotting the two variables together a slightly positive correlation is obtained instead (cor=0.13).
 ```{r, eval=TRUE}
-
+model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
      xlab = "Urban Green", ylab="Air quality", 
      main="Scatterplot of Urban Green and Air quality", 
@@ -568,8 +578,10 @@ To understand if the correlation is stastically relevant:
 cor.test(newdf$`Urban green`, newdf$`Air quality`)
 ```
 And the p-value obatained is 0.17. In this case: 
+
 - H0 = true correlation is equal to 0;
 - H1 = true correlation is not equal to 0.
+
 The p-value does not imply any evidence against H0, so basically the variables are not significantly correlated. 
 
 Also with the functions
@@ -582,9 +594,12 @@ The X^2 is very low, so once more they do not seem to be correlated.
 So, is this pattern of "no correlaton" the same throughout Italy? To understand that, a deeper analysis among subsets has been made.
 
 The results are the following:
+
 - North: very poor correlation (-0.05), that is once more not statistically relevant (p-value=0.71),
 - Centre: no significant correlation, 
-- South: good negative correlation of -0.44, stastically relevant (p-value=0.005). The strong evidence against the null hypotesis implies that for the Southern provinces the two variables are correlated. 
+- South: good negative correlation of -0.44, stastically relevant (p-value=0.005). 
+
+The strong evidence against the null hypotesis implies that for the Southern provinces the two variables are correlated. 
 
 
 ```{r, eval=TRUE, echo=F}
@@ -609,7 +624,9 @@ In the North, probably there are more sources of pollutants that can not be abso
 ### Pedestrian areas and Motorization rate
 
 As second correlation, the relationship between the variables "Pedestrian areas" and "Motorization rate" was studied. Does an area with more pedestrian areas have less motorization rate?
+
 The scatterplot for the whole Italy is:
+
 ```{r, eval=TRUE, echo= FALSE}
 model_italy_pa_mr<-lm (newdf$`Pedestrian areas`~newdf$`Motorization rate`)
 plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
@@ -618,6 +635,7 @@ plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian
      col.main="orange")
 abline(model_italy_pa_mr)
 ```
+
 and from the function "cor" the value of linear correlation coefficient obtained is r=-0.18. The p-value the function "cor.test" provided is 0.07, that implies weak evidence against H0.
 Once more, the null hypothesis states that the true correlation is equal to 0, so the two variable may be weakly correlated. The coefficient of determination, however, is pretty low (X^2=0.03), so the regression line would explain only the 3% of the total variability.
 
@@ -635,10 +653,12 @@ In this particular case, a consideration must be made: Urban Ecosystem is a synt
 So, what is investigated is the impact #####NON MI PIACE QUESTO, COME POSSO SPIEGARLO MEGLIO? that this single indicator has on the final index value.
 
 The results are the following:
+
 - Italy: no general correlation (0.05), the cor test confirms it with the p-value.
 - North: a poor negative correlation (-0.3). Though, this value is not statically relevant, because according to the p-value there's no evidene against H0.
 - Centre: no correlation (0.06), the cor test confirms it with the p-value.
 - South: good negative correlaiton (-0.6), the cor test confirms it with the p-value. 
+
 These can be read as follow: while there's no general correlation throughtout the peninsula, which is confirmed by Northern and Central data analysis, when it comes to the Southern ones, the trend is different.
 In fact, a good negative correlation is found, meaning that with the increasing of Urban Ecosystems, the concentration of pm10, O3 and NO2 decreases.
 This is probably due to the fact that in the Southern provinces a less massive presence of industries is present and so, the improvement of air quality can be correlated to the increase of Urban Ecosystem.
@@ -668,7 +688,7 @@ summary(model_italy_3)
 
 plot(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`,    
      xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality central Italy", 
+     main="Scatterplot of U.E. and Air quality Central Italy", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
 cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`)  
@@ -686,6 +706,56 @@ cor.test(Mezzogiorno$`Urban ecosystem`, Mezzogiorno$`Urban ecosystem`)
 model_italy_5 <- lm(Mezzogiorno$`Urban ecosystem`~ Mezzogiorno$`Air quality`)
 summary(model_italy_5)
 ```
+
+### Motorization rate and Cycling lanes
+A final correlation analysis was conducted between two indicators: Motorization rate and the presence of cycling lanes. The objective of this study was to determine if there exists a correlation between the motorization rate and the availability of cycling lanes. Our idea was that a higher presence of cycling lanes would correspond to a lower motorization rate, similar to the study conducted for pedestrian areas.
+
+- The correlation value across all of Italy is -0.07, indicating no significant correlation.
+The p-value obtained from the cor.test function is 0.45, suggesting that there is no evidence against the null hypothesis (H0).
+ 
+
+```{r, eval=TRUE, echo= FALSE}
+plot(x=newdf$`Motorization rate`, y=newdf$`Cycling lanes`,    
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Scatterplot of Motorization rate and Cycling lanes", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(newdf$`Motorization rate`, newdf$`Cycling lanes`) 
+cor.test(newdf$`Motorization rate`, newdf$`Cycling lanes`)
+
+```
+In the remaining regions of the peninsula:
+
+- North: a poor positive correlation was found (0.32) with a p-value of 0.03, indicating moderate evidence against the null hypothesis (H0).
+- Centre: there is no correlation (-0.048) with a p-value of 0.83, suggesting that it is not statistically significant.
+- South: there is also no correlation (0.009) with a p-value of 0.96, indicating no statistical relevance.
+
+```{r, eval=TRUE, echo= FALSE}   
+# different areas of Italy
+plot(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Northern Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`) 
+
+
+plot(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Central Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`)  
+
+plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Southern Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`)  
+
+```
+From the results we obtained, it's evident that there is mostly no correlation, except for the case of the north where we observe a poor positive correlation. This suggests that with the increase of cycling lanes, the motorization rate is also increasing. This outcome is contrary to our expectations, indicating a need for further studies to understand the underlying reasons for this trend.
 
 # Inference
 
@@ -729,7 +799,7 @@ We obtained an extremely low p-value (8.17^-09), so we are 99% confident the dif
 ### Inference on the variable "Motorization rate" 
 
 With the variable "Motorization rate" we found an opposite trend: higher values in the South and lower values in the North. 
-This time, with the Shapiro test, we discovered the datas in the subset North follow a normal distribution, whereas in the Centre and in the South follow a normal distribution. 
+This time, with the Shapiro test, we discovered the datas in the subset North follow a non-normal distribution, whereas in the Centre and in the South follow a normal distribution. 
 Therefore, we could perform the T test within the difference of means of Centre and South
 ```{r, eval=FALSE}
 t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alternative = "two.sided",
@@ -737,16 +807,16 @@ t.test(x=Mezzogiorno$`Motorization rate` , y = Centro$`Motorization rate`, alter
 ```
 but this time obtaining an high p-value (0.6167), implying no evidence against H0, so basically there is not significative difference among these two geographical areas.
 
-### Inferencce on the variable "Urban green"
-!!!da finire!!! (xMttia XD)
-To find if the distribution is normal in different areas
+### Inference on the variable "Urban green"
+
+With the variable "Urban green," we observed that the means decrease as we move from the north to the center and the south. We conducted a study to ascertain if the mean values significantly differ across these regions. To achieve this, we need to determine the distribution type present in each area, applying the Shapiro test. 
 ```{r, eval=FALSE}
 shapiro.test(Nord$`Urban green`) #not normal distribution
 shapiro.test(Mezzogiorno$`Urban green`) #not normal distribution
 shapiro.test(Centro$`Urban green`) #normal distribution
 ```
 
-We caluclated the unbiased variance and used it for the z.test to understand if the difference between means in nord and mezzogiorno
+Since we have identified a normal distribution only in the center, while the north and south exhibit non-normal distributions, we conducted a z-test between the latter two. We calculated the unbiased variance and applied it for the z-test to assess the difference between means in the north and south.
 ```{r, eval=FALSE}
 var(Nord$`Urban green`)
 sqrt(var(Nord$`Urban green`))
@@ -755,12 +825,14 @@ sqrt(var(Mezzogiorno$`Urban green`))
 
 z.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.sided",
        sigma.x=24.07, sigma.y=9.02, mu=0, conf.level = 0.99)
-#p-value 7,585e-05 so reject H0 (differences between the two means is not equal to 0)
+#p-value = 7,585e-05 
 
 ```
-since the p-value is really small we can say that we have a strong evidence to reject H0 
 
-### Inferencce on the variable "Pedestrian Areas"
+
+The obtained very small p-value (7.585e-05) provides strong evidence to reject the null hypothesis (H0). Consequently, we conclude that the difference between the two means is not equal to 0.
+
+### Inference on the variable "Pedestrian Areas"
 Since the variable pedestrian areas has not a normal distribution, a z-test has been applied for large sample (>30).
 This has be successfully done for the Northern and the Southern provinces, but not for the Central one, where n = 22.
 
