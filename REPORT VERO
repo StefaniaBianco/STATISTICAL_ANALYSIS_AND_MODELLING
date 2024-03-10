@@ -565,7 +565,7 @@ However, by plotting the two variables together a slightly positive correlation 
 ```{r, eval=TRUE}
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
-     xlab = "Urban Green", ylab="Air quality", 
+     xlab = "Urban Green", ylab="PM10, NO2 and O3", 
      main="Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
@@ -577,7 +577,7 @@ To understand if the correlation is stastically relevant:
 ```{r, eval=F}
 cor.test(newdf$`Urban green`, newdf$`Air quality`)
 ```
-And the p-value obatained is 0.17. In this case: 
+The p-value obatained is 0.17. In this case: 
 
 - H0 = true correlation is equal to 0;
 - H1 = true correlation is not equal to 0.
@@ -589,7 +589,7 @@ Also with the functions
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 summary(model_italy)
 ```
-It is observed that the R^2 is very low, so once more they do not seem to be correlated. #####CAZZO HAI SCRITTO STE
+It is observed that the R^2 is very low, so once more they do not seem to be correlated. 
 
 Is this pattern of "no correlaton" the same throughout Italy? To understand that, a deeper analysis among subsets has been made.
 
@@ -635,8 +635,8 @@ plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian
 abline(model_italy_pa_mr)
 ```
 
-and from the function "cor" the value of linear correlation coefficient obtained is r=-0.18. The p-value the function "cor.test" provided is 0.07, that implies weak evidence against H0.
-Once more, the null hypothesis states that the true correlation is equal to 0, so the two variable may be weakly correlated. The coefficient of determination, however, is pretty low (X^2=0.03), so the regression line would explain only the 3% of the total variability.
+From the function "cor" the value of linear correlation coefficient obtained is r=-0.18. The p-value the function "cor.test" provided is 0.07, that implies weak evidence against H0.
+Once more, the null hypothesis states that the true correlation is equal to 0, so the two variable may be weakly correlated. The coefficient of determination, however, is pretty low (R^2=0.03), so the regression line would explain only the 3% of the total variability.
 
 As before, the correlation within the different geographical areas was made. 
 By correlating the data from the North of Italy, the r value obtained is -0.39, with a p-value of 0.007 (strong evidence against H0), so the link within this two variable in the North is consistent. 
@@ -653,11 +653,11 @@ The results are the following:
 - Italy: no general correlation (0.05), the cor test confirms it with the p-value.
 - North: a poor negative correlation (-0.3). Though, this value is not statically relevant, because according to the p-value there's no evidene against H0.
 - Centre: no correlation (0.06), the cor test confirms it with the p-value.
-- South: good negative correlaiton (-0.6), the cor test confirms it with the p-value. 
+- South: good negative correlation (-0.6), the cor test confirms it with the p-value. 
 
 These can be read as follow: while there's no general correlation throughtout the peninsula, which is confirmed by Northern and Central data analysis, when it comes to the Southern ones, the trend is different.
-In fact, a good negative correlation is found, meaning that with the increasing of pm10, O3 and NO2 concentration, the Urban Ecosystem value decreases.
-This is probably due to the fact that in the Southern provinces a less massive presence of industries is present and so, the improvement of air quality bring to the improvement as.
+In fact, a good negative correlation is found, meaning that with the increasing of PM10, O3 and NO2 concentration, the Urban Ecosystem value decreases.
+This is probably due to the fact that in the Southern provinces there is a less massive presence of industries and so the improvement of air quality bring to the improvement of the variable Urban Ecosystem.
 However, since in this study a "Presence of industries" index is not taken into account, the previous can be seen only as a possible explanation. Further study should be done.
 
 ```{r, eval=TRUE, echo= FALSE}
@@ -666,20 +666,12 @@ plot(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`,
      main="Air quality and U.E.", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`)     #value 0.05, no general correlation 
-cor.test(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`) #p-value, no evidence against H0= no correlation
-model_italy_2 <- lm(newdf$`Air quality`~ newdf$`Urban ecosystem`)
-summary(model_italy_2)
 
 plot(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`,    
      xlab = "Air quality", ylab="Urban ecosystem", 
      main="Air quality and U.E., South", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # negative -0.6, good correlation     
-cor.test(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # p-value, 2.2x10^(-16)
-model_italy_5 <- lm(Mezzogiorno$`Air quality`~ Mezzogiorno$`Urban ecosystem`)
-summary(model_italy_5)
 ```
 
 ### Motorization rate and Cycling lanes
@@ -690,12 +682,9 @@ The correlation value across all Italy is -0.07, and the p-value obtained from t
 ```{r, eval=TRUE, echo= FALSE}
 plot(x=newdf$`Motorization rate`, y=newdf$`Cycling lanes`,    
      xlab = "Motorization rate", ylab="Cycling lanes", 
-     main="Scatterplot of Motorization rate and Cycling lanes", 
+     main="Motorization rate and Cycling lanes", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
-cor(newdf$`Motorization rate`, newdf$`Cycling lanes`) 
-cor.test(newdf$`Motorization rate`, newdf$`Cycling lanes`)
-
 ```
 In the remaining regions of the peninsula:
 
@@ -728,7 +717,7 @@ plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`,
 cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`)  
 
 ```
-From the obtained results, it is evident that there is mostly no correlation, except for the case of the north where a poor positive correlation was observed. This suggests that with the increase of cycling lanes, the motorization rate is also increasing. This outcome is contrary to our expectations, indicating a need for further studies to understand the underlying reasons for this trend.
+From the obtained results, it is evident that there is mostly no correlation, except for the case of the North where a poor positive correlation was observed. This suggests that with the increase of cycling lanes, the motorization rate is also increasing. This outcome is contrary to our expectations, indicating a need for further studies to understand the underlying reasons for this trend.
 
 # Inference
 
@@ -782,14 +771,14 @@ but this time obtaining an high p-value (0.6167), implying no evidence against H
 
 ### Inference on the variable "Urban green"
 
-With the variable "Urban green," we observed that the means decrease as we move from the north to the center and the south. We conducted a study to ascertain if the mean values significantly differ across these regions. To achieve this, we need to determine the distribution type present in each area, applying the Shapiro test. 
+With the variable "Urban green," it was observed that the means decrease moving from the North to the Center and the South. Do the mean values significantly differ across these regions? To achieve this, by applying the Shapiro test it was assested if the data are normally distributed or not. 
 ```{r, eval=FALSE}
 shapiro.test(Nord$`Urban green`) #not normal distribution
 shapiro.test(Mezzogiorno$`Urban green`) #not normal distribution
 shapiro.test(Centro$`Urban green`) #normal distribution
 ```
 
-Since we have identified a normal distribution only in the center, while the north and south exhibit non-normal distributions, we conducted a z-test between the latter two. We calculated the unbiased variance and applied it for the z-test to assess the difference between means in the north and south.
+Since a normal distribution was identified only in the center, while the north and south exhibit non-normal distributions, a z-test was conducted between the latter two. The unbiased variance was calculated and used for the z-test to assess the difference between means in the north and south.
 ```{r, eval=FALSE}
 var(Nord$`Urban green`)
 sqrt(var(Nord$`Urban green`))
@@ -802,8 +791,7 @@ z.test(x=Nord$`Urban green` , y = Mezzogiorno$`Urban green`, alternative = "two.
 
 ```
 
-
-The obtained very small p-value (7.585e-05) provides strong evidence to reject the null hypothesis (H0). Consequently, we conclude that the difference between the two means is not equal to 0.
+The obtained very small p-value (7.585e-05) provides strong evidence to reject the null hypothesis (H0). Consequently, it is possible conclude with a 99% confidence interval that the difference between the two means is not equal to 0.
 
 ### Inference on the variable "Pedestrian Areas"
 Since the variable pedestrian areas has not a normal distribution, a z-test has been applied for large sample (>30).
@@ -826,10 +814,10 @@ A z.test for the variable "Pedestrian Areas" can be applied:
 z.test(x=Nord$`Pedestrian areas`, y = Mezzogiorno$`Pedestrian areas`, alternative = "two.sided",
        mu=0, sigma.x= Nord_usv, sigma.y= Sud_usv, conf.level = 0.99) # p-value 0.11
 ```
-According to the p-value obtained, no differences in population means are shown with a 99% confidence interval. #STE CHECK
+According to the p-value obtained, no differences in population means are shown with a 99% confidence interval. 
 
 ### Inference on the variable "Urban Ecosystem"
-Instead, when it comes to Urban Ecosystem, since a normal distribution is followed, a t-test can be applied.
+When it comes to Urban Ecosystem, since a normal distribution is followed, a t-test can be applied.
 ```{r, eval=FALSE}
 t.test(x=Nord$`Urban ecosystem` , y = Mezzogiorno$`Urban ecosystem`, alternative = "two.sided",
        mu=0, var.equal=T, conf.level = 0.99) #4x10^(-8) strong evidence against H0
