@@ -502,19 +502,39 @@ plot(x=newdf$`Motorization rate`, y=newdf$`Cycling lanes`,
      cex.main=1.4, font.main=2, 
      col.main="orange")
 cor(newdf$`Motorization rate`, newdf$`Cycling lanes`) #value -0.07, no correlation
-
+cor.test(newdf$`Motorization rate`, newdf$`Cycling lanes`) #p-value=0.45-->no evidence against H0=true correlation is equal to 0
+model_italy_mr_cl <- lm(newdf$`Motorization rate`~ newdf$`Cycling lanes`)
+summary(model_italy_mr_cl)
 # different areas of Italy
-plot(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`)
+plot(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Northern Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
 cor(x=Nord$`Motorization rate`, y=Nord$`Cycling lanes`) #value 0.32, poor correlation
+cor.test(Nord$`Motorization rate`, Nord$`Cycling lanes`) #p-value 0.03
+model_italy_mr_cl_nord <- lm(Nord$`Motorization rate`~ Nord$`Cycling lanes`)
+summary(model_italy_mr_cl_nord)
 
-plot(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`)
+plot(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Central Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
 cor(x=Centro$`Motorization rate`, y=Centro$`Cycling lanes`)  #-0.05, no correlation
+cor.test(Centro$`Motorization rate`, Centro$`Cycling lanes`) #p-value 0.83
+model_italy_mr_cl_centro <- lm(Centro$`Motorization rate`~ Centro$`Cycling lanes`)
+summary(model_italy_mr_cl_centro)
 
-plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`)
-cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`) #-0.01 good negative correlation
-
-model_mot_cyc<-lm(formula = newdf$`Motorization rate` ~ newdf$`Cycling lanes`)
-summary(model_mot_cyc)
+plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`,
+     xlab = "Motorization rate", ylab="Cycling lanes", 
+     main="Motorization rate and Cycling lanes Southern Italy", 
+     cex.main=1.4, font.main=2, 
+     col.main="orange")
+cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`) #0.01 good negative correlation
+cor.test(Mezzogiorno$`Motorization rate`, Mezzogiorno$`Cycling lanes`) #p-value 0.96
+model_italy_mr_cl_mezzogiorno <- lm(Mezzogiorno$`Motorization rate`~ Mezzogiorno$`Cycling lanes`)
+summary(model_italy_mr_cl_mezzogiorno)
 
 #correlation                            
 plot(x=newdf$`Urban ecosystem`, y=newdf$`Air quality`,    
