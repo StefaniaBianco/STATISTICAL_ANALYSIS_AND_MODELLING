@@ -728,36 +728,36 @@ plot(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`,
 cor(x=Mezzogiorno$`Motorization rate`, y=Mezzogiorno$`Cycling lanes`)  
 
 ```
-From the results we obtained, it's evident that there is mostly no correlation, except for the case of the north where we observe a poor positive correlation. This suggests that with the increase of cycling lanes, the motorization rate is also increasing. This outcome is contrary to our expectations, indicating a need for further studies to understand the underlying reasons for this trend.
+From the obtained results, it is evident that there is mostly no correlation, except for the case of the north where a poor positive correlation was observed. This suggests that with the increase of cycling lanes, the motorization rate is also increasing. This outcome is contrary to our expectations, indicating a need for further studies to understand the underlying reasons for this trend.
 
 # Inference
 
-For our inferencial analysis, we worked pretending that our provences are stastical units coming from a random sample and assuming we could broaden the results obtained thanks to the values of the main cities to the whole geographical areas.
-Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
+For the inferencial analysis, the work was done assuming that the provences are stastical units coming from a random sample and assuming it is possible to broaden the results obtained thanks to the values of the main cities to the whole geographical areas.
+Given the observed patterns of differences between provinces within the same indicators, the goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
 
-We used the following packages:
+The following packages were used:
 ```{r, eval=FALSE}
 library(EnvStats)
 library(BSDA)
 ```
-and for every subset we performed the Shapiro test in order to understand the normality of our data, and subsequently performing a T test or a Z test. 
-We performed the t.test every time we obtained normality in our population data, taking into account the fact that the variance is unknown.
-We performed the z.test every time we did not obtain normality in our population data, knowing that we can assume our data follow a ###z distribution in case of large samples (n>30). 
-However, the subset of the central Italy has not a sample size large enough (n=22), so we could perform the z test only for comparing the population of the North (n=47) and of the South (n=38) of Italy.
+and for every subset the Shapiro test was performed in order to understand the normality of the data, and subsequently performing a T test or a Z test. 
+We performed the t.test every time we obtained normality in the population data, taking into account the fact that the variance is unknown.
+We performed the z.test every time we did not obtain normality in the population data, knowing that it can assumed that the data follow a normal distribution in case of large samples (n>30). 
+However, the subset of the central Italy has not a sample size large enough (n=22), so it was possible to perform the z test only for comparing the population of the North (n=47) and of the South (n=38) of Italy.
 
 ### Inference on the variable "Cycling lanes"
 
-By looking at the data of the variable "Cycling lane", we already noted some important differences among the peninsula. We had already seen the mean values decreases going southern, but we wanted to test if the differences are statistically relevant. 
-We first performed the Shapiro test to understand the normality of our subset data. 
+By looking at the data of the variable "Cycling lane", it is already possible to note some important differences among the peninsula. The mean values decreases going southern, but the aim in this part was to test if the differences are statistically relevant. 
+The Shapiro test was performed to check whether the subset data are normally distributed. 
 ```{r, eval=FALSE}
 shapiro.test(Nord$`Cycling lanes`)
 shapiro.test(Mezzogiorno$`Cycling lanes`)
 shapiro.test(Centro$`Cycling lanes`)
 ```
-We obtained in all the three cases a low p-value, meaning that all our data come from a non-normal distribution. 
-As already stated in the introduction, we can perform the z test even if the variance is unknown if we have a sample size large enough. 
-We can in our case make inference on the difference between the population means between the North and the South. 
-In order to do the z test, we need to have the standard deviation of the two samples, that we can calculate using the function var() that gives us the unbiased sample variance and the simply using the function sqrt()
+In all the three cases a low p-value was found, meaning that all the data come from a non-normal distribution. 
+As already stated in the introduction, it is possible to perform the z test even if the variance is unknown if we have a sample size large enough. 
+It is possible in this case to make inference on the difference between the population means between the North and the South. 
+In order to perform the z test, it is necessary to have the standard deviation of the two samples, that can be calculated using the function var() that provides the unbiased sample variance and then it is possible to get the standard deviation by using the function sqrt().
 ```{r, eval=FALSE}
 z.test(x=Nord$`Cycling lanes` , y = Mezzogiorno$`Cycling lanes`,
        alternative = "two.sided", sigma.x=10.09, sigma.y=6.06, mu=0, conf.level = 0.99)
