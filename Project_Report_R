@@ -3,8 +3,8 @@ title: "Does the Italian quality of life depends on the geographical area?"
 author: "Stefania Bianco, Mattia Fabris, Gioia Riolli"
 date: "2024-02-27"
 output:
-  word_document: default
   html_document: default
+  word_document: default
   pdf_document: default
 ---
 ```{r, eval=TRUE, include=FALSE}
@@ -41,6 +41,9 @@ Centro <- newdf[c(41:60, 100, 105),]
 
 Mezzogiorno <- newdf[c(61:92, 94:95, 101:102, 106:107),]
 
+pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
+                           breaks=c(0, 1.5, 3, 4.5, 7), 
+                           labels=c("0-1.5", "1.5-3", "3-4.5", "4.5-7"))
 ```
 
 # Introduction and Data Description 
@@ -110,7 +113,7 @@ For some variables graphics, such as boxplots, barplots and histograms have been
 
 ### Urban green
 The first analyzed variable is "Urban green", expressed in squared metres per inhabitant. 
-As first numerical measure a data summary has been made in order to calculate the arithmetic mean for each indicator in different areas. 
+As first numerical measure, we computed the arithmetic mean for each indicator across various regions. 
 Note that, as this is the first variable, almost the full code has been included, to be thorough.
 
 For "Urban Green", the results are the following:
@@ -235,12 +238,12 @@ table(air_quality_rate_cat_sud)
 library(RColorBrewer)
 coul <- brewer.pal(5, "Set2")
 
-barplot(table(air_quality_rate_cat), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,50), main="Air quality Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat), xlab="Index on Pm10, NO2 and O3", ylab="Number of cities", ylim = c(0,50), main="Air quality Italy", col=coul, border="black")
 
 par(mfrow=c(1,3))
-barplot(table(air_quality_rate_cat_nord), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality North Italy", col=coul, border="black")
-barplot(table(air_quality_rate_cat_centro), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality Centre Italy", col=coul, border="black")
-barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, NO2 and O3", ylab="Absolute frequency", ylim = c(0,25), main="Air quality South Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_nord), xlab="Index on Pm10, NO2 and O3", ylab="Number of cities", ylim = c(0,25), main="Air quality North Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_centro), xlab="Index on Pm10, NO2 and O3", ylab="Number of cities", ylim = c(0,25), main="Air quality Centre Italy", col=coul, border="black")
+barplot(table(air_quality_rate_cat_sud), xlab="Index on Pm10, NO2 and O3", ylab="Number of cities", ylim = c(0,25), main="Air quality South Italy", col=coul, border="black")
 ```
 
 
@@ -398,7 +401,7 @@ The variance and the standard deviation follow the same pattern:
 
 In this case as well a boxplot of the variable "Motorization rate" in Italy has been drawn:
 ```{r, eval=TRUE, echo=FALSE}
-par(mfrow=c(1,2)
+par(mfrow=c(1,2))
 boxplot(newdf$`Motorization rate`,  main = "Motorization rate")
 boxplot(newdf$`Motorization rate`,  main = "Motorization rate", outline = FALSE)
 ```
@@ -471,6 +474,7 @@ barcat_mezz <-table(pedestrian_areas_cat_mezz)
 The situation is pretty limited all around Italy, with the worst situation again in the South.
 
 ```{r, eval=TRUE, echo=FALSE}
+barcat <-table(pedestrian_areas_cat)
 par(mfrow=c(2,2))
 barplot(barcat, xlab = "m^2 per inhabitant", ylab= "Number of province",
         main="PAs in Italy", col=coul, border="red")
