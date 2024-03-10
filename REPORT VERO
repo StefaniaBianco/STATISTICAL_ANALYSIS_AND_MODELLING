@@ -825,13 +825,10 @@ A z.test for the variable "Pedestrian Areas" can be applied:
 ```{r, eval=FALSE}
 z.test(x=Nord$`Pedestrian areas`, y = Mezzogiorno$`Pedestrian areas`, alternative = "two.sided",
        mu=0, sigma.x= Nord_usv, sigma.y= Sud_usv, conf.level = 0.99) # p-value 0.11
-z.test(x=Nord$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
-       mu=0, sigma.x= Nord_usv, sigma.y= Centro_usv, conf.level = 0.99) #p-value 0.52
-z.test(x=Mezzogiorno$`Pedestrian areas`, y = Centro$`Pedestrian areas`, alternative = "two.sided",
-       mu=0, sigma.x= Sud_usv, sigma.y= Centro_usv, conf.level = 0.99) #p-value 0.17
 ```
-The results shows that: 
+According to the p-value obtained, no differences in population means are shown with a 99% confidence interval. #STE CHECK
 
+### Inference on the variable "Urban Ecosystem"
 Instead, when it comes to Urban Ecosystem, since a normal distribution is followed, a t-test can be applied.
 ```{r, eval=FALSE}
 t.test(x=Nord$`Urban ecosystem` , y = Mezzogiorno$`Urban ecosystem`, alternative = "two.sided",
@@ -847,11 +844,12 @@ As expected, H0 is rejected, since the mean values for Urban Ecosystem for North
 
 Our project's aim was to understand the Italian situation regarding some environmental parameters and to discover if there are patterns along the Peninsula. 
 
-Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a #bad situation for all the parameters. 
+Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a critical situation for all the parameters. 
 Furthermore, the gap between North-Centre-South is almost always visible and consistent in every aspect analysed. 
 
-The need of creating sustainable cities, both for human life and from an environmental point of view, is getting more and more urgent. 
+The need of creating sustainable cities, both for human life and the other organisms #####DIRE MEGLIO, is getting more and more urgent. 
 Thanks to the indicators we can understand where is more important to act, both in terms of parameters and in terms of geographical area.
+However, further researches and studies should be carried out to fully investigate how to improve the general situation and also meet SDGs standards.
 
 # Sitography
 - https://github.com/IlSole24ORE/QDV2022/blob/main/20221213_QDV2022_001.csv
