@@ -767,7 +767,7 @@ With this test:
 - H0=true difference between population means is equal to 0
 - H1=true difference between population means is not equal to 0
 
-We obtained an extremely low p-value (8.17^-09), so we are 99% confident the difference between the amount of Cycling lanes in the North and the South is stastically significative. 
+An extremely low p-value (8.17^-09) was obtaind, so the difference between the amount of Cycling lanes in the North and the South is stastically significative with a 99% Confidence Interval. 
 
 ### Inference on the variable "Motorization rate" 
 
