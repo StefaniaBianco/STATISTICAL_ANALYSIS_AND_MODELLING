@@ -53,7 +53,7 @@ The present project aims both at:
 - analysing and understanding if the parameters are significantly different between the three macroareas of the peninsula.
 
 Data have been collected from "Il Sole 24 Ore" website and GitHub account. The newspaper ranks every year all the 107 Italian provinces from the highest to the lowest for quality of life standards. 
-The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where the present data have been taken and imported by using the function:
+The results are published in an user-friendly website in form of a general and specific ranking, and in the GitHub profile, from where the present data have been taken and imported on R by using the function:
 
 ```{r, eval=FALSE }
 getwd()
@@ -106,11 +106,12 @@ Finally, for the inferencial part, some tests have been made about the differenc
 # Descriptive statistics
 
 In order to make some univariate descriptive analysis, for each indicator the mean, the variance, the standard deviation and the coefficient of variation has been calculated. 
-For some variables graphics, such as boxplots, barplots and histograms, have been drawn.  
+For some variables graphics, such as boxplots, barplots and histograms have been drawn.  
 
 ### Urban green
 The first analyzed variable is "Urban green", expressed in squared metres per inhabitant. 
 As first numerical measure a data summary has been made in order to calculate the arithmetic mean for each indicator in different areas. 
+Note that, as this is the first variable, almost the full code has been included, to be thorough.
 
 For "Urban Green", the results are the following:
 ```{r, eval=TRUE }
@@ -138,8 +139,8 @@ It revealed the presence of five outliers (Gorizia, Pordenone, Verbano-Cusio-Oss
 Consequently, we opted to display the boxplot excluding these outliers.
 ```{r, eval=TRUE}
 par(mfrow=c(1,2))
-boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant", outline = FALSE)
-boxplot(newdf$`Urban green`, main = "Boxplot of Urban green", ylab = "m^2 per inhabitant")
+boxplot(newdf$`Urban green`, main = "Urban green", ylab = "m^2 per inhabitant", outline = FALSE)
+boxplot(newdf$`Urban green`, main = "Urban green", ylab = "m^2 per inhabitant")
 ```
 
 The presence of these outliers skews the mean. In this case a more robust measure is the median.
@@ -186,14 +187,14 @@ cv_urban_green_mezzogiorno
 ```
 
 ### Air quality
-The average values for the variable "Air quality," measured in an index based on PM10, NO2, and O3 data in the regional county seats, are as follows:
+The average values for the variable "Air quality," measured with an index based on PM10, NO2, and O3 data in the regional county seats, are as follows:
 
 - Italy: 51.32
 - North: 62.41
 - Centre: 43.83
 - South: 41.95
 
-These values indicate that, on average, air quality is higher in the South, followed by the Centre, and the North has the lowest air quality.
+These values indicate that, on average, air quality is higher in the South, followed by the Centre, whereas the North has the lowest air quality.
 
 ```{r, eval=TRUE, echo=FALSE}
 mean_air_quality_values<-c(51.32, 62.41, 43.83, 41.95)
@@ -260,10 +261,10 @@ curve(dnorm(x, mean=mean(newdf$`Air quality`),
 The black line indicates the density curve, the orange one represents the shape of hypothetically normally distributed data and the red one is the mean.
 The histogram is slightly positively skewed.
 
+To understand if the data are normally distributed or not, Shapiro test can be performed.
 ```{r, eval=TRUE}
 shapiro.test(newdf$`Air quality`)
 ```
-To understand if the data are normally distributed or not, Shapiro test can be performed.
 The latter test states that: 
 
 - H0 : sample data come from a normal distribution; 
@@ -307,7 +308,7 @@ The measures of variability follows the same pattern, with:
 
 The overall variance for Italy is 86.08, while the standard deviation is 9.28.
 
-To understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, the range has been calculated. It goes from 0 to 46.5 equivalent meters every 100 inhabitants. 5 categories have been created: 
+To understand from a qualitative point of view if the cycling lane presence is consistent or not in Italy, the range has been calculated: it goes from 0 to 46.5 equivalent meters every 100 inhabitants. 5 categories have been created: 
 
 - "Very poor" = 0-10
 - "Poor" = 10-20
@@ -318,7 +319,6 @@ To understand from a qualitative point of view if the cycling lane presence is c
 Note that the above-made classification is based only on the collected data: it is not an arbitrary and universal classification. This means that probably, what has been classified as "very good" could not be good enough for the European standards, or, more generally, for a proper cyclable city.
 
 ```{r, eval=TRUE, echo=FALSE}
-range(newdf$`Cycling lanes`)
 cycling_lanes_cat<-cut(newdf$`Cycling lanes`, breaks = c(0, 10, 20, 30, 40, 50), labels = c("Very poor", "Poor", "Medium","Good","Very good"))
 table(cycling_lanes_cat)
 
@@ -326,7 +326,7 @@ table(cycling_lanes_cat)
 library(RColorBrewer) #choosing colours
 coul <- brewer.pal(5, "Set2")
 
-barplot(table(cycling_lanes_cat), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", main="Cycling lanes Italy", col=coul, border="red")
+barplot(table(cycling_lanes_cat), ylab="Number of cities", main="Cycling lanes Italy", col=coul, border="red")
 ```
 
 It is clear that the majority of Italian cities have a poor presence of cycling lanes, as more than 60 cities belong to the category "very poor", and the number of cities decreases when the categories get better in terms of presence of cycling lanes. 
@@ -343,10 +343,9 @@ cycling_lanes_cat_sud<-cut(Mezzogiorno$`Cycling lanes`, breaks = c(0, 10, 20, 30
 table(cycling_lanes_cat_sud)
 
 par(mfrow=c(1,3))
-barplot(table(cycling_lanes_cat_nord), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes Nord", col=coul, border="red")
-barplot(table(cycling_lanes_cat_centro), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes Centre", col=coul, border="red")
-barplot(table(cycling_lanes_cat_sud), xlab="Equivalent metres every 100 inhabitants", ylab="Number of cycling lanes", ylim=c(0,35), main="Cycling lanes South", col=coul, border="red")
-dev.off()
+barplot(table(cycling_lanes_cat_nord), ylab="Number of cities", ylim=c(0,35), main="Cycling lanes Nord", col=coul, border="red")
+barplot(table(cycling_lanes_cat_centro), ylab="Number of cities", ylim=c(0,35), main="Cycling lanes Centre", col=coul, border="red")
+barplot(table(cycling_lanes_cat_sud), ylab="Number of cities", ylim=c(0,35), main="Cycling lanes South", col=coul, border="red")
 ```
 From this barplots, it can be seen that in the North of Italy there are more cities belonging to better categories compared to the Centre and the South. 
 
@@ -398,10 +397,11 @@ The variance and the standard deviation follow the same pattern:
 - South var = 40.06; South sd = 6.33
 
 In this case as well a boxplot of the variable "Motorization rate" in Italy has been drawn:
-```{r, eval=TRUE}
-boxplot(newdf$`Motorization rate`)
+```{r, eval=TRUE, echo=FALSE}
+par(mfrow=c(1,2)
+boxplot(newdf$`Motorization rate`,  main = "Motorization rate")
+boxplot(newdf$`Motorization rate`,  main = "Motorization rate", outline = FALSE)
 ```
-
 Once more, the presence of three outliers was noticed: Venice, Genova and Milan.
 Overall, the motorization rate is very high and needs to be lowered in order to have more environmental-friendly and human-friendly cities. 
 
@@ -419,13 +419,13 @@ In this case, the values obtained from the analysis across the North, Central, a
 While the values for provinces in the North are around the Italian average, those in the South are much lower, whereas those in the Central region are somewhat higher. 
 There's also notable variability in the data, particularly in the Central region, indicating a considerable degree of difference among the various provinces.
 
-To visually appreciate the results:
+To visually appreciate the difference in the means:
 
 ```{r, eval=TRUE, echo=FALSE}
 mean_pedestrian_areas_values<-c(0.47, 0.50, 0.70, 0.29)
 bp_mean_pedestrian_areas<-barplot(mean_pedestrian_areas_values, 
                                   names.arg = c("Italy", "North", "Centre", "South"), 
-                                  col="light green", ylab="Number of P.A. every 100 habitants")
+                                  col="light green", ylab="m^2 for inhabitant")
 title("Barplot of Pedestrian Areas")
 abline(h=0.47)
 ```
@@ -433,7 +433,7 @@ abline(h=0.47)
 The "Pedestrian Areas" indicator has been divided in four main categories by using the "cat" function and by looking at the squared metres per inhabitant.
 
 General table:
-```{r, eval=TRUE, echo=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 range(newdf$`Pedestrian areas`) # between 0 and 6.8
 pedestrian_areas_cat <-cut(newdf$`Pedestrian areas`, 
                            breaks=c(0, 1.5, 3, 4.5, 7), 
@@ -497,7 +497,7 @@ The results are the following:
 - Centre: mean = 0.52, var = 0.007, sd = 0.08, cv = 0.16
 - South: mean = 0.46, var = 0.008, sd = 0.09, cv = 0.19
 
-To visually appreciate the results:
+To visually appreciate the results, the barplot of the mean of the index "Urban Ecosystem":
 
 ```{r, eval=TRUE, echo=FALSE}
 mean_urban_ecosystem_values<-c(0.53, 0.59, 0.53, 0.46)
