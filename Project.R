@@ -536,55 +536,49 @@ cor.test(Mezzogiorno$`Motorization rate`, Mezzogiorno$`Cycling lanes`) #p-value 
 model_italy_mr_cl_mezzogiorno <- lm(Mezzogiorno$`Motorization rate`~ Mezzogiorno$`Cycling lanes`)
 summary(model_italy_mr_cl_mezzogiorno)
 
-#correlation                            
-plot(x=newdf$`Urban ecosystem`, y=newdf$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality", 
+#correlation between air quality and urban ecosystem                           
+plot(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E.", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(newdf$`Urban ecosystem`, newdf$`Air quality`)     #value 0.05, no general correlation 
-cor.test(newdf$`Urban ecosystem`, newdf$`Air quality`) #p-value, no evidence against H0= no correlation
-model_italy_2 <- lm(newdf$`Urban ecosystem`~ newdf$`Air quality`)
+cor(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`)     #value 0.05, no general correlation 
+cor.test(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`) #p-value, no evidence against H0= no correlation
+model_italy_2 <- lm(newdf$`Air quality`~ newdf$`Urban ecosystem`)
 summary(model_italy_2)
 dev.off()
 
 # But what about in the different areas of Italy?
-
-plot(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality Northern Italy", 
+plot(x=Nord$`Air quality`, y=Nord$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E., North", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-?plot
-cor(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`)  # negative -0.3, poor correlation
-cor.test(Nord$`Urban ecosystem`, Nord$`Air quality`) # p-value, no evidence against H0= no correlation
-model_italy_3 <- lm(Nord$`Urban ecosystem`~ Nord$`Air quality`)
+cor(x=Nord$`Air quality`, y=Nord$`Urban ecosystem`) # negative -0.3, poor correlation     
+cor.test(x=Nord$`Air quality`, y=Nord$`Urban ecosystem`) # p-value, no evidence against H0= no correlation
+model_italy_3 <- lm(Nord$`Air quality`~ Nord$`Urban ecosystem`)
 summary(model_italy_3)
 
-
-plot(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality central Italy", 
+plot(x=Centro$`Air quality`, y=Centro$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E., Centre", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`) #-0.06, no correlation
-cor.test(Centro$`Urban ecosystem`, Centro$`Urban ecosystem`) # p-value = 2.2 x10^(-12)
-model_italy_4 <- lm(Centro$`Urban ecosystem`~ Centro$`Air quality`)
+cor(x=Centro$`Air quality`, y=Centro$`Urban ecosystem`) # no correlation     
+cor.test(x=Centro$`Air quality`, y=Centro$`Urban ecosystem`) # p-value, no evidence against H0= no correlation
+model_italy_4 <- lm(Centro$`Air quality`~ Centro$`Urban ecosystem`)
 summary(model_italy_4)
-dev.off()
 
-# Probably no correlation because the samples are not enough (only 22, compared to 45 in the north and 35 in the south)
-
-plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality Southern Italy", 
+plot(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E., South", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good negative correlation
-cor.test(Mezzogiorno$`Urban ecosystem`, Mezzogiorno$`Urban ecosystem`) # p-value, 2.2x10^(-16)
-model_italy_5 <- lm(Mezzogiorno$`Urban ecosystem`~ Mezzogiorno$`Air quality`)
+cor(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # negative -0.6, good correlation     
+cor.test(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # p-value, 2.2x10^(-16)
+model_italy_5 <- lm(Mezzogiorno$`Air quality`~ Mezzogiorno$`Urban ecosystem`)
 summary(model_italy_5)
-
+dev.off()
 
 ###INFERENCE
 #some packages needed for our tests
