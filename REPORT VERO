@@ -278,7 +278,7 @@ Measures of variability followed a different pattern compared to the mean:
 - South: var = 126.11, sd = 11.23, cv = 0.27.
 
 
-# Cycling lane descriptive analysis
+### Cycling lanes
 
 The variable "cycling lane" is expressed in equivalent metres every 100 inhabitants. 
 The values obtained for the means are:
@@ -369,7 +369,7 @@ shapiro.test(newdf$`Cycling lanes`)
 ```
 an extremely low p-value (1.976^-08) has been obtained, meaning strong evidence against H0: data do not come from a normal distribution, as foreseen. 
 
-# Motorization rate descriptive analysis
+### Motorization rate 
 The variable "Motorization rate" is expressed in circulating cars every 100 inhabitants. The trend this time showed higher values in the South, medium in the Centre and smaller in the North.
 The obtained means:
 
@@ -422,13 +422,12 @@ There's also notable variability in the data, particularly in the Central region
 To visually appreciate the results:
 
 ```{r, eval=TRUE, echo=FALSE}
-mean_urban_ecosystem_values<-c(0.53, 0.59, 0.53, 0.46)
-bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
-                               names.arg = c("Italy", "North", "Centre", "South"), 
-                               col="dark green", ylab="Urban Ecosystem Synthetic Index",
-                               ylim =c(0, 0.7) )
-title("Barplot of Urban Ecosystem")
-abline(h=0.53)
+mean_pedestrian_areas_values<-c(0.47, 0.50, 0.70, 0.29)
+bp_mean_pedestrian_areas<-barplot(mean_pedestrian_areas_values, 
+                                  names.arg = c("Italy", "North", "Centre", "South"), 
+                                  col="light green", ylab="Number of P.A. every 100 habitants")
+title("Barplot of Pedestrian Areas")
+abline(h=0.47)
 ```
 
 The "Pedestrian Areas" indicator has been divided in four main categories by using the "cat" function and by looking at the squared metres per inhabitant.
@@ -501,6 +500,7 @@ The results are the following:
 To visually appreciate the results:
 
 ```{r, eval=TRUE, echo=FALSE}
+mean_urban_ecosystem_values<-c(0.53, 0.59, 0.53, 0.46)
 bp_mean_urban_ecosystem<-barplot(mean_urban_ecosystem_values, 
                                names.arg = c("Italy", "North", "Centre", "South"), 
                                col="dark green", ylab="Urban Ecosystem Synthetic Index",
@@ -551,7 +551,7 @@ Instead, central region follows the general italian distribution with a good ove
 Finally, around 5% of Southern provinces have extremely low values, between 0.2 and 0.3. Little more of 50% of them have values ranging between 0.3 and 0.6 with the maximum density around 0.45, which still falls below the national italian mean. Instead, only a small percentage, less than 5% has good values ranging between 0.7 and 0.8.
 This confirm what has been previously stated: the situation among the Southern provinces is critical almost everywhere, excluding few cities.
 
-## Correlation between variables
+# Correlation between variables
 In this section, a study on the correlation between indicators within the dataset was conducted, aiming to identify any potential links between them.
 
 - Air quality and Urban green 
@@ -760,7 +760,7 @@ From the results we obtained, it's evident that there is mostly no correlation, 
 # Inference
 
 For our inferencial analysis, we worked pretending that our provences are stastical units coming from a random sample and assuming we could broaden the results obtained thanks to the values of the main cities to the whole geographical areas.
-((((#io scriverei quello della riga precedente al posto di questo, mi sembra più chiaro, però ditemi voi. Our inference work involves sampling provinces within the subset, aiming to confirm and broaden the results obtained during the analysis to the entire population.))))) Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
+Given the observed patterns of differences between provinces within the same indicators, our goal is to validate these results through hypothesis testing and subsequently generalize them to whole Italy.
 
 We used the following packages:
 ```{r, eval=FALSE}
