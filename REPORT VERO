@@ -560,13 +560,13 @@ In this section, a study on the correlation between indicators within the datase
 - Motorization rate and Cycling lanes
 
 ### Air quality and Urban green
-It is known that trees may play a central role in improving air quality in cities, so it was expected to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
-However, by plotting the two variables together a slightly positive correlation is obtained instead (cor=0.13).
+It is known that trees play a central role in improving air quality in cities, so it was expected to get a negative correlation between urban green and the concentration of pollutants and particular matter. 
+However, by plotting the two variables together a slightly positive correlation was obtained instead (cor=0.13).
 ```{r, eval=TRUE}
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 plot(x=newdf$`Urban green`, y=newdf$`Air quality`,    
      xlab = "Urban Green", ylab="Air quality", 
-     main="Scatterplot of Urban Green and Air quality", 
+     main="Urban Green and Air quality", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
 abline(model_italy)
@@ -582,16 +582,16 @@ And the p-value obatained is 0.17. In this case:
 - H0 = true correlation is equal to 0;
 - H1 = true correlation is not equal to 0.
 
-The p-value does not imply any evidence against H0, so basically the variables are not significantly correlated. 
+The p-value does not imply any evidence against H0: the variables are not significantly correlated. 
 
 Also with the functions
 ```{r}
 model_italy <- lm(newdf$`Urban green`~ newdf$`Air quality`)
 summary(model_italy)
 ```
-The X^2 is very low, so once more they do not seem to be correlated.
+It is observed that the R^2 is very low, so once more they do not seem to be correlated. #####CAZZO HAI SCRITTO STE
 
-So, is this pattern of "no correlaton" the same throughout Italy? To understand that, a deeper analysis among subsets has been made.
+Is this pattern of "no correlaton" the same throughout Italy? To understand that, a deeper analysis among subsets has been made.
 
 The results are the following:
 
@@ -600,25 +600,24 @@ The results are the following:
 - South: good negative correlation of -0.44, stastically relevant (p-value=0.005). 
 
 The strong evidence against the null hypotesis implies that for the Southern provinces the two variables are correlated. 
-
-
+The correlation can be appreciated in the hereunder present scatterplot.
 ```{r, eval=TRUE, echo=F}
 model_mezzogiorno <- lm(Mezzogiorno$`Urban green`~ Mezzogiorno$`Air quality`)
 plot(x=Mezzogiorno$`Urban green`, y=Mezzogiorno$`Air quality`, 
      xlab = "Urban Green", ylab="PM10, NO2 and 03", 
-     main="Scatterplot of Urban Green and Air quality", 
+     main="Urban Green and Air quality, South", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
 abline(model_mezzogiorno)
 ```
 
-The regression line obtained is: ###MANCA QUALCOSA??????? 
+The regression line obtained is:
 
 - Urban Green=50.21-0.56 x [PM10, NO2 and O3 concentration]
 
-However, the coefficient of determination R^2 obtained with the function "lm" was 0.20, so the regression line explains only the 20% of the variability of the pollutants concentrations. 
+However, the coefficient of determination R^2 obtained with the function "lm" was 0.20, so the regression line explains only the 20% of the variability of the pollutants' concentrations. 
 
-Still, the hypotesis is that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and the pollutants can be more easily absorbed by urban green (when there is a decent amount of threes in the city). 
+Still, the hypotesis is that the more direct correlation between urban green and pollutants in the South is due to a lower presence of factories and industries. Probably, the main emissions in the southern cities are due to traffic, and the pollutants can be more easily absorbed by urban green (when there is a decent amount of trees in the city). 
 In the North, probably there are more sources of pollutants that can not be absorbed by urban green, so the correlation is not that direct.
 
 ### Pedestrian areas and Motorization rate
@@ -630,7 +629,7 @@ The scatterplot for the whole Italy is:
 ```{r, eval=TRUE, echo= FALSE}
 model_italy_pa_mr<-lm (newdf$`Pedestrian areas`~newdf$`Motorization rate`)
 plot(x=newdf$`Pedestrian areas`, y=newdf$`Motorization rate`, xlab = "Pedestrian areas", ylab="Motorization rate", 
-     main="Scatterplot of Pedestrian areas and Motorization rate", 
+     main="Pedestrian areas and Motorization rate", 
      cex.main=1.4, font.main=2, 
      col.main="orange")
 abline(model_italy_pa_mr)
@@ -643,14 +642,11 @@ As before, the correlation within the different geographical areas was made.
 By correlating the data from the North of Italy, the r value obtained is -0.39, with a p-value of 0.007 (strong evidence against H0), so the link within this two variable in the North is consistent. 
 Furthermore, also the coefficient of determination was higher (0.15). 
 
-About the Centre and the South of the peninsula, we didn't find such clear values: the linear correlation coefficient is almost null for the centre (0.009) and also very low for the South (-0.07).
-
+About the Centre and the South of the peninsula, such clear values were not found: the linear correlation coefficient is almost null for the centre (0.009) and also very low for the South (-0.07).
 
 ### Air quality and Urban Ecosystem
 A third correlation between the two indicator Air Quality and Urban Ecosystem was made.
-The aim was to understand if, whenever a lack of Urban Ecosystem is present, a worst quality of air follows as well.
-In this particular case, a consideration must be made: Urban Ecosystem is a synthetic index, based on different indicators (all equally weighted), which one of them is air quality itself. 
-So, what is investigated is the impact #####NON MI PIACE QUESTO, COME POSSO SPIEGARLO MEGLIO? that this single indicator has on the final index value.
+The aim was to understand if, whenever a good air quality is present, a better Urban Ecosystem value is obtained.
 
 The results are the following:
 
@@ -660,59 +656,36 @@ The results are the following:
 - South: good negative correlaiton (-0.6), the cor test confirms it with the p-value. 
 
 These can be read as follow: while there's no general correlation throughtout the peninsula, which is confirmed by Northern and Central data analysis, when it comes to the Southern ones, the trend is different.
-In fact, a good negative correlation is found, meaning that with the increasing of Urban Ecosystems, the concentration of pm10, O3 and NO2 decreases.
-This is probably due to the fact that in the Southern provinces a less massive presence of industries is present and so, the improvement of air quality can be correlated to the increase of Urban Ecosystem.
+In fact, a good negative correlation is found, meaning that with the increasing of pm10, O3 and NO2 concentration, the Urban Ecosystem value decreases.
+This is probably due to the fact that in the Southern provinces a less massive presence of industries is present and so, the improvement of air quality bring to the improvement as.
 However, since in this study a "Presence of industries" index is not taken into account, the previous can be seen only as a possible explanation. Further study should be done.
 
-
 ```{r, eval=TRUE, echo= FALSE}
-plot(x=newdf$`Urban ecosystem`, y=newdf$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality", 
+plot(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E.", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(newdf$`Urban ecosystem`, newdf$`Air quality`)      
-cor.test(newdf$`Urban ecosystem`, newdf$`Air quality`) 
-model_italy_2 <- lm(newdf$`Urban ecosystem`~ newdf$`Air quality`)
+cor(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`)     #value 0.05, no general correlation 
+cor.test(x=newdf$`Air quality`, y=newdf$`Urban ecosystem`) #p-value, no evidence against H0= no correlation
+model_italy_2 <- lm(newdf$`Air quality`~ newdf$`Urban ecosystem`)
 summary(model_italy_2)
 
-plot(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality Northern Italy", 
+plot(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`,    
+     xlab = "Air quality", ylab="Urban ecosystem", 
+     main="Air quality and U.E., South", 
      cex.main=1.4, font.main=2, 
      col.main="navyblue")
-cor(x=Nord$`Urban ecosystem`, y=Nord$`Air quality`)  
-cor.test(Nord$`Urban ecosystem`, Nord$`Air quality`) 
-model_italy_3 <- lm(Nord$`Urban ecosystem`~ Nord$`Air quality`)
-summary(model_italy_3)
-
-plot(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality Central Italy", 
-     cex.main=1.4, font.main=2, 
-     col.main="navyblue")
-cor(x=Centro$`Urban ecosystem`, y=Centro$`Air quality`)  
-model_italy_4 <- lm(Centro$`Urban ecosystem`~ Centro$`Air quality`)
-summary(model_italy_4)
-
-plot(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`,    
-     xlab = "Urban Ecosystem ", ylab="Air quality", 
-     main="Scatterplot of U.E. and Air quality Southern Italy", 
-     cex.main=1.4, font.main=2, 
-     col.main="navyblue")
-cor(x=Mezzogiorno$`Urban ecosystem`, y=Mezzogiorno$`Air quality`) #-0.6 good negative correlation
-# all'aumentare dellurban ecosystem, diminuisce il valore di air quality e quindi abbiamo associati valori più bassi di pm10 e no2 e o3
-cor.test(Mezzogiorno$`Urban ecosystem`, Mezzogiorno$`Urban ecosystem`)
-model_italy_5 <- lm(Mezzogiorno$`Urban ecosystem`~ Mezzogiorno$`Air quality`)
+cor(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # negative -0.6, good correlation     
+cor.test(x=Mezzogiorno$`Air quality`, y=Mezzogiorno$`Urban ecosystem`) # p-value, 2.2x10^(-16)
+model_italy_5 <- lm(Mezzogiorno$`Air quality`~ Mezzogiorno$`Urban ecosystem`)
 summary(model_italy_5)
 ```
 
 ### Motorization rate and Cycling lanes
-A final correlation analysis was conducted between two indicators: Motorization rate and the presence of cycling lanes. The objective of this study was to determine if there exists a correlation between the motorization rate and the availability of cycling lanes. Our idea was that a higher presence of cycling lanes would correspond to a lower motorization rate, similar to the study conducted for pedestrian areas.
+A final correlation analysis was conducted between two indicators: Motorization rate and the presence of cycling lanes. The objective of this study was to determine if there exists a correlation between the motorization rate and the availability of cycling lanes. The idea was that a higher presence of cycling lanes would correspond to a lower motorization rate, similar to the study conducted for pedestrian areas.
 
-- The correlation value across all of Italy is -0.07, indicating no significant correlation.
-The p-value obtained from the cor.test function is 0.45, suggesting that there is no evidence against the null hypothesis (H0).
- 
+The correlation value across all Italy is -0.07, and the p-value obtained from the "cor.test" function is 0.45, suggesting that there is no evidence against the null hypothesis (H0), so the two variables do not seem to be correlated.
 
 ```{r, eval=TRUE, echo= FALSE}
 plot(x=newdf$`Motorization rate`, y=newdf$`Cycling lanes`,    
