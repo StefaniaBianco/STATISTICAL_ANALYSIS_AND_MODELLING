@@ -839,7 +839,7 @@ Our project's aim was to understand the Italian situation regarding some environ
 Overall, the environmental state of the Italian cities can be definitely improved: the indicators underline a critical situation for all the parameters. 
 Furthermore, the gap between North-Centre-South is almost always visible and consistent in every aspect analysed. 
 
-The need of creating sustainable cities, both for human life and the other organisms #####DIRE MEGLIO, is getting more and more urgent. 
+The need of creating sustainable cities, both for human life and for nature, is getting more and more urgent. 
 Thanks to the indicators we can understand where is more important to act, both in terms of parameters and in terms of geographical area.
 However, further researches and studies should be carried out to fully investigate how to improve the general situation and also meet SDGs standards.
 
